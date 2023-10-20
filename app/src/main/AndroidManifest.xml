@@ -25,5 +25,7 @@
         <activity android:name=".Testing"></activity>
 
     </application>
+    <uses-permission android:name="android.permission.INTERNET" />
+
 
 </manifest>
