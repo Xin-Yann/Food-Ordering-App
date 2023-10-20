@@ -35,7 +35,7 @@
                 android:id="@+id/user_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="n"
+                android:text="user@gmail.com"
                 android:layout_marginLeft="20dp"
                 android:onClick="toRegister"
                 android:textAlignment="center"
@@ -47,20 +47,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="100dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="25dp"
                 android:src="@drawable/user_home"
                 android:onClick="toLoginPage"/>
 
-            <Button
+            <ImageButton
                 android:id="@+id/logout"
-                android:layout_width="100dp"
-                android:layout_height="46dp"
-                android:backgroundTint="#fa9611"
-                android:onClick="sendMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:text="Logout"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/logout"/>
 
         </LinearLayout>
 

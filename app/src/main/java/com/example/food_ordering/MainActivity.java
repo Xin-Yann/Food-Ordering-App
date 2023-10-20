@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView mainImage;
     FirebaseFirestore fStore;
     FirebaseAuth auth;
-    Button logout;
+    ImageButton logout;
     TextView textView;
     FirebaseUser user;
 
