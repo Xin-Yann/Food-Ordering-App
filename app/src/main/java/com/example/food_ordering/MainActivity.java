@@ -1,10 +1,12 @@
 package com.example.food_ordering;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -55,4 +57,55 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void toLoginPage(View view){
+        Intent intent = new Intent(this, login.class);
+        ImageButton toLoginPage = findViewById(R.id.login);
+        startActivity(intent);
+    }
+
+    /*Category*/
+    public void toMainDish(View view){
+        Intent intent = new Intent(this, Main_dish.class);
+        ImageButton toMainPage = findViewById(R.id.main_dish_btn);
+        startActivity(intent);
+    }
+
+    public void toBeverage(View view){
+        Intent intent = new Intent(this, Beverage.class);
+        ImageButton toBeverage = findViewById(R.id.beverage_btn);
+        startActivity(intent);
+    }
+
+    public void toDessert(View view){
+        Intent intent = new Intent(this, Dessert.class);
+        ImageButton toDessert = findViewById(R.id.dessert_btn);
+        startActivity(intent);
+    }
+
+    /*Footer*/
+    public void toHome(View view){
+        Intent intent = new Intent(this, MainActivity.class);
+        ImageButton toHome = findViewById(R.id.home_page);
+        startActivity(intent);
+    }
+
+    public void toOrder(View view){
+        Intent intent = new Intent(this, Order_history_n_upcoming.class);
+        ImageButton toOrder = findViewById(R.id.order);
+        startActivity(intent);
+    }
+
+    public void toCartPage(View view){
+        Intent intent = new Intent(this, Cart.class);
+        ImageButton toCartPage = findViewById(R.id.cartPage);
+        startActivity(intent);
+    }
+
+    public void toAccount(View view){
+        Intent intent = new Intent(this, Account_details.class);
+        ImageButton toAccount = findViewById(R.id.accountPage);
+        startActivity(intent);
+    }
+
 }

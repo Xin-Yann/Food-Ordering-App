@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Food-Ordering</string>
+    <string name="hyperlink">Already Have An Account?<font fgcolor="@color/color"> <a href="register.xml">Login</a></font></string>
+    <string name="login">Don’t Have An Account?<font fgcolor="@color/color"> <a href="login.xml">Create One</a></font></string>
 </resources>
