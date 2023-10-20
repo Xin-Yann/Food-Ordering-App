@@ -3,6 +3,7 @@ package com.example.food_ordering;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -20,11 +23,21 @@ public class MainActivity extends AppCompatActivity {
     TextView mainName, mainPrice;
     ImageView mainImage;
     FirebaseFirestore fStore;
+    FirebaseAuth auth;
+    Button logout;
+    TextView textView;
+    FirebaseUser user;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.home); // Replace with the layout for your main dish activity.
+        setContentView(R.layout.home);
+
+        auth = FirebaseAuth.getInstance();
+        logout = findViewById(R.id.logout);
+        textView = findViewById(R.id.user_details);
+        user = auth.getCurrentUser();
 
         fStore = FirebaseFirestore.getInstance();
         mainName = findViewById(R.id.main_name); // Replace with the actual ID of your TextView for dish name
@@ -54,6 +67,25 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     // Handle the case where the query was not successful
                 }
+            }
+        });
+
+        if(user == null){
+            Intent intent = new Intent(getApplicationContext(), login.class);
+            startActivity(intent);
+            finish();
+        }
+        else {
+            textView.setText(user.getEmail());
+        }
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getApplicationContext(), login.class);
+                startActivity(intent);
+                finish();
             }
         });
     }

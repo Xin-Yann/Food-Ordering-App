@@ -31,14 +31,16 @@
                 android:backgroundTint="#00FFFFFF"
                 android:src="@drawable/logo" />
 
-            <ImageButton
+            <TextView
+                android:id="@+id/user_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="200dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/white"
-                android:src="@drawable/shopping_home"
-                android:onClick="toCartPage"/>
+                android:text="n"
+                android:layout_marginLeft="20dp"
+                android:onClick="toRegister"
+                android:textAlignment="center"
+                android:textSize="14sp"
+                android:layout_marginTop="20dp"/>
 
             <ImageButton
                 android:id="@+id/login"
@@ -50,6 +52,15 @@
                 android:layout_marginBottom="25dp"
                 android:src="@drawable/user_home"
                 android:onClick="toLoginPage"/>
+
+            <Button
+                android:id="@+id/logout"
+                android:layout_width="100dp"
+                android:layout_height="46dp"
+                android:backgroundTint="#fa9611"
+                android:onClick="sendMessage"
+                android:text="Logout"
+                android:layout_marginTop="10dp"/>
 
         </LinearLayout>
 

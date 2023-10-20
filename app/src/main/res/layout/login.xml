@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="142dp"
+        android:layout_marginTop="50dp"
         android:id="@+id/linearLayout2">
 
         <ImageView
@@ -28,11 +28,25 @@
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Username or E-mail"
+            android:text="Email"
             android:layout_marginTop="50dp"/>
 
         <EditText
-            android:id="@+id/nameid"
+            android:id="@+id/user_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textEmailAddress" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Darpa Id"
+            android:layout_marginTop="50dp"/>
+
+        <EditText
+            android:id="@+id/user_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -45,15 +59,21 @@
             android:text="Password"
             android:layout_marginTop="20dp"/>
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
         <EditText
-            android:id="@+id/passid"
+            android:id="@+id/user_pass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPassword"/>
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btn_login"
             android:layout_width="210dp"
             android:layout_height="46dp"
             android:backgroundTint="#fa9611"

@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="30dp"
         android:id="@+id/linearLayout2">
 
         <ImageView
@@ -25,54 +25,92 @@
             android:layout_marginLeft="80dp"/>
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/userName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Name"
+            android:text="Username"
             android:layout_marginTop="50dp"/>
 
+
         <EditText
-            android:id="@+id/editTextText2"
+            android:id="@+id/user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="text"/>
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/userid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Darpa Id"
+            android:layout_marginTop="20dp"/>
+
+
+        <EditText
+            android:id="@+id/user_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"/>
+
+        <TextView
+            android:id="@+id/userEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="E-mail"
             android:layout_marginTop="20dp"/>
 
         <EditText
-            android:id="@+id/editTextTextEmailAddress"
+            android:id="@+id/user_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textEmailAddress" />
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
         <TextView
-            android:id="@+id/textView8"
+            android:id="@+id/contact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Contact No"
+            android:layout_marginTop="20dp"/>
+
+
+        <EditText
+            android:id="@+id/user_contact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"/>
+
+        <TextView
+            android:id="@+id/pass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Password"
             android:layout_marginTop="20dp"/>
 
         <EditText
-            android:id="@+id/editTextTextPassword2"
+            android:id="@+id/user_pass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPassword"/>
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btn_register"
             android:layout_width="210dp"
             android:layout_height="46dp"
-            android:backgroundTint="#040F51"
+            android:backgroundTint="#fa9611"
             android:text="Register"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="20dp"
+            android:onClick="Registerbtn"/>
 
         <TextView
             android:id="@+id/login"
@@ -83,5 +121,8 @@
             android:textSize="14sp"
             android:layout_marginTop="20dp"
             android:onClick="toRegister"/>
+
+        
+
     </LinearLayout>
 </RelativeLayout>
