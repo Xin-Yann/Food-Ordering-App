@@ -34,9 +34,10 @@
         <activity android:name=".Beverage"></activity>
         <activity android:name=".Dessert"></activity>
         <activity android:name=".Admin_home"></activity>
+        <activity android:name=".SearchResultsActivity"></activity>
+        <activity android:name=".Header"></activity>
 
     </application>
-    <uses-permission android:name="android.permission.INTERNET" />
 
 
 </manifest>
