@@ -199,6 +199,7 @@
             android:backgroundTint="#fa9611"
             android:text="Save"
             android:textColor="#FFFFFF"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            android:onClick="saveButton"/>
     </RelativeLayout>
 </LinearLayout>
