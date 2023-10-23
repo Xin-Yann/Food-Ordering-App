@@ -14,7 +14,6 @@ public class Header extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
     }
-
         public void toLoginPage(View view){
         Intent intent = new Intent(this, login.class);
         ImageButton toLoginPage = findViewById(R.id.login);

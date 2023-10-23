@@ -29,7 +29,7 @@
                 android:onClick="toRegister"
                 android:text="user@gmail.com"
                 android:textAlignment="center"
-                android:textSize="14sp" />
+                android:textSize="14sp" /><!--
 
             <ImageButton
                 android:id="@+id/login"
@@ -40,13 +40,13 @@
                 android:layout_marginBottom="25dp"
                 android:background="@color/white"
                 android:onClick="toLoginPage"
-                android:src="@drawable/user_home" />
+                android:src="@drawable/user_home" />-->
 
             <ImageButton
                 android:id="@+id/logout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="120dp"
                 android:layout_marginTop="10dp"
                 android:background="@color/white"
                 android:src="@drawable/logout"

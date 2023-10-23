@@ -7,6 +7,7 @@
     android:layout_marginTop="10dp"
     android:background="#ffffff">
 
+
     <LinearLayout
         android:id="@+id/linearLayout0"
         android:layout_width="match_parent"
@@ -16,10 +17,8 @@
         android:background="#ffffff"
         android:orientation="vertical">
 
-        <include
-            layout="@layout/header"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <include layout="@layout/header"/>
+
 
         <ScrollView
             android:layout_width="match_parent"
@@ -239,5 +238,7 @@
             layout="@layout/footer"
             android:layout_width="wrap_content"
             android:layout_height="match_parent" />
+
+
     </LinearLayout>
 </RelativeLayout>

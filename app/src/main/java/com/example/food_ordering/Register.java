@@ -88,6 +88,8 @@ public class Register extends AppCompatActivity {
                 }
 
                 boolean isAdmin = email.endsWith("@admin.com");
+                boolean isUser = email.endsWith("@student.com");
+                boolean isStaff = email.endsWith("@staff.com");
 
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -135,7 +137,7 @@ public class Register extends AppCompatActivity {
                                                             Toast.makeText(Register.this, "Failed to save admin data.", Toast.LENGTH_SHORT).show();
                                                         }
                                                     });
-                                        } else {
+                                        } else if (isUser && isStaff){
 
                                             // Create a new document in the "users" collection with the user's UID as the document ID
                                             db.collection("users")
@@ -159,6 +161,30 @@ public class Register extends AppCompatActivity {
                                                             Toast.makeText(Register.this, "Failed to save user data.", Toast.LENGTH_SHORT).show();
                                                         }
                                                     });
+                                        }else if(isStaff){
+                                            // Create a new document in the "users" collection with the user's UID as the document ID
+                                            db.collection("staffs")
+                                                    .document(firebaseUser.getUid())
+                                                    .set(userData)
+                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            // User data successfully saved in Firestore
+                                                            Toast.makeText(Register.this, "Staff data saved.", Toast.LENGTH_SHORT).show();
+
+                                                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                                            startActivity(intent);
+                                                            finish();
+                                                        }
+                                                    })
+                                                    .addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            // Failed to save user data in Firestore
+                                                            Toast.makeText(Register.this, "Failed to save staff data.", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    });
+
                                         }
                                     }
 

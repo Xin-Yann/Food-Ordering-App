@@ -3,15 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include layout="@layout/header"></include>
+
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/beverage"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="80dp"/>
 
-    <ImageButton
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:backgroundTint="#00FFFFFF"
-        android:src="@drawable/logo" />
 
-</RelativeLayout>
+</RelativeLayout >
