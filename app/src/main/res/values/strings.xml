@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Food-Ordering</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_settings">Settings</string>
     <string name="hyperlink">Already Have An Account? <a href="register.xml">Login</a></string>
     <string name="login">Don’t Have An Account? <a href="login.xml">Create One</a></string>
     <string name="open">Open Navigation Drawer</string>
