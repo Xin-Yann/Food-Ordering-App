@@ -1,345 +1,243 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginTop="10dp"
+    android:background="#ffffff">
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/linearLayout0"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:layout_marginBottom="10dp"
+        android:background="#ffffff"
         android:orientation="vertical">
 
-    <LinearLayout
-            android:id="@+id/linearLayout"
+        <include
+            layout="@layout/header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="20dp"
-            android:orientation="horizontal">
+            android:layout_gravity="top"
+            android:layout_weight="1">
 
-            <ImageButton
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:backgroundTint="#00FFFFFF"
-                android:src="@drawable/logo" />
-
-            <ImageButton
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="250dp"
-                android:background="@drawable/border_round_corner_small"
-                android:backgroundTint="#fa9611"
-                android:src="@drawable/shoppingbag" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="75dp"
-            android:layout_weight="1"
-            android:fontFamily="@font/happylucky_gxnzp"
-            android:text="What Are You"
-            android:textSize="14pt" />
-
-        <TextView
-            android:id="@+id/textVie1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="110dp"
-            android:layout_weight="1"
-            android:fontFamily="@font/happylucky_gxnzp"
-            android:text="Craving For Today?"
-            android:textSize="16pt" />
-
-        <!--search-->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inputOrigin"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="170dp"
-            android:hint="what are you craving for?"
-            android:textColor="#e6e6e6"
-            android:textSize="16sp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/border_round_corner_small"
-                android:backgroundTint="#e6e6e6" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <ImageButton
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginLeft="290dp"
-            android:layout_marginTop="175dp"
-            android:backgroundTint="#00FFFFFF"
-            android:src="@drawable/search" />
-
-        <!--Menu-->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="90dp"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:id="@+id/linearLayout2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:orientation="horizontal">
-
-                <ImageButton
-                    android:layout_width="85dp"
-                    android:layout_height="85dp"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginTop="180dp"
-                    android:background="@drawable/circle"
-                    android:src="@drawable/vegetables" />
-
-                <ImageButton
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_marginLeft="50dp"
-                    android:layout_marginTop="180dp"
-                    android:background="@drawable/circle"
-                    android:src="@drawable/soda" />
-
-                <ImageButton
-                    android:layout_width="85dp"
-                    android:layout_height="85dp"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginTop="180dp"
-                    android:background="@drawable/circle"
-                    android:src="@drawable/ice_cream" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linearLayout3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:backgroundTint="#00FFFFFF"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/main"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginTop="270dp"
-                    android:fontFamily="@font/happylucky_gxnzp"
-                    android:text="Main Dish"
-                    android:textSize="10pt" />
-
-                <TextView
-                    android:id="@+id/beverage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="55dp"
-                    android:layout_marginTop="270dp"
-                    android:fontFamily="@font/happylucky_gxnzp"
-                    android:text="Beverage"
-                    android:textSize="10pt" />
-
-                <TextView
-                    android:id="@+id/dessert"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="55dp"
-                    android:layout_marginTop="270dp"
-                    android:fontFamily="@font/happylucky_gxnzp"
-                    android:text="Dessert"
-                    android:textSize="10pt" />
-            </LinearLayout>
-
+            <!--Menu-->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/happylucky_gxnzp"
+                    android:text="What Are You"
+                    android:textSize="14pt" />
+
+                <TextView
+                    android:id="@+id/textVie1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="60dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/happylucky_gxnzp"
+                    android:text="Craving For Today?"
+                    android:textSize="16pt" />
+
                 <LinearLayout
-                    android:id="@+id/linearLayout4"
+                    android:id="@+id/search"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:layout_marginLeft="3dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="120dp">
+
+
+                    <com.google.android.material.appbar.AppBarLayout
+                        android:layout_width="360dp"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.Toolbar
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <androidx.appcompat.widget.SearchView
+                                android:id="@+id/searchView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="#f2f2f2"
+                                android:iconifiedByDefault="false"
+                                android:queryHint="Search" />
+                        </androidx.appcompat.widget.Toolbar>
+                    </com.google.android.material.appbar.AppBarLayout>
+                </LinearLayout>
+                <!--After Search-->
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="30dp"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:id="@+id/main_dish_btn"
+                            android:layout_width="85dp"
+                            android:layout_height="85dp"
+                            android:layout_marginLeft="40dp"
+                            android:layout_marginTop="180dp"
+                            android:background="@drawable/circle"
+                            android:onClick="toMainDish"
+                            android:src="@drawable/vegetables" />
+
+                        <ImageButton
+                            android:id="@+id/beverage_btn"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_marginLeft="45dp"
+                            android:layout_marginTop="180dp"
+                            android:background="@drawable/circle"
+                            android:onClick="toBeverage"
+                            android:src="@drawable/soda" />
+
+                        <ImageButton
+                            android:id="@+id/dessert_btn"
+                            android:layout_width="85dp"
+                            android:layout_height="85dp"
+                            android:layout_marginLeft="40dp"
+                            android:layout_marginTop="180dp"
+                            android:background="@drawable/circle"
+                            android:onClick="toDessert"
+                            android:src="@drawable/ice_cream" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="35dp"
+                        android:backgroundTint="#00FFFFFF"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/main"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="35dp"
+                            android:layout_marginTop="270dp"
+                            android:fontFamily="@font/happylucky_gxnzp"
+                            android:text="Main Dish"
+                            android:textSize="10pt" />
+
+                        <TextView
+                            android:id="@+id/beverage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="55dp"
+                            android:layout_marginTop="270dp"
+                            android:fontFamily="@font/happylucky_gxnzp"
+                            android:text="Beverage"
+                            android:textSize="10pt" />
+
+                        <TextView
+                            android:id="@+id/dessert"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="58dp"
+                            android:layout_marginTop="270dp"
+                            android:fontFamily="@font/happylucky_gxnzp"
+                            android:text="Dessert"
+                            android:textSize="10pt" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <!--Food Menu-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center_horizontal"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/food"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/linearLayout4"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="40dp"
-                        android:layout_marginTop="330dp"
-                        android:fontFamily="@font/happylucky_gxnzp"
-                        android:text="Food Menu"
-                        android:textSize="16pt" />
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginTop="25dp"
+                        android:orientation="horizontal">
 
+                        <TextView
+                            android:id="@+id/food"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="40dp"
+                            android:layout_marginTop="330dp"
+                            android:fontFamily="@font/happylucky_gxnzp"
+                            android:text="Food Menu"
+                            android:textSize="16pt" />
 
-                    <TextView
-                        android:id="@+id/seemore"
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:id="@+id/seemore"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="110dp"
+                            android:layout_marginTop="330dp"
+                            android:fontFamily="@font/happylucky_gxnzp"
+                            android:onClick="toMainDish"
+                            android:text="See More"
+                            android:textColor="#fa9611"
+                            android:textSize="9pt" />
+
+                    </LinearLayout>
+
+                    <!--Food Menu Details-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="110dp"
-                        android:layout_marginTop="330dp"
-                        android:fontFamily="@font/happylucky_gxnzp"
-                        android:text="See More"
-                        android:textColor="#fa9611"
-                        android:textSize="9pt" />
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="420dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="8dp">
 
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center">
 
-                </LinearLayout>
+                        </androidx.recyclerview.widget.RecyclerView>
+
+                    </LinearLayout>
+                </RelativeLayout>
             </RelativeLayout>
-            <!--Main Dish-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="390dp"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
+        </ScrollView>
 
-                <ImageView
-                    android:id="@+id/main_Image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:srcCompat="@tools:sample/avatars" />
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/mainCardView"
-                    android:layout_width="250dp"
-                    android:layout_height="125dp"
-                    android:layout_gravity="center"
-                    android:onClick="toMainDish">
-
-                    <TextView
-                        android:id="@+id/main_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:gravity="top"
-                        android:text="Duration"
-                        android:textColor="#000000"
-                        android:textSize="10pt"
-                        android:layout_marginTop="14dp"/>
-
-                    <TextView
-                        android:id="@+id/main_price"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="90dp"
-                        android:gravity="top"
-                        android:text="Duration"
-                        android:textColor="#000000"
-                        android:textSize="12sp" />
-                </androidx.cardview.widget.CardView>
-            </LinearLayout>
-        </RelativeLayout>
-        <!--Footer-->
-        <RelativeLayout
-            android:id="@+id/footer"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="#FEFAFD"
-
-            android:gravity="center_horizontal">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="60dp"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <ImageButton
-                    android:id="@+id/image1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="88dp"
-                    android:background="#ffff"
-                    android:contentDescription="Image1"
-                    android:onClick="clickImage1"
-                    android:padding="5dp"/>
-
-                <ImageButton
-                    android:id="@+id/image2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="95dp"
-                    android:background="#ffffff"
-                    android:onClick="clickImage2"/>
-
-
-                <ImageButton
-                    android:id="@+id/image3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#ffffff"
-                    android:onClick="clickImage3"
-                    android:padding="5dp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="30dp"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal"
-                android:padding="10dp">
-
-
-                <TextView
-                    android:id="@+id/home"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="70dp"
-                    android:gravity="top"
-                    android:text="Home"
-                    android:textColor="#000000"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/myTicket"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="70dp"
-                    android:gravity="top"
-                    android:text="My Ticket"
-                    android:textColor="#000000"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/account"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="top"
-                    android:text="Account"
-                    android:textColor="#000000"
-                    android:textSize="14sp" />
-            </LinearLayout>
-        </RelativeLayout>
-    </RelativeLayout>
-</ScrollView>
-
+        <include
+            layout="@layout/footer"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+</RelativeLayout>
