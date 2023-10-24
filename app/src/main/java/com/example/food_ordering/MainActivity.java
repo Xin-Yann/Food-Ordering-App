@@ -2,20 +2,24 @@ package com.example.food_ordering;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -26,17 +30,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    RecyclerView recyclerView, searchResultsRecyclerView;
+    RecyclerView recyclerView;
     FirebaseFirestore fStore;
     FirebaseAuth auth;
-    ImageButton logout;
+    ImageButton logout,openDrawer;
     TextView textView;
     FirebaseUser user;
     ArrayList<Dish> datalist;
     MyAdapter adapter;
     SearchView searchView;
     DrawerLayout drawerLayout;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         logout = findViewById(R.id.logout);
-        textView = findViewById(R.id.user_details);
         user = auth.getCurrentUser();
 
         fStore = FirebaseFirestore.getInstance();
@@ -54,15 +56,26 @@ public class MainActivity extends AppCompatActivity {
         datalist = new ArrayList<>();
         adapter = new MyAdapter(this, datalist);
         recyclerView.setAdapter(adapter);
+        drawerLayout = findViewById(R.id.drawerLayout);
+        openDrawer = findViewById(R.id.menu);
+        searchView = findViewById(R.id.searchView);
+        searchView.setFocusable(true);
+        searchView.setIconified(true);
+        searchView.requestFocus();
 
-        fStore.collection("main-dish").limit(3).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        /*fetch main dish data*/
+        fStore.collection("menu")
+                .whereEqualTo("menu_category","Main Dish")
+                .limit(3)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        String dishName = document.getString("main_name");
-                        String dishPrice = document.getString("main_price");
-                        String dishImage = document.getString("main_image");
+                        String dishName = document.getString("menu_name");
+                        String dishPrice = document.getString("menu_price");
+                        String dishImage = document.getString("menu_image");
 
                         // Add the retrieved data to the ArrayList
                         datalist.add(new Dish(dishName, dishPrice, dishImage));
@@ -76,11 +89,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        searchView = findViewById(R.id.searchView);
-        searchView.setFocusable(true);
-        searchView.setIconified(true);
-        searchView.requestFocus();
-
+        /*search*/
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -100,15 +109,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         if (user == null) {
+            // User is not logged in, redirect to the login screen
             Intent intent = new Intent(getApplicationContext(), login.class);
             startActivity(intent);
             finish();
         } else {
-            textView.setText(user.getEmail());
+            // User is authenticated, get their email
+            String userEmail = user.getEmail();
+
+            // Display the user's email
+            TextView text = findViewById(R.id.user_details);
+            text.setText(userEmail);
+            TextView textView = findViewById(R.id.user_email);
+            textView.setText(userEmail);
         }
 
+        /*logout*/
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,6 +136,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        /*open menu*/
+        openDrawer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (drawerLayout.isDrawerOpen(findViewById(R.id.drawerMenu))) {
+                    drawerLayout.closeDrawer(findViewById(R.id.drawerMenu));
+                } else {
+                    drawerLayout.openDrawer(findViewById(R.id.drawerMenu));
+                }
+            }
+        });
 
     }
 
@@ -137,9 +165,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void toSearch(View view){
-        Intent intent = new Intent(this, SearchResultsActivity.class);
-        SearchView searchView = findViewById(R.id.searchView);
+    /*menu*/
+    public void toPrivacy(View view){
+        Intent intent = new Intent(this, Privacy_policy.class);
+        TextView toPrivacy= findViewById(R.id.privacy);
+        startActivity(intent);
+    }
+
+    public void toPickup(View view){
+        Intent intent = new Intent(this, Pickup_info.class);
+        TextView toPickup= findViewById(R.id.pickup);
+        startActivity(intent);
+    }
+
+    public void toContact(View view){
+        Intent intent = new Intent(this, Contact_us.class);
+        TextView toContact= findViewById(R.id.contact);
         startActivity(intent);
     }
 
@@ -148,6 +189,7 @@ public class MainActivity extends AppCompatActivity {
         ImageButton toLoginPage = findViewById(R.id.login);
         startActivity(intent);
     }
+
 
     /*Category*/
     public void toMainDish(View view){

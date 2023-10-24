@@ -54,7 +54,6 @@ public class login extends AppCompatActivity {
                 String email, password, id;
                 email = String.valueOf(userEmail.getText());
                 password = String.valueOf(userPass.getText());
-                id = String.valueOf(userId.getText());
 
                 if (TextUtils.isEmpty(email)) {
                     Toast.makeText(login.this, "Enter email", Toast.LENGTH_SHORT).show();
@@ -62,10 +61,6 @@ public class login extends AppCompatActivity {
                 }
                 if (TextUtils.isEmpty(password)) {
                     Toast.makeText(login.this, "Enter password", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (TextUtils.isEmpty(id)) {
-                    Toast.makeText(login.this, "Enter id", Toast.LENGTH_SHORT).show();
                     return;
                 }
 

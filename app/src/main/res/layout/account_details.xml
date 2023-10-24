@@ -31,7 +31,9 @@
             android:backgroundTint="#fa9611"
             android:text="X"
             android:textColor="#FFFFFF"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:onClick="toHome"/>
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -63,7 +65,11 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputUsername"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:editable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:background="#e6e6e6"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -91,7 +97,12 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputDarpaId"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:editable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:background="#e6e6e6"/>
+
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -188,6 +199,7 @@
             android:backgroundTint="#fa9611"
             android:text="Save"
             android:textColor="#FFFFFF"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:onClick="saveButton"/>
     </RelativeLayout>
 </LinearLayout>
