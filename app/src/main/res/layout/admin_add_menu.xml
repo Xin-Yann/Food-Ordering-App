@@ -43,15 +43,41 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/addMenuheader"
             android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/menuCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="45dp"
+                android:layout_marginTop="15dp"
+                android:text="MENU CATEGORY"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <RelativeLayout
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="40dp"
+                android:textColor="#000000"
+                android:textSize="16sp">
+
+                <Spinner
+                    android:id="@+id/selectMenuType"
+                    style="@style/Widget.AppCompat.DropDownItem.Spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    app:boxStrokeColor="@color/black"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/menuImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="45dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="95dp"
                 android:text="MENU IMAGE"
                 android:textColor="#000000"
                 android:textSize="16sp" />
@@ -59,7 +85,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="35dp"
+                android:layout_marginTop="115dp"
                 android:gravity="center"
                 android:orientation="horizontal"
                 tools:ignore="MissingConstraints">
@@ -87,7 +113,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="45dp"
-                android:layout_marginTop="185dp"
+                android:layout_marginTop="265dp"
                 android:text="MENU ID"
                 android:textColor="#000000"
                 android:textSize="16sp" />
@@ -97,7 +123,7 @@
                 android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="210dp"
+                android:layout_marginTop="290dp"
                 android:hint="MENU ID"
                 android:textColor="#000000"
                 android:textSize="16sp"
@@ -115,7 +141,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="45dp"
-                android:layout_marginTop="285dp"
+                android:layout_marginTop="365dp"
                 android:text="MENU NAME"
                 android:textColor="#000000"
                 android:textSize="16sp" />
@@ -125,7 +151,7 @@
                 android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="310dp"
+                android:layout_marginTop="390dp"
                 android:hint="MENU NAME"
                 android:textColor="#000000"
                 android:textSize="16sp"
@@ -143,7 +169,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="45dp"
-                android:layout_marginTop="385dp"
+                android:layout_marginTop="465dp"
                 android:text="MENU DESCRIPTION"
                 android:textColor="#000000"
                 android:textSize="16sp" />
@@ -153,7 +179,7 @@
                 android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="410dp"
+                android:layout_marginTop="490dp"
                 android:hint="MENU DESCRIPTION"
                 android:textColor="#000000"
                 android:textSize="16sp"
@@ -174,7 +200,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="45dp"
-                android:layout_marginTop="540dp"
+                android:layout_marginTop="620dp"
                 android:text="MENU PRICE (RM)"
                 android:textColor="#000000"
                 android:textSize="16sp" />
@@ -184,7 +210,7 @@
                 android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="565dp"
+                android:layout_marginTop="645dp"
                 android:hint="MENU PRICE (RM)"
                 android:textColor="#000000"
                 android:textSize="16sp"
@@ -202,7 +228,7 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="645dp"
+                android:layout_marginTop="725dp"
                 android:layout_marginBottom="50px"
                 android:backgroundTint="#fa9611"
                 android:text="ADD"
