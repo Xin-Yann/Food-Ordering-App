@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -37,7 +38,7 @@ public class Add_Menu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.admin_add_menu); // Use the correct XML layout file
+        setContentView(R.layout.admin_add_menu);
 
         firestore = FirebaseFirestore.getInstance();
 
@@ -45,7 +46,7 @@ public class Add_Menu extends AppCompatActivity {
 
         selectImageButton.setOnClickListener(v -> {
             // Create an intent to open the file picker or camera, depending on your requirements.
-            Intent intent = new Intent(Intent.ACTION_GET_CONTENT); // For file picker
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
             // or Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); // For camera
 
             // Start the intent for result
@@ -114,5 +115,11 @@ public class Add_Menu extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Failed to add menu", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    public void toHome(View view){
+        Intent intent = new Intent(this, Admin_home.class);
+        Button toHome = findViewById(R.id.home_page);
+        startActivity(intent);
     }
 }

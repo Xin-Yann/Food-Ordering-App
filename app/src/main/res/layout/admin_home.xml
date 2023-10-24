@@ -16,11 +16,61 @@
         android:background="#ffffff"
         android:orientation="vertical">
 
-        <include
-            layout="@layout/admin_header"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="20dp"
+                android:background="#ffffff"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/menuButton"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:backgroundTint="#00FFFFFF"
+                    android:src="@drawable/logo" />
+
+                <TextView
+                    android:id="@+id/admin_details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:onClick="toRegister"
+                    android:text="admin@gmail.com"
+                    android:textAlignment="center"
+                    android:textSize="14sp" />
+
+                <ImageButton
+                    android:id="@+id/login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="99dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="25dp"
+                    android:background="@color/white"
+                    android:onClick="toLoginPage"
+                    android:src="@drawable/user_home" />
+
+                <ImageButton
+                    android:id="@+id/logout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    android:src="@drawable/logout"
+                    android:text="Logout"
+                    android:onClick="logout"/>
+
+            </LinearLayout>
+        </RelativeLayout>
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -50,6 +100,8 @@
         <include
             layout="@layout/admin_footer"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent" />-->
+
+
     </LinearLayout>
 </RelativeLayout>

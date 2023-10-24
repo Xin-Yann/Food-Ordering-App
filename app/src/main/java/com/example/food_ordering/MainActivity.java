@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseFirestore fStore;
     FirebaseAuth auth;
     ImageButton logout,openDrawer;
+    TextView textView;
     FirebaseUser user;
     ArrayList<Dish> datalist;
     MyAdapter adapter;
@@ -108,16 +109,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*display user email if user login */
         if (user == null) {
+            // User is not logged in, redirect to the login screen
             Intent intent = new Intent(getApplicationContext(), login.class);
             startActivity(intent);
             finish();
         } else {
-            TextView text= findViewById(R.id.user_details);
-            text.setText(user.getEmail());
+            // User is authenticated, get their email
+            String userEmail = user.getEmail();
+
+            // Display the user's email
+            TextView text = findViewById(R.id.user_details);
+            text.setText(userEmail);
             TextView textView = findViewById(R.id.user_email);
-            textView.setText(user.getEmail());
+            textView.setText(userEmail);
         }
 
         /*logout*/
@@ -144,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
     public void filterList(String keyword) {
         List<Dish> filteredList = new ArrayList<>();
         for (Dish dish : datalist) {
