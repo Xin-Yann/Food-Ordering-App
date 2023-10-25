@@ -1,8 +1,10 @@
 package com.example.food_ordering;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
         searchView.setIconified(true);
         searchView.requestFocus();
 
+        deleteCache(this);
+
         /*fetch main dish data*/
         fStore.collection("menu")
                 .whereEqualTo("menu_category","Main Dish")
@@ -72,9 +77,10 @@ public class MainActivity extends AppCompatActivity {
                         String dishName = document.getString("menu_name");
                         String dishPrice = document.getString("menu_price");
                         String dishImage = document.getString("menu_image");
+                        String dishDesc = document.getString("menu_detail");
 
                         // Add the retrieved data to the ArrayList
-                        datalist.add(new Menu(dishName, dishPrice, dishImage));
+                        datalist.add(new Menu(dishName, dishPrice, dishImage,dishDesc));
                     }
 
                     adapter.notifyDataSetChanged();
@@ -82,6 +88,22 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     // Handle the case where the query was not successful
                 }
+            }
+        });
+
+        adapter.setOnItemClickListener(new MenuAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                // Get the selected menu item
+                Menu selectedItem = datalist.get(position);
+
+                // Create an Intent to send the selected menu item's details to the MenuItemDashboardActivity
+                Intent intent = new Intent(MainActivity.this, Menu_item.class);
+                intent.putExtra("menuName", selectedItem.getName());
+                intent.putExtra("menuPrice", selectedItem.getPrice());
+                intent.putExtra("menuImage", selectedItem.getImage());
+                intent.putExtra("menuDetail", selectedItem.getDetail());
+                startActivity(intent);
             }
         });
 
@@ -141,6 +163,29 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public static void deleteCache(Context context) {
+        try {
+            File dir = context.getCacheDir();
+            deleteDir(dir);
+        } catch (Exception e) {}
+    }
+    public static boolean deleteDir(File dir) {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            for (int i = 0; i < children.length; i++) {
+                boolean success = deleteDir(new File(dir, children[i]));
+                if (!success) {
+                    return false;
+                }
+            }
+            return dir.delete();
+        } else if(dir!= null && dir.isFile()) {
+            return dir.delete();
+        } else {
+            return false;
+        }
     }
 
     public void filterList(String keyword) {

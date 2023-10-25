@@ -42,7 +42,7 @@
         <activity android:name=".Admin_report"></activity>
         <activity android:name=".Admin_order"></activity>
         <activity android:name=".Add_Menu"></activity>
-        <activity android:name=".MenuItemDashboardActivity"></activity>
+        <activity android:name=".Menu_item"></activity>
 
     </application>
 
