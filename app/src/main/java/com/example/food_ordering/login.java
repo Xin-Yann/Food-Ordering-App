@@ -3,6 +3,7 @@ package com.example.food_ordering;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -41,7 +42,6 @@ public class login extends AppCompatActivity {
         setContentView(R.layout.login);
 
         mAuth = FirebaseAuth.getInstance();
-        userId = findViewById(R.id.user_id);
         userEmail = findViewById(R.id.user_email);
         userPass = findViewById(R.id.user_pass);
         Loginbtn = findViewById(R.id.btn_login);
@@ -92,6 +92,7 @@ public class login extends AppCompatActivity {
                         });
             }
         });
+
 
         TextView register = findViewById(R.id.register);
 

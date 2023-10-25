@@ -1,5 +1,4 @@
 package com.example.food_ordering;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,33 +10,39 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 
-public class DessertAdapter extends RecyclerView.Adapter<DessertAdapter.CardViewHolder> {
-    private List<Dessert_Data>  dessertList; // Change to the appropriate data class (BeverageData)
+public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.CardViewHolder> {
+    private List<Menu> dataList;
     private Context context;
 
-    public DessertAdapter(Context context, List<Dessert_Data>  dessertList) { // Change the parameter type to the appropriate data class (BeverageData)
+    public MenuAdapter(Context context, List<Menu> dataList) {
         this.context = context;
-        this. dessertList =  dessertList;
+        this.dataList = dataList;
     }
+
+    public void setFilteredList(List<Menu> filteredList){
+        this.dataList = filteredList;
+        notifyDataSetChanged();
+    }
+
 
     @NonNull
     @Override
     public CardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.dessert_menu, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.food_menu, parent, false);
         return new CardViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CardViewHolder holder, int position) {
-        Dessert_Data dessert =  dessertList.get(position); // Change the variable name to beverage
-        Picasso.get().load(dessert.getImage()).into(holder.imageView);
-        holder.nameTextView.setText(dessert.getName());
-        holder.priceTextView.setText(dessert.getPrice());
+        Menu data = dataList.get(position);
+        Picasso.get().load(data.getImage()).into(holder.imageView);
+        holder.nameTextView.setText(data.getName());
+        holder.priceTextView.setText(data.getPrice());
     }
 
     @Override
     public int getItemCount() {
-        return dessertList.size();
+        return dataList.size();
     }
 
     public static class CardViewHolder extends RecyclerView.ViewHolder {
@@ -47,9 +52,10 @@ public class DessertAdapter extends RecyclerView.Adapter<DessertAdapter.CardView
 
         public CardViewHolder(View itemView) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.dessert_Image);
-            nameTextView = itemView.findViewById(R.id.dessert_name);
-            priceTextView = itemView.findViewById(R.id.dessert_price);
+            imageView = itemView.findViewById(R.id.main_Image);
+            nameTextView = itemView.findViewById(R.id.main_name);
+            priceTextView = itemView.findViewById(R.id.main_price);
         }
     }
 }
+

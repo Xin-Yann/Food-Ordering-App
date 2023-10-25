@@ -2,24 +2,20 @@ package com.example.food_ordering;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -36,8 +32,8 @@ public class MainActivity extends AppCompatActivity {
     ImageButton logout,openDrawer;
     TextView textView;
     FirebaseUser user;
-    ArrayList<Dish> datalist;
-    MyAdapter adapter;
+    ArrayList<Menu> datalist;
+    MenuAdapter adapter;
     SearchView searchView;
     DrawerLayout drawerLayout;
 
@@ -54,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         datalist = new ArrayList<>();
-        adapter = new MyAdapter(this, datalist);
+        adapter = new MenuAdapter(this, datalist);
         recyclerView.setAdapter(adapter);
         drawerLayout = findViewById(R.id.drawerLayout);
         openDrawer = findViewById(R.id.menu);
@@ -78,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                         String dishImage = document.getString("menu_image");
 
                         // Add the retrieved data to the ArrayList
-                        datalist.add(new Dish(dishName, dishPrice, dishImage));
+                        datalist.add(new Menu(dishName, dishPrice, dishImage));
                     }
 
                     adapter.notifyDataSetChanged();
@@ -109,20 +105,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        /*display user email if user login */
         if (user == null) {
-            // User is not logged in, redirect to the login screen
             Intent intent = new Intent(getApplicationContext(), login.class);
             startActivity(intent);
             finish();
         } else {
-            // User is authenticated, get their email
-            String userEmail = user.getEmail();
 
-            // Display the user's email
-            TextView text = findViewById(R.id.user_details);
-            text.setText(userEmail);
+            TextView text= findViewById(R.id.user_details);
+            text.setText(user.getEmail());
             TextView textView = findViewById(R.id.user_email);
-            textView.setText(userEmail);
+            textView.setText(user.getEmail());
         }
 
         /*logout*/
@@ -151,8 +144,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void filterList(String keyword) {
-        List<Dish> filteredList = new ArrayList<>();
-        for (Dish dish : datalist) {
+        List<Menu> filteredList = new ArrayList<>();
+        for (Menu dish : datalist) {
             if (dish.getName().toLowerCase().contains(keyword.toLowerCase())) {
                 filteredList.add(dish);
             }
