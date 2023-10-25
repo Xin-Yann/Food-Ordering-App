@@ -162,11 +162,6 @@ public class Account_details extends AppCompatActivity {
                             }
                         }
                     });
-        }else{
-
-            Intent intent = new Intent(Account_details.this, login.class);
-            startActivity(intent);
-            finish();
         }
         if(staffs != null){
             // Get the document reference for the user's data
@@ -191,10 +186,6 @@ public class Account_details extends AppCompatActivity {
                         }
                     });
 
-        }else {
-            Intent intent = new Intent(Account_details.this, login.class);
-            startActivity(intent);
-            finish();
         }
     }
 
