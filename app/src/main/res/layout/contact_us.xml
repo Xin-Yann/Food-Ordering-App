@@ -25,13 +25,14 @@
             android:textSize="20sp" />
 
         <Button
-            android:id="@+id/crossBtn"
+            android:id="@+id/home"
             android:layout_width="wrap_content"
             android:layout_height="55dp"
             android:backgroundTint="#fa9611"
             android:text="X"
             android:textColor="#FFFFFF"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:onClick="toHome"/>
     </RelativeLayout>
 
     <RelativeLayout

@@ -44,8 +44,8 @@ public class SearchResultsActivity extends AppCompatActivity {
         // Retrieve the search query from the intent
         String searchQuery = getIntent().getStringExtra("search_query");
 
-        fStore.collection("main-dish")
-                .whereEqualTo("main_name", searchQuery)
+        fStore.collection("menu")
+                .whereEqualTo("menu_name", searchQuery)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
 
@@ -53,9 +53,9 @@ public class SearchResultsActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        String dishName = document.getString("main_name");
-                        String dishPrice = document.getString("main_price");
-                        String dishImage = document.getString("main_image");
+                        String dishName = document.getString("menu_name");
+                        String dishPrice = document.getString("menu_price");
+                        String dishImage = document.getString("menu_image");
 
                         // Add the retrieved data to the ArrayList
                         datalist.add(new Dish(dishName, dishPrice, dishImage));

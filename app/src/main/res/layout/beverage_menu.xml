@@ -11,13 +11,13 @@
         android:padding="8dp">
 
         <ImageView
-            android:id="@+id/main_Image"
+            android:id="@+id/beverage_Image"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="500dp"
             android:src="@drawable/search" />
 
         <TextView
-            android:id="@+id/main_name"
+            android:id="@+id/beverage_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
@@ -26,13 +26,13 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/main_price"
+            android:id="@+id/beverage_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:layout_marginTop="20dp"
-            android:text="Price"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:text="Price"/>
 
         <LinearLayout
             android:layout_width="match_parent"

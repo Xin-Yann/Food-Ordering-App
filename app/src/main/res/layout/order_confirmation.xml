@@ -45,13 +45,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/orderConfirmationheader"
-            android:orientation="vertical">
+            android:padding="8dp">
 
             <RelativeLayout
-                android:layout_width="wrap_content"
+                android:layout_width="380dp"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="30dp"
                 android:background="@drawable/border_round_corner"
                 android:backgroundTint="#F1F1F1"
                 android:padding="15dp">
@@ -68,8 +67,8 @@
                     android:id="@+id/menuId1.1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="240dp"
-                    android:text=" "
+                    android:layout_alignParentRight="true"
+                    android:text="id"
                     android:textColor="#000000"
                     android:textSize="20sp" />
 
@@ -86,9 +85,9 @@
                     android:id="@+id/menuName1.1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="110dp"
+                    android:layout_alignParentRight="true"
                     android:layout_marginTop="40dp"
-                    android:text=""
+                    android:text="name"
                     android:textColor="#000000"
                     android:textSize="20sp" />
 
@@ -105,7 +104,7 @@
                     android:id="@+id/menuPrice1.1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="240dp"
+                    android:layout_alignParentRight="true"
                     android:layout_marginTop="80dp"
                     android:text="0.00"
                     android:textColor="#000000"
@@ -124,7 +123,7 @@
                     android:id="@+id/menuQuantity1.1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="240dp"
+                    android:layout_alignParentRight="true"
                     android:layout_marginTop="120dp"
                     android:text="0"
                     android:textColor="#000000"
@@ -143,7 +142,7 @@
                     android:id="@+id/menuTotalPrice1.1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="240dp"
+                    android:layout_alignParentRight="true"
                     android:layout_marginTop="160dp"
                     android:text="0.00"
                     android:textColor="#000000"
