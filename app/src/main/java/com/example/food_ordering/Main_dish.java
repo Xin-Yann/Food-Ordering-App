@@ -28,8 +28,8 @@ public class Main_dish extends AppCompatActivity {
 
     RecyclerView recyclerView;
     FirebaseFirestore fStore;
-    ArrayList<Dish> datalist;
-    MyAdapter adapter;
+    ArrayList<Menu> datalist;
+    MenuAdapter adapter;
     FirebaseAuth auth;
     ImageButton logout;
     FirebaseUser user;
@@ -50,7 +50,7 @@ public class Main_dish extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         datalist = new ArrayList<>();
-        adapter = new MyAdapter(this, datalist);
+        adapter = new MenuAdapter(this, datalist);
         recyclerView.setAdapter(adapter);
 
         openDrawer.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +90,7 @@ public class Main_dish extends AppCompatActivity {
                                 String dishImage = document.getString("menu_image");
 
                                 // Add the retrieved data to the ArrayList
-                                datalist.add(new Dish(dishName, dishPrice, dishImage));
+                                datalist.add(new Menu(dishName, dishPrice, dishImage));
                             }
 
                             adapter.notifyDataSetChanged();
