@@ -39,11 +39,11 @@
         <activity android:name=".Contact_us"></activity>
         <activity android:name=".Pickup_info"></activity>
         <activity android:name=".Privacy_policy"></activity>
-        <activity android:name=".Faq"></activity>
         <activity android:name=".Admin_report"></activity>
         <activity android:name=".Admin_order"></activity>
         <activity android:name=".Add_Menu"></activity>
-        <activity android:name=".Admin_footer"></activity>
+        <activity android:name=".MenuItemDashboardActivity"></activity>
+
     </application>
 
 

@@ -2,7 +2,6 @@ package com.example.food_ordering;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -16,7 +15,6 @@ import androidx.annotation.NonNull;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -27,8 +25,8 @@ import java.util.ArrayList;
 public class Beverage extends AppCompatActivity {
     RecyclerView recyclerView;
     FirebaseFirestore fStore;
-    ArrayList<BeverageData> berverageList;
-    BeverageAdapter adapter;
+    ArrayList<Menu> datalist;
+    MenuAdapter adapter;
     ImageButton openDrawer;
     DrawerLayout drawerLayout;
 
@@ -48,8 +46,8 @@ public class Beverage extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();
         recyclerView = findViewById(R.id.beverage);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        berverageList = new ArrayList<>();
-        adapter = new BeverageAdapter(this, berverageList);
+        datalist= new ArrayList<>();
+        adapter = new MenuAdapter(this, datalist);
         recyclerView.setAdapter(adapter);
         drawerLayout = findViewById(R.id.drawerLayout);
         openDrawer = findViewById(R.id.menu);
@@ -68,7 +66,7 @@ public class Beverage extends AppCompatActivity {
                         String beverageImage = document.getString("menu_image");
 
                         // Add the retrieved data to the ArrayList
-                        berverageList.add(new BeverageData(beverageName, beveragePrice, beverageImage)); // Change to the appropriate data class (BeverageData)
+                        datalist.add(new Menu(beverageName, beveragePrice, beverageImage)); // Change to the appropriate data class (BeverageData)
                     }
 
                     adapter.notifyDataSetChanged();

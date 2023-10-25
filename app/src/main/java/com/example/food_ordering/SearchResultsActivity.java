@@ -1,9 +1,6 @@
 package com.example.food_ordering;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,8 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -27,8 +22,8 @@ public class SearchResultsActivity extends AppCompatActivity {
 
     RecyclerView searchResultsRecyclerView;
     FirebaseFirestore fStore;
-    ArrayList<Dish> datalist;
-    MyAdapter adapter;
+    ArrayList<Menu> datalist;
+    MenuAdapter adapter;
     SearchView searchView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +34,7 @@ public class SearchResultsActivity extends AppCompatActivity {
         searchResultsRecyclerView = findViewById(R.id.searchResultsRecyclerView);
         searchResultsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         datalist = new ArrayList<>();
-        adapter = new MyAdapter(this, datalist);
+        adapter = new MenuAdapter(this, datalist);
         searchResultsRecyclerView.setAdapter(adapter);
         // Retrieve the search query from the intent
         String searchQuery = getIntent().getStringExtra("search_query");
@@ -58,7 +53,7 @@ public class SearchResultsActivity extends AppCompatActivity {
                         String dishImage = document.getString("menu_image");
 
                         // Add the retrieved data to the ArrayList
-                        datalist.add(new Dish(dishName, dishPrice, dishImage));
+                        datalist.add(new Menu(dishName, dishPrice, dishImage));
                     }
                     // Notify the adapter that the data has changed
                     adapter.notifyDataSetChanged();
@@ -89,8 +84,8 @@ public class SearchResultsActivity extends AppCompatActivity {
 
     }
     public void filterList(String keyword) {
-        List<Dish> filteredList = new ArrayList<>();
-        for (Dish dish : datalist) {
+        List<Menu> filteredList = new ArrayList<>();
+        for (Menu dish : datalist) {
             // Check if the main_name contains the keyword (case-insensitive)
             if (dish.getName().toLowerCase().contains(keyword.toLowerCase())) {
                 filteredList.add(dish);

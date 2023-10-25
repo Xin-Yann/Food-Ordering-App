@@ -1,11 +1,11 @@
 package com.example.food_ordering;
 
-public class Dessert_Data {
+public class Menu {
     private String name;
     private String price;
     private String image;
 
-    public Dessert_Data(String name, String price, String image) {
+    public Menu(String name, String price, String image) {
         this.name = name;
         this.price = price;
         this.image = image;
