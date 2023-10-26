@@ -137,7 +137,9 @@ public class Register extends AppCompatActivity {
                                                             Toast.makeText(Register.this, "Failed to save admin data.", Toast.LENGTH_SHORT).show();
                                                         }
                                                     });
-                                        } else if (isUser && isStaff){
+                                        }
+
+                                        if (isUser){
 
                                             // Create a new document in the "users" collection with the user's UID as the document ID
                                             db.collection("users")
@@ -161,7 +163,9 @@ public class Register extends AppCompatActivity {
                                                             Toast.makeText(Register.this, "Failed to save user data.", Toast.LENGTH_SHORT).show();
                                                         }
                                                     });
-                                        }else if(isStaff){
+                                        }
+
+                                        if(isStaff){
                                             // Create a new document in the "users" collection with the user's UID as the document ID
                                             db.collection("staffs")
                                                     .document(firebaseUser.getUid())

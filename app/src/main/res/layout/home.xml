@@ -210,6 +210,7 @@
                 </LinearLayout>
             </RelativeLayout>
 
+
             <!--Food Menu-->
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -268,14 +269,11 @@
                         android:layout_gravity="center">
 
                     </androidx.recyclerview.widget.RecyclerView>
-
                 </LinearLayout>
-
             </RelativeLayout>
-
         </RelativeLayout>
-
     </RelativeLayout>
+
     </ScrollView>
 
     <!-- Drawer Menu Layout -->
