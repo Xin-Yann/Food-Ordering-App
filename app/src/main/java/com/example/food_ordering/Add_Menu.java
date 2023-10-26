@@ -104,7 +104,7 @@ public class Add_Menu extends AppCompatActivity {
                             String menuImage = imageUrl; // Use the URL obtained from Firebase Storage
                             String menuId = ((TextInputEditText) findViewById(R.id.inputMenuId)).getText().toString();
                             String menuName = ((TextInputEditText) findViewById(R.id.inputMenuName)).getText().toString();
-                            String menuDetails = ((TextInputEditText) findViewById(R.id.inputMenuDescription)).getText().toString();
+                            String menuDetail = ((TextInputEditText) findViewById(R.id.inputMenuDescription)).getText().toString();
                             String menuPrice = ((TextInputEditText) findViewById(R.id.inputmenuPrice)).getText().toString();
 
                             // Create a menu object with the added data
@@ -112,7 +112,7 @@ public class Add_Menu extends AppCompatActivity {
                             menu.put("menu_image", menuImage);
                             menu.put("menu_id", menuId);
                             menu.put("menu_name", menuName);
-                            menu.put("menu_details", menuDetails);
+                            menu.put("menu_detail", menuDetail);
                             menu.put("menu_price", menuPrice);
 
                             firestore.collection("menu").add(menu).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {

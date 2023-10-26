@@ -3,9 +3,9 @@ package com.example.food_ordering;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,7 +14,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,14 +30,17 @@ public class Edit_Menu extends AppCompatActivity {
     String menuItemId;
     Button editButton;
     Button selectImageButton;
-    Spinner selectMenuType;
+    StorageReference storageRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.admin_edit_menu); // Use the correct XML layout file
+
+        setContentView(R.layout.admin_edit_menu);
 
         firestore = FirebaseFirestore.getInstance();
+
+        FirebaseApp.initializeApp(this);
 
         selectImageButton = findViewById(R.id.selectImageBtn);
 
@@ -76,35 +82,54 @@ public class Edit_Menu extends AppCompatActivity {
     }
 
     private void editMenu(String menuItemId) {
-        Map<String, Object> updatedMenu = new HashMap<>();
-        // Gather data from input fields
-        String menuImage = selectedImageUri != null ? selectedImageUri.toString() : "";
-        String menuName = ((TextInputEditText) findViewById(R.id.inputMenuName)).getText().toString();
-        String menuDetails = ((TextInputEditText) findViewById(R.id.inputMenuDescription)).getText().toString();
-        String menuPrice = ((TextInputEditText) findViewById(R.id.inputmenuPrice)).getText().toString();
+        if (selectedImageUri != null) {
+            storageRef = FirebaseStorage.getInstance().getReference();
+            StorageReference imageRef = storageRef.child("images/" + System.currentTimeMillis()); // Set a unique path for each image
 
-        // You may also need to retrieve the menu ID to identify which menu item to edit
+            imageRef.putFile(selectedImageUri)
+                    .addOnSuccessListener(taskSnapshot -> {
+                        // Image upload successful
+                        imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                            String imageUrl = uri.toString(); // This is the shareable URL
 
-        // Create a menu object with the updated data
-        updatedMenu.put("menu_image", menuImage);
-        updatedMenu.put("menu_name", menuName);
-        updatedMenu.put("menu_details", menuDetails);
-        updatedMenu.put("menu_price", menuPrice);
+                            Map<String, Object> updatedMenu = new HashMap<>();
+                            // Gather data from input fields
+                            String menuImage = imageUrl; // Use the URL obtained from Firebase Storage
+                            String menuName = ((TextInputEditText) findViewById(R.id.inputMenuName)).getText().toString();
+                            String menuDetail = ((TextInputEditText) findViewById(R.id.inputMenuDescription)).getText().toString();
+                            String menuPrice = ((TextInputEditText) findViewById(R.id.inputmenuPrice)).getText().toString();
 
-        // Update the menu item in Firestore
-        firestore.collection("menu").document(this.menuItemId)
-                .update(updatedMenu)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(getApplicationContext(), "Menu edited successfully", Toast.LENGTH_LONG).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getApplicationContext(), "Failed to edit menu", Toast.LENGTH_LONG).show();
-                    }
-                });
+                            // You may also need to retrieve the menu ID to identify which menu item to edit
+
+                            // Create a menu object with the updated data
+                            updatedMenu.put("menu_image", menuImage);
+                            updatedMenu.put("menu_name", menuName);
+                            updatedMenu.put("menu_detail", menuDetail);
+                            updatedMenu.put("menu_price", menuPrice);
+
+                            // Update the menu item in Firestore
+                            firestore.collection("menu").document(this.menuItemId)
+                                    .update(updatedMenu)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Toast.makeText(getApplicationContext(), "Menu edited successfully", Toast.LENGTH_LONG).show();
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(getApplicationContext(), "Failed to edit menu", Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                        });
+                    });
+        }
+    }
+
+    public void toHome(View view) {
+        Intent intent = new Intent(this, Admin_home.class);
+        Button toHome = findViewById(R.id.home_page);
+        startActivity(intent);
     }
 }
