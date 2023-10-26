@@ -76,21 +76,20 @@ public class Edit_Menu extends AppCompatActivity {
     }
 
     private void editMenu(String menuItemId) {
+        Map<String, Object> updatedMenu = new HashMap<>();
         // Gather data from input fields
         String menuImage = selectedImageUri != null ? selectedImageUri.toString() : "";
         String menuName = ((TextInputEditText) findViewById(R.id.inputMenuName)).getText().toString();
-        String menuDescription = ((TextInputEditText) findViewById(R.id.inputMenuDescription)).getText().toString();
+        String menuDetails = ((TextInputEditText) findViewById(R.id.inputMenuDescription)).getText().toString();
         String menuPrice = ((TextInputEditText) findViewById(R.id.inputmenuPrice)).getText().toString();
 
         // You may also need to retrieve the menu ID to identify which menu item to edit
 
         // Create a menu object with the updated data
-        Map<String, Object> updatedMenu = new HashMap<>();
         updatedMenu.put("menu_image", menuImage);
         updatedMenu.put("menu_name", menuName);
-        updatedMenu.put("menu_description", menuDescription);
+        updatedMenu.put("menu_details", menuDetails);
         updatedMenu.put("menu_price", menuPrice);
-
 
         // Update the menu item in Firestore
         firestore.collection("menu").document(this.menuItemId)

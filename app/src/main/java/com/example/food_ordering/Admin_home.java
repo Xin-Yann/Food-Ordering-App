@@ -18,7 +18,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firestore.v1.StructuredQuery;
 
 import java.util.ArrayList;
 
@@ -30,6 +29,7 @@ public class Admin_home extends AppCompatActivity {
     ImageButton logout;
     TextView textView;
     FirebaseUser user;
+    FirebaseUser staff;
     ArrayList<User> datalist;
     FirebaseUser admin;
     AdminAdapter adapter;
@@ -44,6 +44,7 @@ public class Admin_home extends AppCompatActivity {
         logout = findViewById(R.id.logout);
         textView = findViewById(R.id.admin_details);
         user = auth.getCurrentUser();
+        staff = auth.getCurrentUser();
 
         fStore = FirebaseFirestore.getInstance();
         recyclerView = findViewById(R.id.recyclerView);
@@ -65,6 +66,29 @@ public class Admin_home extends AppCompatActivity {
 
                         // Add the retrieved data to the ArrayList
                         datalist.add(new User(username, userId, userEmail, userContact, userPassword));
+                    }
+
+                    adapter.notifyDataSetChanged();
+
+                } else {
+                    // Handle the case where the query was not successful
+                }
+            }
+        });
+
+        fStore.collection("staffs").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        String username = document.getString("name");
+                        String staffId = document.getString("id");
+                        String staffEmail = document.getString("email");
+                        String staffContact = document.getString("contact");
+                        String staffPassword = document.getString("password");
+
+                        // Add the retrieved data to the ArrayList
+                        datalist.add(new User(username, staffId, staffEmail, staffContact, staffPassword));
                     }
 
                     adapter.notifyDataSetChanged();
