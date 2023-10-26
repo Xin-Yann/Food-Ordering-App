@@ -28,6 +28,7 @@
         <activity android:name=".login"></activity>
         <activity android:name=".Register"></activity>
         <activity android:name=".Order_history_n_upcoming"></activity>
+        <activity android:name=".Admin_Order_history_n_upcoming"></activity>
         <activity android:name=".Cart"></activity>
         <activity android:name=".Account_details"></activity>
         <activity android:name=".Main_dish"></activity>
