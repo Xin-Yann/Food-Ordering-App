@@ -3,9 +3,11 @@ package com.example.food_ordering;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -20,6 +22,7 @@ public class Menu_item extends AppCompatActivity {
     FirebaseAuth auth;
     FirebaseUser user;
 
+    int quantity = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +71,7 @@ public class Menu_item extends AppCompatActivity {
             }
         });
 
+
         // Receive the data passed from the MainActivity
         String menuName = getIntent().getStringExtra("menuName");
         String menuPrice = getIntent().getStringExtra("menuPrice");
@@ -89,6 +93,7 @@ public class Menu_item extends AppCompatActivity {
         Picasso.get().load(menuImage).into(imageView);
 
     }
+
     /*menu*/
     public void toHome(View view){
         Intent intent = new Intent(this, MainActivity.class);
@@ -132,5 +137,10 @@ public class Menu_item extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void toAccount(View view){
+        Intent intent = new Intent(this, Account_details.class);
+        TextView toAccount = findViewById(R.id.accountPage);
+        startActivity(intent);
+    }
 
 }

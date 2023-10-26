@@ -153,7 +153,7 @@ public class Admin_home extends AppCompatActivity {
 
     public void toAccount(View view){
         Intent intent = new Intent(this, Account_details.class);
-        ImageButton toAccount = findViewById(R.id.accountPage);
+        TextView toAccount = findViewById(R.id.accountPage);
         startActivity(intent);
     }
 
