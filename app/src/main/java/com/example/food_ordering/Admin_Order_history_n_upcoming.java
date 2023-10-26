@@ -1,43 +1,44 @@
 package com.example.food_ordering;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager2.widget.ViewPager2;
+import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
-public class Admin_Order_history_n_upcoming extends AppCompatActivity{
+import com.google.android.material.tabs.TabLayoutMediator;
+import java.util.ArrayList;
+import java.util.List;
 
-    public static final String name="";
+public class Admin_Order_history_n_upcoming extends AppCompatActivity {
 
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.admin_order_history_n_upcoming);
 
-        tabLayout = findViewById(R.id.tablayout);
-        viewPager = findViewById(R.id.viewpager);
+        TabLayout tabLayout = findViewById(R.id.tablayout);
+        ViewPager2 viewPager = findViewById(R.id.viewpager);
 
-        tabLayout.setupWithViewPager(viewPager);
+        // Create a list of fragments
+        List<Fragment> fragments = new ArrayList<>();
+        fragments.add(new Admin_UpcomingOrdersFragment());
+        fragments.add(new Admin_OrderHistoryFragment());
 
         // Create a new instance of the VPAdapter class
-        VPAdapter vpAdapter = new VPAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        VPAdapter vpAdapter = new VPAdapter(this, fragments);
 
-        // Add the fragments to the VPAdapter object
-        vpAdapter.addFragment(new Admin_UpcomingOrdersFragment(), "Upcoming Order");
-        vpAdapter.addFragment(new Admin_OrderHistoryFragment(), "Order History" );
-
-        // Set the adapter of the ViewPager to the VPAdapter object
         viewPager.setAdapter(vpAdapter);
 
-        // Set the current item of the ViewPager to 0
-        viewPager.setCurrentItem(0);
-
+        new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
+            if (position == 0) {
+                tab.setText("Upcoming Order");
+            } else if (position == 1) {
+                tab.setText("Order History");
+            }
+        }).attach();
     }
 }

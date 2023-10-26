@@ -1,41 +1,26 @@
 package com.example.food_ordering;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Nullable;
-
-public class VPAdapter extends FragmentPagerAdapter {
+public class VPAdapter extends FragmentStateAdapter {
     private final List<Fragment> fragmentList = new ArrayList<>();
-    private final List<String> fragmentTitleList = new ArrayList<>();
 
-    public VPAdapter(FragmentManager fm, int behavior) {
-        super(fm, behavior);
+    public VPAdapter(FragmentActivity fragmentActivity, List<Fragment> fragments) {
+        super(fragmentActivity);
+        fragmentList.addAll(fragments);
     }
 
-    @NonNull
     @Override
-    public Fragment getItem(int position) {
+    public Fragment createFragment(int position) {
         return fragmentList.get(position);
     }
 
     @Override
-    public int getCount() {
+    public int getItemCount() {
         return fragmentList.size();
-    }
-
-    public void addFragment(Fragment fragment, String title) {
-        fragmentList.add(fragment);
-        fragmentTitleList.add(title);
-    }
-
-    @Nullable
-    @Override
-    public CharSequence getPageTitle(int position) {
-        return fragmentTitleList.get(position);
     }
 }

@@ -19,6 +19,7 @@ import com.google.firebase.firestore.Query;
 import com.squareup.picasso.Picasso;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import android.os.Handler;
+import android.util.Log;
 
 public class Admin_UpcomingOrdersFragment extends Fragment {
 
@@ -37,6 +38,7 @@ public class Admin_UpcomingOrdersFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Log.d("Fragment", "onCreateView called");
         View view = inflater.inflate(R.layout.admin_fragment_order_upcoming, container, false);
 
         // Initialize views
