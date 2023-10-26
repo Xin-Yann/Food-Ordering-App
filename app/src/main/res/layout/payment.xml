@@ -44,126 +44,98 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_below="@id/paymentheader"
+            android:padding="8dp">
 
-            <TextView
-                android:id="@+id/username"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="45dp"
-                android:layout_marginTop="15dp"
-                android:text="Username"
-                android:textColor="#000000"
-                android:textSize="16sp" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="320dp"
+            <RelativeLayout
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="40dp"
-                android:hint="Username"
-                android:textColor="#000000"
-                android:textSize="16sp"
-                app:hintEnabled="true">
+                android:background="@drawable/border_round_corner"
+                android:backgroundTint="#F1F1F1"
+                android:padding="15dp">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputUsername"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                <TextView
+                    android:id="@+id/username1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Username"
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
 
-            </com.google.android.material.textfield.TextInputLayout>
+                <TextView
+                    android:id="@+id/showUsername"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="username"
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/darpaId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="45dp"
-                android:layout_marginTop="115dp"
-                android:text="Darpa Id"
-                android:textColor="#000000"
-                android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/darpaId1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:text="Darpa Id"
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="320dp"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="140dp"
-                android:hint="Darpa Id"
-                android:textColor="#000000"
-                android:textSize="16sp"
-                app:hintEnabled="true">
+                <TextView
+                    android:id="@+id/showDarpaId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="40dp"
+                    android:text="darpa id"
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputDarpaId"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                <TextView
+                    android:id="@+id/email1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="80dp"
+                    android:text="Email"
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
 
-            </com.google.android.material.textfield.TextInputLayout>
+                <TextView
+                    android:id="@+id/showEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="80dp"
+                    android:text="email"
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="45dp"
-                android:layout_marginTop="215dp"
-                android:text="E-mail"
-                android:textColor="#000000"
-                android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/contactNo1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="120dp"
+                    android:text="Contact No."
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="320dp"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="240dp"
-                android:hint="E-mail"
-                android:textColor="#000000"
-                android:textSize="16sp"
-                app:hintEnabled="true">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <TextView
-                android:id="@+id/ContactNo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="45dp"
-                android:layout_marginTop="315dp"
-                android:text="Contact No."
-                android:textColor="#000000"
-                android:textSize="16sp" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="320dp"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="340dp"
-                android:hint="Contact No."
-                android:textColor="#000000"
-                android:textSize="16sp"
-                app:hintEnabled="true">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputContactNo"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
-            </com.google.android.material.textfield.TextInputLayout>
+                <TextView
+                    android:id="@+id/showContactNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="120dp"
+                    android:text="contact no."
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/paymentMethod"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="45dp"
-                android:layout_marginTop="425dp"
+                android:layout_marginTop="190dp"
                 android:text="Payment Method"
                 android:textColor="#000000"
                 android:textSize="16sp" />
@@ -173,7 +145,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="45dp"
-                android:layout_marginTop="445dp"
+                android:layout_marginTop="210dp"
                 android:checked="false">
 
                 <RadioButton
@@ -203,6 +175,30 @@
                     android:text="Debit / Credit card"
                     android:textSize="16sp" />
             </RadioGroup>
+
+            <FrameLayout
+                android:id="@+id/cardFragmentContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/radioGroup" />
+
+            <TextView
+                android:id="@+id/pickupTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="45dp"
+                android:layout_marginTop="360dp"
+                android:text="Pickup Time"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <TimePicker
+                android:id="@+id/selectPickupTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="360dp"
+                android:timePickerMode="spinner"/>
         </RelativeLayout>
     </ScrollView>
 
