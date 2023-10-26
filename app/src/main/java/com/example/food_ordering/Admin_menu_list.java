@@ -47,9 +47,10 @@ public class Admin_menu_list extends AppCompatActivity {
                                 String dishName = document.getString("menu_name");
                                 String dishPrice = document.getString("menu_price");
                                 String dishImage = document.getString("menu_image");
+                                String dishIDesc = document.getString("menu_detail");
 
                                 // Add the retrieved data to the ArrayList
-                                datalist.add(new Menu(dishName, dishPrice, dishImage));
+                                datalist.add(new Menu(dishName, dishPrice, dishImage, dishIDesc));
                             }
 
                             adapter.notifyDataSetChanged();
