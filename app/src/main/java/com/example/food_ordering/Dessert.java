@@ -163,4 +163,9 @@ public class Dessert extends AppCompatActivity {
         TextView toContact= findViewById(R.id.contact);
         startActivity(intent);
     }
+    public void toAccount(View view){
+        Intent intent = new Intent(this, Account_details.class);
+        TextView toAccount = findViewById(R.id.accountPage);
+        startActivity(intent);
+    }
 }

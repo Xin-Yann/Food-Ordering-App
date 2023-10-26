@@ -6,7 +6,7 @@ public class Menu {
     private String image;
     private String detail;
 
-    public Menu(String name, String price, String image,String detail) {
+    public Menu(String name, String price, String image, String detail) {
         this.name = name;
         this.price = price;
         this.image = image;
@@ -28,4 +28,5 @@ public class Menu {
     public String getDetail() {
         return detail;
     }
+
 }

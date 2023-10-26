@@ -164,6 +164,12 @@ public class Main_dish extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void toAccount(View view){
+        Intent intent = new Intent(this, Account_details.class);
+        TextView toAccount = findViewById(R.id.accountPage);
+        startActivity(intent);
+    }
+
 
 
 }
