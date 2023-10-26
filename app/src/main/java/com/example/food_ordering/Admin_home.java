@@ -163,7 +163,7 @@ public class Admin_home extends AppCompatActivity {
     }
 
     public void toOrder(View view){
-        Intent intent = new Intent(this, Admin_order.class);
+        Intent intent = new Intent(this, Admin_Order_history_n_upcoming.class);
         ImageButton toOrder = findViewById(R.id.order);
         startActivity(intent);
     }
