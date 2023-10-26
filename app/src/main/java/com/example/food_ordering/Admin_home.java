@@ -2,12 +2,13 @@ package com.example.food_ordering;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,7 +20,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firestore.v1.StructuredQuery;
+import android.content.Context;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class Admin_home extends AppCompatActivity {
@@ -27,12 +30,13 @@ public class Admin_home extends AppCompatActivity {
     RecyclerView recyclerView;
     FirebaseFirestore fStore;
     FirebaseAuth auth;
-    ImageButton logout;
+    ImageButton logout,openDrawer;
     TextView textView;
     FirebaseUser user;
     ArrayList<User> datalist;
     FirebaseUser admin;
     AdminAdapter adapter;
+    DrawerLayout drawerLayout;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +55,10 @@ public class Admin_home extends AppCompatActivity {
         datalist = new ArrayList<>();
         adapter = new AdminAdapter(this, datalist);
         recyclerView.setAdapter(adapter);
+        drawerLayout = findViewById(R.id.drawerLayout);
+        openDrawer = findViewById(R.id.menu);
+
+        deleteCache(this);
 
         fStore.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -99,6 +107,18 @@ public class Admin_home extends AppCompatActivity {
 
         });
 
+        /*open menu*/
+        openDrawer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (drawerLayout.isDrawerOpen(findViewById(R.id.drawerMenu))) {
+                    drawerLayout.closeDrawer(findViewById(R.id.drawerMenu));
+                } else {
+                    drawerLayout.openDrawer(findViewById(R.id.drawerMenu));
+                }
+            }
+        });
+
     }
     public void toLoginPage(View view){
         Intent intent = new Intent(this, login.class);
@@ -137,6 +157,28 @@ public class Admin_home extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public static void deleteCache(Context context) {
+        try {
+            File dir = context.getCacheDir();
+            deleteDir(dir);
+        } catch (Exception e) {}
+    }
+    public static boolean deleteDir(File dir) {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            for (int i = 0; i < children.length; i++) {
+                boolean success = deleteDir(new File(dir, children[i]));
+                if (!success) {
+                    return false;
+                }
+            }
+            return dir.delete();
+        } else if(dir!= null && dir.isFile()) {
+            return dir.delete();
+        } else {
+            return false;
+        }
+    }
 
 
 }
