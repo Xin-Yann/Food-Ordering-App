@@ -49,7 +49,7 @@ public class Add_Menu extends AppCompatActivity {
         selectImageButton = findViewById(R.id.selectImageBtn);
 
         selectImageButton.setOnClickListener(v -> {
-            // Create an intent to open the file picker or camera, depending on your requirements.
+            // Create intent to open photo
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(intent, REQUEST_IMAGE);
         });
@@ -74,15 +74,12 @@ public class Add_Menu extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_IMAGE && resultCode == RESULT_OK) {
-            // Handle the selected image here
+            // Handle selected image
             selectedImageUri = data.getData();
 
-            // You can display the selected image in an ImageView
+            // Display selected image
             ImageView imageView = findViewById(R.id.selectedImage);
             imageView.setImageURI(selectedImageUri);
-
-            // You can also upload the selected image to a server or perform any other desired actions.
-            // Ensure you have the necessary permissions and code to handle image uploads.
         }
     }
 
@@ -97,17 +94,17 @@ public class Add_Menu extends AppCompatActivity {
                         imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
                             String imageUrl = uri.toString(); // This is the shareable URL
 
-                            // Now, save the URL in Firestore
+                            // Then save URL in Firestore
                             Map<String, Object> menu = new HashMap<>();
-                            // Get data from user input fields and add it to the 'menu' map
+                            // Get data from user input
                             String menuCategory = selectMenuType.getSelectedItem().toString();
-                            String menuImage = imageUrl; // Use the URL obtained from Firebase Storage
+                            String menuImage = imageUrl;
                             String menuId = ((TextInputEditText) findViewById(R.id.inputMenuId)).getText().toString();
                             String menuName = ((TextInputEditText) findViewById(R.id.inputMenuName)).getText().toString();
                             String menuDetail = ((TextInputEditText) findViewById(R.id.inputMenuDescription)).getText().toString();
                             String menuPrice = ((TextInputEditText) findViewById(R.id.inputmenuPrice)).getText().toString();
 
-                            // Create a menu object with the added data
+                            // Create menu object with the added data
                             menu.put("menu_category", menuCategory);
                             menu.put("menu_image", menuImage);
                             menu.put("menu_id", menuId);
@@ -119,6 +116,16 @@ public class Add_Menu extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(DocumentReference documentReference) {
                                     Toast.makeText(getApplicationContext(), "Menu added successfully", Toast.LENGTH_LONG).show();
+                                    // Clear text while data is added successful
+                                    TextInputEditText inputedMenuId = findViewById(R.id.inputMenuId);
+                                    TextInputEditText inputedMenuName = findViewById(R.id.inputMenuName);
+                                    TextInputEditText inputedMenuDetail = findViewById(R.id.inputMenuDescription);
+                                    TextInputEditText inputedMenuPrice = findViewById(R.id.inputmenuPrice);
+
+                                    inputedMenuId.getText().clear();
+                                    inputedMenuName.getText().clear();
+                                    inputedMenuDetail.getText().clear();
+                                    inputedMenuPrice.getText().clear();
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
@@ -128,9 +135,6 @@ public class Add_Menu extends AppCompatActivity {
                             });
                         });
                     });
-        } else {
-            // Handle the case where no image is selected.
-            Toast.makeText(this, "Please select an image", Toast.LENGTH_SHORT).show();
         }
     }
 

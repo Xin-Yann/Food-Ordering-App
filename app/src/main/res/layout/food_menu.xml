@@ -14,32 +14,35 @@
         <ImageView
             android:id="@+id/main_Image"
             android:layout_width="match_parent"
-            android:layout_height="500dp"
+            android:layout_height="380dp"
             android:src="@drawable/search" />
 
         <TextView
             android:id="@+id/main_name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
             android:layout_marginTop="20dp"
             android:text="Name"
             android:textSize="18sp" />
 
         <TextView
             android:id="@+id/main_detail"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
             android:layout_marginTop="20dp"
             android:text="Desc"
             android:textSize="18sp" />
 
         <TextView
             android:id="@+id/main_price"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
             android:layout_marginTop="20dp"
             android:textSize="16sp"
             android:text="Price"/>
