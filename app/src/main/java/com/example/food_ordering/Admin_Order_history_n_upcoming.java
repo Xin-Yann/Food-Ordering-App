@@ -10,8 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
-
-public class Order_history_n_upcoming extends AppCompatActivity {
+public class Admin_Order_history_n_upcoming extends AppCompatActivity{
 
     public static final String name="";
 
@@ -20,7 +19,7 @@ public class Order_history_n_upcoming extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.order_history_n_upcoming);
+        setContentView(R.layout.admin_order_history_n_upcoming);
 
         tabLayout = findViewById(R.id.tablayout);
         viewPager = findViewById(R.id.viewpager);
@@ -31,8 +30,8 @@ public class Order_history_n_upcoming extends AppCompatActivity {
         VPAdapter vpAdapter = new VPAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
 
         // Add the fragments to the VPAdapter object
-        vpAdapter.addFragment(new UpcomingOrdersFragment(), "Upcoming Order");
-        vpAdapter.addFragment(new OrderHistoryFragment(), "Order History" );
+        vpAdapter.addFragment(new Admin_UpcomingOrdersFragment(), "Upcoming Order");
+        vpAdapter.addFragment(new Admin_OrderHistoryFragment(), "Order History" );
 
         // Set the adapter of the ViewPager to the VPAdapter object
         viewPager.setAdapter(vpAdapter);

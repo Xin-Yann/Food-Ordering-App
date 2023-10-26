@@ -51,9 +51,10 @@ public class SearchResultsActivity extends AppCompatActivity {
                         String dishName = document.getString("menu_name");
                         String dishPrice = document.getString("menu_price");
                         String dishImage = document.getString("menu_image");
+                        String dishDesc = document.getString("menu_detail");
 
                         // Add the retrieved data to the ArrayList
-                        datalist.add(new Menu(dishName, dishPrice, dishImage));
+                        datalist.add(new Menu(dishName, dishPrice, dishImage,dishDesc));
                     }
                     // Notify the adapter that the data has changed
                     adapter.notifyDataSetChanged();
