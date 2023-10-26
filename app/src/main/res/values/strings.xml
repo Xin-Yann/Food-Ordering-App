@@ -7,4 +7,6 @@
     <string name="login">Don’t Have An Account? <a href="login.xml">Create One</a></string>
     <string name="open">Open Navigation Drawer</string>
     <string name="close">Close Navigation Drawer</string>
+    <!-- Style for header text in the order form -->
+
 </resources>

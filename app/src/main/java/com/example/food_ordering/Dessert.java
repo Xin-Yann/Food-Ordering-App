@@ -26,8 +26,8 @@ public class Dessert extends AppCompatActivity {
 
     RecyclerView recyclerView;
     FirebaseFirestore fStore;
-    ArrayList<Dessert_Data> dessertList;
-    DessertAdapter adapter;
+    ArrayList<Menu> datalist;
+    MenuAdapter adapter;
     DrawerLayout drawerLayout;
     ImageButton openDrawer;
 
@@ -74,8 +74,8 @@ public class Dessert extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();
         recyclerView = findViewById(R.id.dessert);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        dessertList = new ArrayList<>();
-        adapter = new DessertAdapter(this, dessertList);
+        datalist= new ArrayList<>();
+        adapter = new MenuAdapter(this, datalist);
         recyclerView.setAdapter(adapter);
 
         fStore.collection("menu")
@@ -89,9 +89,10 @@ public class Dessert extends AppCompatActivity {
                                 String dessertName = document.getString("menu_name");
                                 String dessertPrice = document.getString("menu_price");
                                 String dessertImage = document.getString("menu_image");
+                                String dessertDesc = document.getString("menu_detail");
 
                                 // Add the retrieved data to the ArrayList
-                                dessertList.add(new Dessert_Data(dessertName, dessertPrice, dessertImage)); // Change to the appropriate data class (BeverageData)
+                                datalist.add(new Menu(dessertName, dessertPrice, dessertImage,dessertDesc)); // Change to the appropriate data class (BeverageData)
                             }
 
                             adapter.notifyDataSetChanged();
@@ -101,10 +102,32 @@ public class Dessert extends AppCompatActivity {
                     }
                 });
 
+        adapter.setOnItemClickListener(new MenuAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                // Get the selected menu item
+                Menu selectedItem = datalist.get(position);
+
+                // Create an Intent to send the selected menu item's details to the MenuItemDashboardActivity
+                Intent intent = new Intent(Dessert.this, Menu_item.class);
+                intent.putExtra("menuName", selectedItem.getName());
+                intent.putExtra("menuPrice", selectedItem.getPrice());
+                intent.putExtra("menuImage", selectedItem.getImage());
+                intent.putExtra("menuDetail", selectedItem.getDetail());
+                startActivity(intent);
+            }
+        });
+
+
 
     }
 
     /*menu*/
+    public void toHome(View view){
+        Intent intent = new Intent(this, MainActivity.class);
+        TextView toHome = findViewById(R.id.home);
+        startActivity(intent);
+    }
     public void toMainDish(View view){
         Intent intent = new Intent(this, Main_dish.class);
         ImageButton toMainPage = findViewById(R.id.main_dish_btn);
@@ -138,6 +161,11 @@ public class Dessert extends AppCompatActivity {
     public void toContact(View view){
         Intent intent = new Intent(this, Contact_us.class);
         TextView toContact= findViewById(R.id.contact);
+        startActivity(intent);
+    }
+    public void toAccount(View view){
+        Intent intent = new Intent(this, Account_details.class);
+        TextView toAccount = findViewById(R.id.accountPage);
         startActivity(intent);
     }
 }

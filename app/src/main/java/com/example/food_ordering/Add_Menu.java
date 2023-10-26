@@ -1,26 +1,27 @@
 package com.example.food_ordering;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,6 +34,7 @@ public class Add_Menu extends AppCompatActivity {
     Button addButton;
     Button selectImageButton;
     Spinner selectMenuType;
+    StorageReference storageRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,14 +44,13 @@ public class Add_Menu extends AppCompatActivity {
 
         firestore = FirebaseFirestore.getInstance();
 
+        FirebaseApp.initializeApp(this);
+
         selectImageButton = findViewById(R.id.selectImageBtn);
 
         selectImageButton.setOnClickListener(v -> {
             // Create an intent to open the file picker or camera, depending on your requirements.
-            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-            // or Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); // For camera
-
-            // Start the intent for result
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(intent, REQUEST_IMAGE);
         });
 
@@ -86,35 +87,51 @@ public class Add_Menu extends AppCompatActivity {
     }
 
     private void addMenu() {
-        Map<String, Object> menus = new HashMap<>();
-        // Get data from user input fields and add it to the 'menu' map
-        String menuCategory = ((android.widget.Spinner) findViewById(R.id.selectMenuType)).getSelectedItem().toString();
-        String menuImage = selectedImageUri != null ? selectedImageUri.toString() : "";
-        String menuId = ((TextInputEditText) findViewById(R.id.inputMenuId)).getText().toString();
-        String menuName = ((TextInputEditText) findViewById(R.id.inputMenuName)).getText().toString();
-        String menuDescription = ((TextInputEditText) findViewById(R.id.inputMenuDescription)).getText().toString();
-        String menuPrice = ((TextInputEditText) findViewById(R.id.inputmenuPrice)).getText().toString();
+        if (selectedImageUri != null) {
+            storageRef = FirebaseStorage.getInstance().getReference();
+            StorageReference imageRef = storageRef.child("images/" + System.currentTimeMillis()); // Set a unique path for each image
 
-        // Create a menu object with the added data
-        Map<String, Object> menu = new HashMap<>();
-        menu.put("menu_category", menuCategory);
-        menu.put("menu_image", menuImage);
-        menu.put("menu_id", menuId);
-        menu.put("menu_name", menuName);
-        menu.put("menu_description", menuDescription);
-        menu.put("menu_price", menuPrice);
+            imageRef.putFile(selectedImageUri)
+                    .addOnSuccessListener(taskSnapshot -> {
+                        // Image upload successful
+                        imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                            String imageUrl = uri.toString(); // This is the shareable URL
 
-        firestore.collection("menu").add(menu).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-            @Override
-            public void onSuccess(DocumentReference documentReference) {
-                Toast.makeText(getApplicationContext(), "Menu added successfully", Toast.LENGTH_LONG).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(), "Failed to add menu", Toast.LENGTH_LONG).show();
-            }
-        });
+                            // Now, save the URL in Firestore
+                            Map<String, Object> menu = new HashMap<>();
+                            // Get data from user input fields and add it to the 'menu' map
+                            String menuCategory = selectMenuType.getSelectedItem().toString();
+                            String menuImage = imageUrl; // Use the URL obtained from Firebase Storage
+                            String menuId = ((TextInputEditText) findViewById(R.id.inputMenuId)).getText().toString();
+                            String menuName = ((TextInputEditText) findViewById(R.id.inputMenuName)).getText().toString();
+                            String menuDetail = ((TextInputEditText) findViewById(R.id.inputMenuDescription)).getText().toString();
+                            String menuPrice = ((TextInputEditText) findViewById(R.id.inputmenuPrice)).getText().toString();
+
+                            // Create a menu object with the added data
+                            menu.put("menu_category", menuCategory);
+                            menu.put("menu_image", menuImage);
+                            menu.put("menu_id", menuId);
+                            menu.put("menu_name", menuName);
+                            menu.put("menu_detail", menuDetail);
+                            menu.put("menu_price", menuPrice);
+
+                            firestore.collection("menu").add(menu).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                @Override
+                                public void onSuccess(DocumentReference documentReference) {
+                                    Toast.makeText(getApplicationContext(), "Menu added successfully", Toast.LENGTH_LONG).show();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(getApplicationContext(), "Failed to add menu", Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        });
+                    });
+        } else {
+            // Handle the case where no image is selected.
+            Toast.makeText(this, "Please select an image", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void toHome(View view){

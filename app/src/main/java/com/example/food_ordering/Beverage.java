@@ -64,15 +64,33 @@ public class Beverage extends AppCompatActivity {
                         String beverageName = document.getString("menu_name");
                         String beveragePrice = document.getString("menu_price");
                         String beverageImage = document.getString("menu_image");
+                        String beverageDesc = document.getString("menu_detail");
+
 
                         // Add the retrieved data to the ArrayList
-                        datalist.add(new Menu(beverageName, beveragePrice, beverageImage)); // Change to the appropriate data class (BeverageData)
+                        datalist.add(new Menu(beverageName, beveragePrice, beverageImage,beverageDesc)); // Change to the appropriate data class (BeverageData)
                     }
 
                     adapter.notifyDataSetChanged();
                 } else {
                     // Handle the case where the query was not successful
                 }
+            }
+        });
+
+        adapter.setOnItemClickListener(new MenuAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                // Get the selected menu item
+                Menu selectedItem = datalist.get(position);
+
+                // Create an Intent to send the selected menu item's details to the MenuItemDashboardActivity
+                Intent intent = new Intent(Beverage.this, Menu_item.class);
+                intent.putExtra("menuName", selectedItem.getName());
+                intent.putExtra("menuPrice", selectedItem.getPrice());
+                intent.putExtra("menuImage", selectedItem.getImage());
+                intent.putExtra("menuDetail", selectedItem.getDetail());
+                startActivity(intent);
             }
         });
 
@@ -102,6 +120,11 @@ public class Beverage extends AppCompatActivity {
     }
 
     /*menu*/
+    public void toHome(View view){
+        Intent intent = new Intent(this, MainActivity.class);
+        TextView toHome = findViewById(R.id.home);
+        startActivity(intent);
+    }
     public void toMainDish(View view){
         Intent intent = new Intent(this, Main_dish.class);
         ImageButton toMainPage = findViewById(R.id.main_dish_btn);
@@ -135,6 +158,11 @@ public class Beverage extends AppCompatActivity {
     public void toContact(View view){
         Intent intent = new Intent(this, Contact_us.class);
         TextView toContact= findViewById(R.id.contact);
+        startActivity(intent);
+    }
+    public void toAccount(View view){
+        Intent intent = new Intent(this, Account_details.class);
+        TextView toAccount = findViewById(R.id.accountPage);
         startActivity(intent);
     }
 }
