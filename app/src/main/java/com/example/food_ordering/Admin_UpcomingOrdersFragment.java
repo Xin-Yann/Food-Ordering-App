@@ -189,4 +189,3 @@ public class Admin_UpcomingOrdersFragment extends Fragment {
         orderQuery = null;
     }
 }
-

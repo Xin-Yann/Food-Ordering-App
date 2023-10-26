@@ -31,6 +31,8 @@
         <activity android:name=".Register"></activity>
         <activity android:name=".Order_history_n_upcoming"></activity>
         <activity android:name=".Admin_Order_history_n_upcoming"></activity>
+        <activity android:name=".Admin_OrderHistoryFragment"></activity>
+        <activity android:name=".Admin_UpcomingOrdersFragment"></activity>
         <activity android:name=".Account_details"></activity>
         <activity android:name=".Main_dish"></activity>
         <activity android:name=".Beverage"></activity>
