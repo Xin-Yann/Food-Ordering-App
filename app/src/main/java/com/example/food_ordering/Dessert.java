@@ -26,8 +26,8 @@ public class Dessert extends AppCompatActivity {
 
     RecyclerView recyclerView;
     FirebaseFirestore fStore;
-    ArrayList<Dessert_Data> dessertList;
-    DessertAdapter adapter;
+    ArrayList<Menu> dessertList;
+    MenuAdapter adapter;
     DrawerLayout drawerLayout;
     ImageButton openDrawer;
 
@@ -75,7 +75,7 @@ public class Dessert extends AppCompatActivity {
         recyclerView = findViewById(R.id.dessert);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         dessertList = new ArrayList<>();
-        adapter = new DessertAdapter(this, dessertList);
+        adapter = new MenuAdapter(this, dessertList);
         recyclerView.setAdapter(adapter);
 
         fStore.collection("menu")
@@ -91,7 +91,7 @@ public class Dessert extends AppCompatActivity {
                                 String dessertImage = document.getString("menu_image");
 
                                 // Add the retrieved data to the ArrayList
-                                dessertList.add(new Dessert_Data(dessertName, dessertPrice, dessertImage)); // Change to the appropriate data class (BeverageData)
+                                dessertList.add(new Menu(dessertName, dessertPrice, dessertImage)); // Change to the appropriate data class (BeverageData)
                             }
 
                             adapter.notifyDataSetChanged();

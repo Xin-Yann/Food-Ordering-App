@@ -183,6 +183,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void toWallet(View view){
+        Intent intent = new Intent(this, Wallet.class);
+        ImageButton toWallet = findViewById(R.id.wallet);
+        startActivity(intent);
+    }
+
 
     /*Category*/
     public void toMainDish(View view){

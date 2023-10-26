@@ -14,10 +14,10 @@ public class Dessert_menu extends AppCompatActivity {
         setContentView(R.layout.dessert_menu);
     }
 
-    public void toDashboard(View view) {
+   /* public void toDashboard(View view) {
         Intent intent = new Intent(this, MenuItemDashboardActivity.class);
         startActivity(intent);
 
-    }
+    }*/
 
 }
