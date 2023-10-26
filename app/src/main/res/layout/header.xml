@@ -43,14 +43,14 @@
 
                         <ImageButton
                             android:id="@+id/wallet"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_marginLeft="80dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="70dp"
                             android:layout_marginTop="5dp"
                             android:layout_marginBottom="25dp"
                             android:background="@color/white"
                             android:onClick="toWallet"
-                            android:src="@drawable/wallet" />
+                            android:src="@drawable/wallet_2" />
 
                         <ImageButton
                             android:id="@+id/logout"
