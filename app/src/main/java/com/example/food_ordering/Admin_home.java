@@ -169,14 +169,14 @@ public class Admin_home extends AppCompatActivity {
     }
 
     public void toReportPage(View view){
-        Intent intent = new Intent(this, Admin_report.class);
+        Intent intent = new Intent(this, Admin_menu_list.class);
         ImageButton toCartPage = findViewById(R.id.reportPage);
         startActivity(intent);
     }
 
     public void toAccount(View view){
         Intent intent = new Intent(this, Account_details.class);
-        ImageButton toAccount = findViewById(R.id.accountPage);
+        TextView toAccount = findViewById(R.id.accountPage);
         startActivity(intent);
     }
 

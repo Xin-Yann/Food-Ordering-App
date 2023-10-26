@@ -24,7 +24,7 @@
         android:textSize="24sp" />
 
     <TextView
-        android:id="@+id/nav_accDetails"
+        android:id="@+id/accountPage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -32,5 +32,6 @@
         android:layout_marginLeft="22dp"
         android:fontFamily="@font/balthazar"
         android:text="Account Details"
-        android:textSize="18dp" />
+        android:textSize="18dp"
+        android:onClick="toAccount"/>
 </LinearLayout>

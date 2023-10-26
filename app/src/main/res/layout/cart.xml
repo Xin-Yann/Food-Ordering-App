@@ -32,7 +32,7 @@
             android:background="#f2f2f2"/>
 
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/menu_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Cart"
@@ -42,7 +42,7 @@
             android:layout_marginTop="10dp"/>
 
         <TextView
-            android:id="@+id/qty"
+            android:id="@+id/cartItemQuantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Qty"
@@ -51,7 +51,7 @@
             android:layout_marginLeft="50dp"/>
 
         <TextView
-            android:id="@+id/price"
+            android:id="@+id/menu_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Price"

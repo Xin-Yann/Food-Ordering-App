@@ -23,6 +23,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -190,18 +191,19 @@ public class MainActivity extends AppCompatActivity {
 
     public void filterList(String keyword) {
         List<Menu> filteredList = new ArrayList<>();
-        for (Menu dish : datalist) {
-            if (dish.getName().toLowerCase().contains(keyword.toLowerCase())) {
-                filteredList.add(dish);
+        for (Menu menu : datalist) {
+            if (menu.getName().toLowerCase().contains(keyword.toLowerCase())) {
+                filteredList.add(menu);
             }
         }
 
         if (filteredList.isEmpty()) {
             Toast.makeText(this, "No Data Found", Toast.LENGTH_SHORT).show();
         } else {
-            adapter.setFilteredList(filteredList);// Hide the main content
+            adapter.setFilteredList(filteredList);
         }
     }
+
 
     /*menu*/
     public void toPrivacy(View view){
@@ -225,6 +227,12 @@ public class MainActivity extends AppCompatActivity {
     public void toLoginPage(View view){
         Intent intent = new Intent(this, login.class);
         ImageButton toLoginPage = findViewById(R.id.login);
+        startActivity(intent);
+    }
+
+    public void toWallet(View view){
+        Intent intent = new Intent(this, Wallet.class);
+        ImageButton toWallet = findViewById(R.id.wallet);
         startActivity(intent);
     }
 
@@ -261,15 +269,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void toCartPage(View view){
-        Intent intent = new Intent(this, Cart.class);
-        ImageButton toCartPage = findViewById(R.id.cartPage);
-        startActivity(intent);
-    }
-
     public void toAccount(View view){
         Intent intent = new Intent(this, Account_details.class);
-        ImageButton toAccount = findViewById(R.id.accountPage);
+        TextView toAccount = findViewById(R.id.accountPage);
         startActivity(intent);
     }
 

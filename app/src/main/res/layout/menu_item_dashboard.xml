@@ -110,13 +110,14 @@
                 android:padding="15dp">
 
                 <Button
-                    android:id="@+id/button"
+                    android:id="@+id/addToCart"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:backgroundTint="#fa9611"
                     android:padding="5dp"
                     android:text="Add"
-                    android:textSize="20dp" />
+                    android:textSize="20dp"
+                    android:onClick="toCart"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
