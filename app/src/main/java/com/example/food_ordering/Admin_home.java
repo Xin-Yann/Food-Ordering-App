@@ -61,6 +61,7 @@ public class Admin_home extends AppCompatActivity {
 
         deleteCache(this);
 
+        // Display user list
         fStore.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -78,11 +79,11 @@ public class Admin_home extends AppCompatActivity {
 
                     adapter.notifyDataSetChanged();
 
-                } else {
-                    // Handle the case where the query was not successful
                 }
             }
         });
+
+        // Display staff list
 
         fStore.collection("staffs").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -101,8 +102,6 @@ public class Admin_home extends AppCompatActivity {
 
                     adapter.notifyDataSetChanged();
 
-                } else {
-                    // Handle the case where the query was not successful
                 }
             }
         });
