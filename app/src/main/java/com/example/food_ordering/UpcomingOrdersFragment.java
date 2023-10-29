@@ -1,7 +1,5 @@
 package com.example.food_ordering;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,53 +7,42 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.squareup.picasso.Picasso;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
+import androidx.appcompat.app.AlertDialog;
 
 public class UpcomingOrdersFragment extends Fragment {
+
     private FirebaseFirestore db;
     private Query orderQuery;
-    private ImageView foodImg;
-    private TextView foodDetails;
-    private TextView price;
-    private TextView orderNumber;
-    private TextView pickupTime;
-    private TextView orderStatus;
-    private TextView paymentMethod;
+    private TabLayout tabLayout;
     private String currentUserEmail;
-    private int foodQuantity; // Declare it once
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_order_upcoming, container, false);
 
-        // Initialize views
-        foodImg = view.findViewById(R.id.food_img);
-        foodDetails = view.findViewById(R.id.foodDetails);
-        price = view.findViewById(R.id.price);
-        orderNumber = view.findViewById(R.id.orderNumber);
-        pickupTime = view.findViewById(R.id.pickupTime);
-        orderStatus = view.findViewById(R.id.orderStatus);
-        paymentMethod = view.findViewById(R.id.paymentMethod);
-
         db = FirebaseFirestore.getInstance();
-
-        // Get the current user's email after they have signed in
         currentUserEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        tabLayout = requireActivity().findViewById(R.id.tabLayout);
 
-        // Modify the query to fetch orders by the user's email
-        orderQuery = db.collection("orders")
-                .whereEqualTo("email", currentUserEmail);
+        // Get references to the views within the layout
+        ImageView foodImg = view.findViewById(R.id.food_img);
+        TextView foodDetails = view.findViewById(R.id.foodDetails);
+        TextView price = view.findViewById(R.id.price);
+        TextView orderNumber = view.findViewById(R.id.orderNumber);
+        TextView pickupTime = view.findViewById(R.id.pickupTime);
+        TextView orderStatus = view.findViewById(R.id.orderStatus);
+        TextView paymentMethod = view.findViewById(R.id.paymentMethod);
 
-        // Add a snapshot listener to the query
+        // Fetch and populate the "Upcoming Orders" layout
+        orderQuery = db.collection("orders").whereEqualTo("email", currentUserEmail);
+
         orderQuery.addSnapshotListener((querySnapshot, e) -> {
             if (e != null) {
                 // Handle the error
@@ -65,86 +52,45 @@ public class UpcomingOrdersFragment extends Fragment {
             if (querySnapshot != null) {
                 for (DocumentChange dc : querySnapshot.getDocumentChanges()) {
                     if (dc.getType() == DocumentChange.Type.ADDED) {
-                        // This will be called when an upcoming order for the user is found
-
-                        // Get data from the document
+                        // Get data for the order
                         String foodImgUrl = dc.getDocument().getString("food_img");
                         String foodDetailsText = dc.getDocument().getString("food_name");
-                        foodQuantity = dc.getDocument().getLong("food_quantity").intValue(); // Update the existing variable
+                        int foodQuantity = dc.getDocument().getLong("food_quantity").intValue();
                         double priceValue = dc.getDocument().getDouble("food_price");
                         String orderNumberText = dc.getDocument().getString("order_number");
                         String pickupTimeText = dc.getDocument().getString("pickup_time");
                         String orderStatusText = dc.getDocument().getString("order_status");
                         String paymentMethodText = dc.getDocument().getString("payment_method");
 
-                        // Load and display the image using Picasso
+                        // Populate the views with order data
                         Picasso.get().load(foodImgUrl).into(foodImg);
-
-                        // Set other data to your views directly
-                        foodDetails.setText(foodQuantity + "x " + foodDetailsText); // Display food_quantity beside food_name
-                        price.setText(String.format("RM"+"%.2f", priceValue));
+                        foodDetails.setText(foodQuantity + "x " + foodDetailsText);
+                        price.setText(String.format("RM%.2f", priceValue));
                         orderNumber.setText(orderNumberText);
                         pickupTime.setText(pickupTimeText);
                         orderStatus.setText(orderStatusText);
                         paymentMethod.setText(paymentMethodText);
-
-                        // Add click listener for the "Pickup Completed" button
-                        Button pickupButton = view.findViewById(R.id.pickupButton);
-                        pickupButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                showPickupConfirmationDialog();
-                            }
-                        });
                     }
                 }
             }
         });
+
+        // Set up the "Pickup Completed" button click listener
+        Button pickupButton = view.findViewById(R.id.pickupButton);
+        pickupButton.setOnClickListener(v -> showPickupConfirmationDialog());
 
         return view;
     }
 
     private void showPickupConfirmationDialog() {
         // Show a confirmation dialog
-        new AlertDialog.Builder(getContext())
+        new AlertDialog.Builder(requireContext())
                 .setTitle("Confirm Pickup Completion")
-                .setMessage("Are you sure you want to mark all pending orders as Pickup Completed?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        updateOrderStatus("Pickup Completed");
-                    }
+                .setMessage("Are you sure you want to mark this order as Pickup Completed?")
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    // Handle the pickup completion
                 })
                 .setNegativeButton("No", null)
                 .show();
-    }
-
-    private void updateOrderStatus(String newStatus) {
-        // Query the database to find the orders associated with the current user's email
-        db.collection("orders")
-                .whereEqualTo("email", currentUserEmail)
-                .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                        // Update the order_status in each document
-                        document.getReference().update("order_status", newStatus)
-                                .addOnSuccessListener(aVoid -> {
-                                    // Update successful
-                                })
-                                .addOnFailureListener(e -> {
-                                    // Handle the error
-                                });
-                    }
-                })
-                .addOnFailureListener(e -> {
-                    // Handle the error
-                });
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        // Stop listening for changes when the fragment is destroyed
-        orderQuery = null;
     }
 }

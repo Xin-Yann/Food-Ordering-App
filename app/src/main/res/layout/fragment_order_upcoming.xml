@@ -7,12 +7,9 @@
 
 
 
-    <!-- Upcoming Orders -->
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/upcomingOrderLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -25,7 +22,7 @@
                 android:fontFamily="@font/happylucky_gxnzp"
                 android:text="Upcoming Orders"
                 android:textSize="28sp"
-                android:layout_marginTop="16dp" />
+                android:layout_marginTop="40dp" />
 
             <!-- Order Card -->
             <androidx.cardview.widget.CardView
@@ -215,5 +212,4 @@
                 android:backgroundTint="#fa9611"
                 android:textColor="#FFFFFF" />
         </LinearLayout>
-    </ScrollView>
 </RelativeLayout>

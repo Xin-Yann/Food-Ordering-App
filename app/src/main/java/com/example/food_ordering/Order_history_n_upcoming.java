@@ -1,44 +1,58 @@
 package com.example.food_ordering;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.tabs.TabLayout;
 
 public class Order_history_n_upcoming extends AppCompatActivity {
 
-    public static final String name="";
-
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.order_history_n_upcoming);
 
-        tabLayout = findViewById(R.id.tablayout);
-        viewPager = findViewById(R.id.viewpager);
+        // Set UpcomingOrdersFragment as the default fragment
+        Fragment defaultFragment = new UpcomingOrdersFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.upcomingFragmentContainer, defaultFragment);
+        transaction.commit();
 
-        tabLayout.setupWithViewPager(viewPager);
+        TabLayout tabLayout = findViewById(R.id.tabLayout);
 
-        // Create a new instance of the VPAdapter class
-        VPAdapter vpAdapter = new VPAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                Fragment selectedFragment = null;
+                switch (tab.getPosition()) {
+                    case 0:
+                        // Show Upcoming Orders
+                        selectedFragment = new UpcomingOrdersFragment();
+                        break;
+                    case 1:
+                        // Show Order History
+                        selectedFragment = new OrderHistoryFragment();
+                        break;
+                }
 
-        // Add the fragments to the VPAdapter object
-        vpAdapter.addFragment(new UpcomingOrdersFragment(), "Upcoming Order");
-        vpAdapter.addFragment(new OrderHistoryFragment(), "Order History" );
+                if (selectedFragment != null) {
+                    // Replace the fragment using the correct container IDs
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.upcomingFragmentContainer, selectedFragment);
+                    transaction.commit();
+                }
+            }
 
-        // Set the adapter of the ViewPager to the VPAdapter object
-        viewPager.setAdapter(vpAdapter);
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                // Handle unselected tabs if needed
+            }
 
-        // Set the current item of the ViewPager to 0
-        viewPager.setCurrentItem(0);
-
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                // Handle reselected tabs if needed
+            }
+        });
     }
 }

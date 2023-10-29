@@ -5,11 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.LinearLayout;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import android.widget.TextView;
 import androidx.fragment.app.Fragment;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -17,13 +16,13 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.squareup.picasso.Picasso;
 
 public class OrderHistoryFragment extends Fragment {
+
     private FirebaseFirestore db;
     private Query orderQuery;
     private String currentUserEmail;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_order_history, container, false);
 
         db = FirebaseFirestore.getInstance();
@@ -41,7 +40,6 @@ public class OrderHistoryFragment extends Fragment {
                         isFirstOrder = false;
                         ImageView foodImg = view.findViewById(R.id.foodimg);
                         TextView foodDetails = view.findViewById(R.id.foodDetails1);
-                        TextView foodQuantityTextView = view.findViewById(R.id.foodQuantity);
                         TextView price = view.findViewById(R.id.price1);
                         TextView orderNumber = view.findViewById(R.id.orderNumber);
                         TextView pickupTime = view.findViewById(R.id.pickupTime);
@@ -61,18 +59,17 @@ public class OrderHistoryFragment extends Fragment {
                         // Populate the views with data for the first order
                         Picasso.get().load(foodImgUrl).into(foodImg);
                         foodDetails.setText(foodQuantity + "x " + foodDetailsText);
-                        price.setText(String.format("RM"+"%.2f", priceValue));
+                        price.setText(String.format("RM%.2f", priceValue));
                         orderNumber.setText(orderNumberText);
                         pickupTime.setText(pickupTimeText);
                         orderStatus.setText(orderStatusText);
                         paymentMethod.setText(paymentMethodText);
                     } else {
                         // For subsequent orders, create a new order history item and add it to the layout
-                        View orderItemView = inflater.inflate(R.layout.fragment_order_history, null);
+                        View orderItemView = inflater.inflate(R.layout.fragment_order_history, container, false);
                         ImageView foodImg = orderItemView.findViewById(R.id.foodimg);
                         Picasso.get().load(document.getString("food_img")).into(foodImg);
                         TextView foodDetails = orderItemView.findViewById(R.id.foodDetails1);
-                        TextView foodQuantityTextView = orderItemView.findViewById(R.id.foodQuantity);
                         TextView price = orderItemView.findViewById(R.id.price1);
                         TextView orderNumber = orderItemView.findViewById(R.id.orderNumber);
                         TextView pickupTime = orderItemView.findViewById(R.id.pickupTime);
@@ -92,7 +89,7 @@ public class OrderHistoryFragment extends Fragment {
                         // Populate the views in the new order history item
                         Picasso.get().load(foodImgUrl).into(foodImg);
                         foodDetails.setText(foodQuantity + "x " + foodDetailsText);
-                        price.setText(String.format("RM"+"%.2f", priceValue));
+                        price.setText(String.format("RM%.2f", priceValue));
                         orderNumber.setText(orderNumberText);
                         pickupTime.setText(pickupTimeText);
                         orderStatus.setText(orderStatusText);
