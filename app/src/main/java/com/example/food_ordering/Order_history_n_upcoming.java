@@ -1,6 +1,9 @@
 package com.example.food_ordering;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -52,6 +55,17 @@ public class Order_history_n_upcoming extends AppCompatActivity {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
                 // Handle reselected tabs if needed
+            }
+        });
+        // Get the ImageButton
+        View backBtn = findViewById(R.id.backBtn);
+
+        // Set an OnClickListener to navigate to Admin_home when the ImageButton is clicked
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Navigate to the Admin_home activity
+                startActivity(new Intent(Order_history_n_upcoming.this, MainActivity.class));
             }
         });
     }
