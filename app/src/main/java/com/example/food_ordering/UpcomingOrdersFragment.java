@@ -5,92 +5,86 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 import androidx.fragment.app.Fragment;
-import com.google.android.material.tabs.TabLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.squareup.picasso.Picasso;
-import androidx.appcompat.app.AlertDialog;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UpcomingOrdersFragment extends Fragment {
 
     private FirebaseFirestore db;
     private Query orderQuery;
-    private TabLayout tabLayout;
     private String currentUserEmail;
+
+    private RecyclerView recyclerView;
+    private UpcomingOrdersAdapter adapter;
+    private List<UpcomingOrder> upcomingOrderList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_order_upcoming, container, false);
 
+        recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        upcomingOrderList = new ArrayList<>();
+        adapter = new UpcomingOrdersAdapter(upcomingOrderList, currentUserEmail);
+        recyclerView.setAdapter(adapter);
+
         db = FirebaseFirestore.getInstance();
         currentUserEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-        tabLayout = requireActivity().findViewById(R.id.tabLayout);
-
-        // Get references to the views within the layout
-        ImageView foodImg = view.findViewById(R.id.food_img);
-        TextView foodDetails = view.findViewById(R.id.foodDetails);
-        TextView price = view.findViewById(R.id.price);
-        TextView orderNumber = view.findViewById(R.id.orderNumber);
-        TextView pickupTime = view.findViewById(R.id.pickupTime);
-        TextView orderStatus = view.findViewById(R.id.orderStatus);
-        TextView paymentMethod = view.findViewById(R.id.paymentMethod);
 
         // Fetch and populate the "Upcoming Orders" layout
         orderQuery = db.collection("orders").whereEqualTo("email", currentUserEmail);
 
+        // Add a real-time listener for order changes
         orderQuery.addSnapshotListener((querySnapshot, e) -> {
             if (e != null) {
                 // Handle the error
                 return;
             }
 
-            if (querySnapshot != null) {
-                for (DocumentChange dc : querySnapshot.getDocumentChanges()) {
-                    if (dc.getType() == DocumentChange.Type.ADDED) {
-                        // Get data for the order
-                        String foodImgUrl = dc.getDocument().getString("food_img");
-                        String foodDetailsText = dc.getDocument().getString("food_name");
-                        int foodQuantity = dc.getDocument().getLong("food_quantity").intValue();
-                        double priceValue = dc.getDocument().getDouble("food_price");
-                        String orderNumberText = dc.getDocument().getString("order_number");
-                        String pickupTimeText = dc.getDocument().getString("pickup_time");
-                        String orderStatusText = dc.getDocument().getString("order_status");
-                        String paymentMethodText = dc.getDocument().getString("payment_method");
+            upcomingOrderList.clear(); // Clear the previous data
 
-                        // Populate the views with order data
-                        Picasso.get().load(foodImgUrl).into(foodImg);
-                        foodDetails.setText(foodQuantity + "x " + foodDetailsText);
-                        price.setText(String.format("RM%.2f", priceValue));
-                        orderNumber.setText(orderNumberText);
-                        pickupTime.setText(pickupTimeText);
-                        orderStatus.setText(orderStatusText);
-                        paymentMethod.setText(paymentMethodText);
-                    }
+            for (QueryDocumentSnapshot document : querySnapshot) {
+                // Get data for the order
+                String documentId = document.getId();
+                String foodImgUrl = document.getString("food_img");
+                String foodDetailsText = document.getString("food_name");
+                int foodQuantity = document.getLong("food_quantity").intValue();
+                double priceValue = document.getDouble("food_price");
+                String orderNumberText = document.getString("order_number");
+                String pickupTimeText = document.getString("pickup_time");
+                String orderStatusText = document.getString("order_status");
+                String paymentMethodText = document.getString("payment_method");
+
+                // Create an UpcomingOrder object
+                UpcomingOrder upcomingOrder = new UpcomingOrder(
+                        documentId,
+                        foodImgUrl,
+                        foodDetailsText,
+                        foodQuantity,
+                        priceValue,
+                        orderNumberText,
+                        pickupTimeText,
+                        orderStatusText,
+                        paymentMethodText
+                );
+
+                // Only add orders with status other than "Pickup Completed"
+                if (!"Pickup Completed".equals(orderStatusText)) {
+                    upcomingOrderList.add(upcomingOrder);
                 }
             }
+
+            // Notify the adapter that data has changed
+            adapter.notifyDataSetChanged();
         });
 
-        // Set up the "Pickup Completed" button click listener
-        Button pickupButton = view.findViewById(R.id.pickupButton);
-        pickupButton.setOnClickListener(v -> showPickupConfirmationDialog());
-
         return view;
-    }
-
-    private void showPickupConfirmationDialog() {
-        // Show a confirmation dialog
-        new AlertDialog.Builder(requireContext())
-                .setTitle("Confirm Pickup Completion")
-                .setMessage("Are you sure you want to mark this order as Pickup Completed?")
-                .setPositiveButton("Yes", (dialog, which) -> {
-                    // Handle the pickup completion
-                })
-                .setNegativeButton("No", null)
-                .show();
     }
 }
