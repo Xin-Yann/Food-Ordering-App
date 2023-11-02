@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.ImageButton;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -110,6 +108,12 @@ public class Order_Confirmation extends AppCompatActivity {
     public void toCart(View view){
         Intent intent = new Intent(this, Cart.class);
         TextView toCart = findViewById(R.id.cart);
+        startActivity(intent);
+    }
+
+    public void toPayment(View view){
+        Intent intent = new Intent(this, Payment.class);
+        TextView toOrderConfirmation = findViewById(R.id.payBtn);
         startActivity(intent);
     }
 }
