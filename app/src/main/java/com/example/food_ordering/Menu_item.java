@@ -4,16 +4,26 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Menu_item extends AppCompatActivity {
 
@@ -21,12 +31,22 @@ public class Menu_item extends AppCompatActivity {
     ImageButton logout,openDrawer;
     FirebaseAuth auth;
     FirebaseUser user;
+    TextView quantityTextView;
+    EditText remarks;
+    Button cart;
+    FirebaseFirestore db;
 
     int quantity = 1;
+    String menuName; // Add variable to hold menu name
+    String menuPrice; // Add variable to hold menu price
+    String menuImage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu_item);
+        db = FirebaseFirestore.getInstance();
+        remarks = findViewById(R.id.remarks);
+        cart = findViewById(R.id.cart);
 
         drawerLayout = findViewById(R.id.drawerLayout);
         openDrawer = findViewById(R.id.menu);
@@ -35,7 +55,59 @@ public class Menu_item extends AppCompatActivity {
         logout = findViewById(R.id.logout);
         user = auth.getCurrentUser();
 
+        quantityTextView = findViewById(R.id.quantity_text_view);
+
+        Button incrementButton = findViewById(R.id.increment);
+        Button decrementButton = findViewById(R.id.decrement);
+
+        menuName = getIntent().getStringExtra("menuName");
+        menuPrice = getIntent().getStringExtra("menuPrice");
+        menuImage = getIntent().getStringExtra("menuImage");
+
+        cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String Remarks = remarks.getText().toString();
+                Map<String,Object> cart = new HashMap<>();
+                cart.put("cart_remarks", Remarks);
+                cart.put("cart_name", menuName);
+                cart.put("cart_price", menuPrice);
+                cart.put("cart_quantity", quantity);
+                cart.put("cart_image", menuImage);
+                cart.put("user_email", user.getEmail());
+
+                db.collection("cart")
+                        .add(cart)
+                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                Toast.makeText(Menu_item.this,"Successful",Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(Menu_item.this,"Failed",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            }
+        });
+
+        incrementButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                incrementQuantity();
+            }
+        });
+
+        decrementButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                decrementQuantity();
+            }
+        });
+
         String searchQuery = getIntent().getStringExtra("search_query");
+      
         /*open menu*/
         openDrawer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +167,25 @@ public class Menu_item extends AppCompatActivity {
 
     }
 
+    // Function to increment the quantity
+    private void incrementQuantity() {
+        quantity++;
+        updateQuantityTextView();
+    }
+
+    // Function to decrement the quantity
+    private void decrementQuantity() {
+        if (quantity > 1) {
+            quantity--;
+            updateQuantityTextView();
+        }
+    }
+
+    // Function to update the quantity_text_view
+    private void updateQuantityTextView() {
+        quantityTextView.setText(String.valueOf(quantity));
+    }
+
     /*menu*/
     public void toHome(View view){
         Intent intent = new Intent(this, MainActivity.class);
@@ -141,6 +232,12 @@ public class Menu_item extends AppCompatActivity {
     public void toAccount(View view){
         Intent intent = new Intent(this, Account_details.class);
         TextView toAccount = findViewById(R.id.accountPage);
+        startActivity(intent);
+    }
+
+    public void toCart(View view){
+        Intent intent = new Intent(this, Cart.class);
+        TextView toCart = findViewById(R.id.cart);
         startActivity(intent);
     }
 

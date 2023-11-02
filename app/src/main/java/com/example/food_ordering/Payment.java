@@ -131,12 +131,13 @@ public class Payment extends AppCompatActivity {
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 currentFragment = fragmentManager.findFragmentById(R.id.cardFragmentContainer);
 
+                // Remove current fragment
                 if (currentFragment != null) {
-                    transaction.remove(currentFragment); // Remove the current fragment
+                    transaction.remove(currentFragment);
                 }
 
+                // Replace fragment container with the CardFragment
                 if (checkedId == R.id.card) {
-                    // Replace the fragment container with the CardFragment
                     transaction.replace(R.id.cardFragmentContainer, new FragmentCard());
                 }
 

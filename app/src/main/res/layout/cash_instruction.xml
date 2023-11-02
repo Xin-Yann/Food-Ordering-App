@@ -34,48 +34,18 @@
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="45dp"
-        android:layout_marginTop="100dp"
-        android:text="Select A Reload Method"
-        android:textColor="#000000"
+        android:layout_centerInParent="true"
+        android:text="Please go to the counter to reload using cash payment."
         android:textSize="16sp" />
 
-    <RadioGroup
-        android:id="@+id/reloadMethodGroup"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="125dp"
-        android:layout_marginLeft="45dp">
-
-        <RadioButton
-            android:id="@+id/radioButton1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Credit/Debit Card" />
-
-        <RadioButton
-            android:id="@+id/radioButton2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cash" />
-
-    </RadioGroup>
-
-    <Button
-        android:id="@+id/next_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="250dp"
-        android:backgroundTint="#fa9611"
-        android:text="Next"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        android:onClick="next"/>
-
-
+        android:text="Thank you"
+        android:layout_marginTop="380dp"
+        android:layout_marginLeft="165dp"
+        android:textSize="16sp" />
 
 </RelativeLayout>

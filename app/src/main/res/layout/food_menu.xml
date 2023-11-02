@@ -9,66 +9,54 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="8dp">
+        android:padding="8dp"
+        android:layout_marginBottom="30dp">
 
         <ImageView
             android:id="@+id/main_Image"
             android:layout_width="match_parent"
-            android:layout_height="500dp"
+            android:layout_height="380dp"
             android:src="@drawable/search" />
 
         <TextView
             android:id="@+id/main_name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
             android:layout_marginTop="20dp"
             android:text="Name"
             android:textSize="18sp" />
 
         <TextView
             android:id="@+id/main_detail"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
             android:layout_marginTop="20dp"
             android:text="Desc"
             android:textSize="18sp" />
 
         <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="20dp"
+            android:text="RM"
+            android:textSize="16sp" />
+
+        <TextView
             android:id="@+id/main_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="-22dp"
             android:textSize="16sp"
             android:text="Price"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="15dp">
-
-            <Button
-                android:id="@+id/button"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:backgroundTint="#fa9611"
-                android:text="Add"
-                android:textSize="20dp"
-                android:padding="5dp"
-                android:onClick="toDashboard"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@drawable/plus"
-                android:layout_marginLeft="-125dp"
-                android:padding="5dp"
-                android:onClick="toCartPage"/>
-
-        </LinearLayout>
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

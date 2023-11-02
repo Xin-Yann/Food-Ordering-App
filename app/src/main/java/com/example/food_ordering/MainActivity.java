@@ -274,4 +274,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void toCart(View view){
+        Intent intent = new Intent(this, Cart.class);
+        TextView toCart = findViewById(R.id.cart);
+        startActivity(intent);
+    }
+
 }
