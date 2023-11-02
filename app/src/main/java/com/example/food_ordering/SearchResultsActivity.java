@@ -1,5 +1,6 @@
 package com.example.food_ordering;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -40,7 +41,6 @@ public class SearchResultsActivity extends AppCompatActivity {
         String searchQuery = getIntent().getStringExtra("search_query");
 
         fStore.collection("menu")
-                .whereEqualTo("menu_name", searchQuery)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
 
@@ -65,7 +65,9 @@ public class SearchResultsActivity extends AppCompatActivity {
         });
 
         searchView = findViewById(R.id.searchView);
-        searchView.clearFocus();
+        searchView.setFocusable(true);
+        searchView.setIconified(true);
+        searchView.requestFocus();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -83,21 +85,30 @@ public class SearchResultsActivity extends AppCompatActivity {
         });
 
 
+
     }
     public void filterList(String keyword) {
         List<Menu> filteredList = new ArrayList<>();
-        for (Menu dish : datalist) {
-            // Check if the main_name contains the keyword (case-insensitive)
-            if (dish.getName().toLowerCase().contains(keyword.toLowerCase())) {
-                filteredList.add(dish);
+
+        if (keyword.isEmpty()) {
+            // If the query is empty, show all items
+            filteredList.addAll(datalist);
+        } else {
+            for (Menu menu : datalist) {
+                if (menu.getName().toLowerCase().contains(keyword.toLowerCase())) {
+                    filteredList.add(menu);
+                }
             }
         }
 
+        // Update the adapter with the filtered or all items
+        adapter.setFilteredList(filteredList);
+
         if (filteredList.isEmpty()) {
             Toast.makeText(this, "No Data Found", Toast.LENGTH_SHORT).show();
-        } else {
-            adapter.setFilteredList(filteredList);// Hide the main content
         }
     }
+
+
 }
 
