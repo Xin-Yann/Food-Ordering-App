@@ -67,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
 
         /*fetch main dish data*/
         fStore.collection("menu")
-                .whereEqualTo("menu_category","Main Dish")
                 .limit(3)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -191,19 +190,25 @@ public class MainActivity extends AppCompatActivity {
 
     public void filterList(String keyword) {
         List<Menu> filteredList = new ArrayList<>();
-        for (Menu menu : datalist) {
-            if (menu.getName().toLowerCase().contains(keyword.toLowerCase())) {
-                filteredList.add(menu);
+
+        if (keyword.isEmpty()) {
+            // If the query is empty, show all items
+            filteredList.addAll(datalist);
+        } else {
+            for (Menu menu : datalist) {
+                if (menu.getName().toLowerCase().contains(keyword.toLowerCase())) {
+                    filteredList.add(menu);
+                }
             }
         }
 
+        // Update the adapter with the filtered or all items
+        adapter.setFilteredList(filteredList);
+
         if (filteredList.isEmpty()) {
             Toast.makeText(this, "No Data Found", Toast.LENGTH_SHORT).show();
-        } else {
-            adapter.setFilteredList(filteredList);
         }
     }
-
 
     /*menu*/
     public void toPrivacy(View view){
@@ -227,12 +232,6 @@ public class MainActivity extends AppCompatActivity {
     public void toLoginPage(View view){
         Intent intent = new Intent(this, login.class);
         ImageButton toLoginPage = findViewById(R.id.login);
-        startActivity(intent);
-    }
-
-    public void toWallet(View view){
-        Intent intent = new Intent(this, Wallet.class);
-        ImageButton toWallet = findViewById(R.id.wallet);
         startActivity(intent);
     }
 
@@ -271,7 +270,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void toAccount(View view){
         Intent intent = new Intent(this, Account_details.class);
-        TextView toAccount = findViewById(R.id.accountPage);
+        ImageButton toAccount = findViewById(R.id.accountPage);
         startActivity(intent);
     }
 

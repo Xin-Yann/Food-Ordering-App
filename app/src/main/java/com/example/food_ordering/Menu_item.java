@@ -35,6 +35,7 @@ public class Menu_item extends AppCompatActivity {
         logout = findViewById(R.id.logout);
         user = auth.getCurrentUser();
 
+        String searchQuery = getIntent().getStringExtra("search_query");
         /*open menu*/
         openDrawer.setOnClickListener(new View.OnClickListener() {
             @Override
