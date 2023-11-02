@@ -3,10 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/header"></include>
+    <include layout="@layout/admin_header"></include>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/menuRecyclerView"
+        android:id="@+id/beverage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="80dp" />
