@@ -108,13 +108,21 @@
                             android:text="Desc"
                             android:textSize="18sp" />
 
+                        <TextView
+                            android:id="@+id/textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="40dp"
+                            android:layout_marginTop="20dp"
+                            android:text="RM"
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/menu_price"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="40dp"
-                            android:layout_marginTop="20dp"
+                            android:layout_marginLeft="70dp"
+                            android:layout_marginTop="-22dp"
                             android:text="Price"
                             android:textSize="16sp" />
 
@@ -178,13 +186,14 @@
                             android:padding="15dp">
 
                             <Button
-                                android:id="@+id/button"
+                                android:id="@+id/cart"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:backgroundTint="#fa9611"
                                 android:padding="5dp"
                                 android:text="Add"
-                                android:textSize="20dp" />
+                                android:textSize="20dp"
+                                android:onClick="toCart"/>
 
                             <ImageView
                                 android:layout_width="wrap_content"

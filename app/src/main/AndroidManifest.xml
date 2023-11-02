@@ -48,7 +48,10 @@
         <activity android:name=".Wallet"></activity>
         <activity android:name=".Reload"></activity>
         <activity android:name=".Admin_menu_list"></activity>
-
+        <activity android:name=".Reload_1"></activity>
+        <activity android:name=".Cash_Instruction"></activity>
+        <activity android:name=".Cart"></activity>
+        <activity android:name=".Order_Confirmation"></activity>
     </application>
 
 
