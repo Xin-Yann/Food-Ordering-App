@@ -1,16 +1,25 @@
 package com.example.food_ordering;
 
-public class OrderItem {
+public class OrderHistory {
+    private String documentId;
     private String foodImgUrl;
     private String foodDetailsText;
-    private int foodQuantity;
     private double priceValue;
+    private int foodQuantity;
     private String orderNumberText;
     private String pickupTimeText;
     private String orderStatusText;
     private String paymentMethodText;
 
-    public OrderItem(String foodImgUrl, String foodDetailsText, int foodQuantity, double priceValue, String orderNumberText, String pickupTimeText, String orderStatusText, String paymentMethodText) {
+    private String pickupedOnText;
+
+    // Add a no-argument constructor
+    public OrderHistory() {
+        // Default constructor required for Firebase
+    }
+
+    public OrderHistory(String documentId, String foodImgUrl, String foodDetailsText, int foodQuantity, double priceValue, String orderNumberText, String pickupTimeText, String orderStatusText, String paymentMethodText, String pickupedOnText) {
+        this.documentId = documentId;
         this.foodImgUrl = foodImgUrl;
         this.foodDetailsText = foodDetailsText;
         this.foodQuantity = foodQuantity;
@@ -19,9 +28,17 @@ public class OrderItem {
         this.pickupTimeText = pickupTimeText;
         this.orderStatusText = orderStatusText;
         this.paymentMethodText = paymentMethodText;
+        this.pickupedOnText = pickupedOnText;
     }
 
-    // Getters for your fields
+    public String getDocumentId() {
+        return documentId;
+    }
+
+    public void setDocumentId(String documentId) {
+        this.documentId = documentId;
+    }
+
     public String getFoodImgUrl() {
         return foodImgUrl;
     }
@@ -30,12 +47,12 @@ public class OrderItem {
         return foodDetailsText;
     }
 
-    public int getFoodQuantity() {
-        return foodQuantity;
-    }
-
     public double getPriceValue() {
         return priceValue;
+    }
+
+    public int getFoodQuantity() {
+        return foodQuantity;
     }
 
     public String getOrderNumberText() {
@@ -53,4 +70,8 @@ public class OrderItem {
     public String getPaymentMethodText() {
         return paymentMethodText;
     }
+
+    public String getPickupedOnText() { return pickupedOnText;}
+
 }
+

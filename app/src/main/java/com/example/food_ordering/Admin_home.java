@@ -21,6 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+
 import java.io.File;
 import java.util.ArrayList;
 
@@ -163,7 +164,7 @@ public class Admin_home extends AppCompatActivity {
     }
 
     public void toOrder(View view){
-        Intent intent = new Intent(this, Admin_Order_history_n_upcoming.class);
+        Intent intent = new Intent(this, Order_history_n_upcoming.class);
         ImageButton toOrder = findViewById(R.id.order);
         startActivity(intent);
     }
