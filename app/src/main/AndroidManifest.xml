@@ -52,7 +52,6 @@
         <activity android:name=".Cash_Instruction"></activity>
         <activity android:name=".Cart"></activity>
         <activity android:name=".Order_Confirmation"></activity>
-
     </application>
 
 
