@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/orderConfirmationheader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="#fa9611"
+            android:padding="15dp"
+            android:text="Order Confirmation"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
+
+        <ImageButton
+            android:id="@+id/backBtn"
+            android:layout_width="20dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="50px"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/left_chevron"
+            android:baselineAligned="false"
+            android:onClick="toCart" />
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="105dp"/>
+
+    <RelativeLayout
+        android:id="@+id/footer"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#FEFAFD"
+        android:gravity="center">
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="1dp"
+            android:background="@color/black" />
+
+        <TextView
+            android:id="@+id/total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="45dp"
+            android:layout_marginTop="20dp"
+            android:text="Total："
+            android:textColor="#000000"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/totalAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="45dp"
+            android:layout_marginTop="50dp"
+            android:text="RM 0.00"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/payBtn"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="220dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginBottom="20dp"
+            android:backgroundTint="#fa9611"
+            android:text="Pay"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:onClick="toOrderConfirmation"/>
+    </RelativeLayout>
+</RelativeLayout>

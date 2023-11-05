@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/privacyPolicyheader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="#fa9611"
+            android:padding="15dp"
+            android:text="Privacy Policy"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/home"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:backgroundTint="#fa9611"
+            android:text="X"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:onClick="toHome"/>
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="top"
+        android:layout_weight="1">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/privacyPolicy1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="25dp"
+                android:text="At Darpa College's Food Ordering System (FOS) application, we are committed to protecting your privacy. This Privacy Policy outlines how we collect, use, disclose, and safeguard your personal information when you use our app. By using the FOS app, you agree to the terms and practices described in this policy."
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/privacyPolicy2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="175dp"
+                android:layout_marginRight="25dp"
+                android:text="1. Information We Collect \n\na. Registration Information: To use our system, students and staff are required to register an account along with Darpa Id.
+                            \n\nb. Financial Information: Students can pay by cash (pay at cafeteria counter), wallet (deduct from your account) or debit / credit card. Staff credits are deducted from their salaries."
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/privacyPolicy3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="390dp"
+                android:layout_marginRight="25dp"
+                android:text="2. How We Use Your Information \n\na. User Verification: We use registration information to verify users' eligibility.
+                            \n\nb. Order Processing: Your order information is used for food preparation and payment processing.
+                            \n\nc. Monthly Billing: Staff's credit deductions are managed at the end of each month."
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/privacyPolicy4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="625dp"
+                android:layout_marginRight="25dp"
+                android:paddingBottom="50px"
+                android:text="3. Information Security \n\nWe take security seriously and employ industry-standard measures to protect your data. We do not share your information with third parties except when required by law."
+                android:textColor="#000000"
+                android:textSize="16sp" />
+        </RelativeLayout>
+    </ScrollView>
+</LinearLayout>

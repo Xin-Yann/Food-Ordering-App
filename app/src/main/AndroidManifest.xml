@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -10,10 +13,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.FoodOrdering"
+        android:theme="@style/Theme.Material3.Light.NoActionBar"
         tools:targetApi="31">
         <activity
             android:name=".MainActivity"
+            android:theme="@style/Theme.Material3.Light.NoActionBar"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +27,32 @@
         </activity>
 
         <activity android:name=".Testing"></activity>
-
+        <activity android:name=".login"></activity>
+        <activity android:name=".Register"></activity>
+        <activity android:name=".Order_history_n_upcoming"></activity>
+        <activity android:name=".Admin_Order_history_n_upcoming"></activity>
+        <activity android:name=".Account_details"></activity>
+        <activity android:name=".Main_dish"></activity>
+        <activity android:name=".Beverage"></activity>
+        <activity android:name=".Dessert"></activity>
+        <activity android:name=".Admin_home"></activity>
+        <activity android:name=".SearchResultsActivity"></activity>
+        <activity android:name=".Header"></activity>
+        <activity android:name=".Contact_us"></activity>
+        <activity android:name=".Pickup_info"></activity>
+        <activity android:name=".Privacy_policy"></activity>
+        <activity android:name=".Admin_report"></activity>
+        <activity android:name=".Admin_order"></activity>
+        <activity android:name=".Add_Menu"></activity>
+        <activity android:name=".Menu_item"></activity>
+        <activity android:name=".Wallet"></activity>
+        <activity android:name=".Reload"></activity>
+        <activity android:name=".Admin_menu_list"></activity>
+        <activity android:name=".Reload_1"></activity>
+        <activity android:name=".Cash_Instruction"></activity>
+        <activity android:name=".Cart"></activity>
+        <activity android:name=".Order_Confirmation"></activity>
     </application>
+
 
 </manifest>

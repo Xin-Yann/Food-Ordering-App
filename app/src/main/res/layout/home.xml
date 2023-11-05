@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <!-- Content Layout -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:background="#ffffff">
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="20dp"
+            android:background="#ffffff"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/menu"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:backgroundTint="#00FFFFFF"
+                android:onClick="openDrawer"
+                android:src="@drawable/logo" />
+
+            <TextView
+                android:id="@+id/user_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:text="user@gmail.com"
+                android:textAlignment="center"
+                android:textSize="14sp" />
+
+            <ImageButton
+                android:id="@+id/wallet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="70dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/white"
+                android:onClick="toWallet"
+                android:src="@drawable/wallet_2" />
+
+            <ImageButton
+                android:id="@+id/logout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:src="@drawable/logout"
+                android:text="Logout" />
+        </LinearLayout>
+
+         <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:layout_marginTop="70dp">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/happylucky_gxnzp"
+                android:text="What Are You"
+                android:textSize="14pt" />
+
+            <TextView
+                android:id="@+id/textVie1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="60dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/happylucky_gxnzp"
+                android:text="Craving For Today?"
+                android:textSize="16pt" />
+
+            <LinearLayout
+                android:id="@+id/search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="120dp">
+
+
+                <com.google.android.material.appbar.AppBarLayout
+                    android:layout_width="360dp"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.Toolbar
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.SearchView
+                            android:id="@+id/searchView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="#f2f2f2"
+                            android:iconifiedByDefault="false"
+                            android:queryHint="Search" />
+                    </androidx.appcompat.widget.Toolbar>
+                </com.google.android.material.appbar.AppBarLayout>
+            </LinearLayout>
+            <!--After Search-->
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/linearLayout2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="30dp"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/main_dish_btn"
+                        android:layout_width="85dp"
+                        android:layout_height="85dp"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginTop="180dp"
+                        android:background="@drawable/circle"
+                        android:onClick="toMainDish"
+                        android:src="@drawable/vegetables" />
+
+                    <ImageButton
+                        android:id="@+id/beverage_btn"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_marginLeft="45dp"
+                        android:layout_marginTop="180dp"
+                        android:background="@drawable/circle"
+                        android:onClick="toBeverage"
+                        android:src="@drawable/soda" />
+
+                    <ImageButton
+                        android:id="@+id/dessert_btn"
+                        android:layout_width="85dp"
+                        android:layout_height="85dp"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginTop="180dp"
+                        android:background="@drawable/circle"
+                        android:onClick="toDessert"
+                        android:src="@drawable/ice_cream" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="35dp"
+                    android:backgroundTint="#00FFFFFF"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/main"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="35dp"
+                        android:layout_marginTop="270dp"
+                        android:fontFamily="@font/happylucky_gxnzp"
+                        android:text="Main Dish"
+                        android:textSize="10pt" />
+
+                    <TextView
+                        android:id="@+id/beverage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="55dp"
+                        android:layout_marginTop="270dp"
+                        android:fontFamily="@font/happylucky_gxnzp"
+                        android:text="Beverage"
+                        android:textSize="10pt" />
+
+                    <TextView
+                        android:id="@+id/dessert"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="58dp"
+                        android:layout_marginTop="270dp"
+                        android:fontFamily="@font/happylucky_gxnzp"
+                        android:text="Dessert"
+                        android:textSize="10pt" />
+                </LinearLayout>
+            </RelativeLayout>
+
+
+            <!--Food Menu-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/linearLayout4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginTop="25dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/food"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginTop="330dp"
+                        android:fontFamily="@font/happylucky_gxnzp"
+                        android:text="Food Menu"
+                        android:textSize="16pt" />
+
+                    <TextView
+                        android:id="@+id/seemore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="110dp"
+                        android:layout_marginTop="330dp"
+                        android:fontFamily="@font/happylucky_gxnzp"
+                        android:onClick="toMainDish"
+                        android:text="See More"
+                        android:textColor="#fa9611"
+                        android:textSize="9pt" />
+
+                </LinearLayout>
+
+                <!--Food Menu Details-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="420dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+                </LinearLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+
+    </ScrollView>
+
+    <!-- Drawer Menu Layout -->
+    <LinearLayout
+        android:id="@+id/drawerMenu"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="#FFFFFF"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/nav_header_main"></include>
+
+        <!-- Add your menu items here, e.g., TextViews, ImageButtons, etc. -->
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="30dp"
+            android:text="Home"
+            android:onClick="toHome"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="30dp"
+            android:text="Main Dish"
+            android:onClick="toMainDish"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="30dp"
+            android:text="Beverage"
+            android:onClick="toBeverage"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="30dp"
+            android:text="Dessert"
+            android:onClick="toDessert"/>
+
+        <View
+            android:layout_width="200dp"
+            android:layout_height="1dp"
+            android:background="#000000"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="25dp"/>
+
+        <TextView
+            android:id="@+id/privacy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="30dp"
+            android:text="Privacy Policy"
+            android:onClick="toPrivacy"/>
+
+        <TextView
+            android:id="@+id/pickup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="30dp"
+            android:text="Pickup Infomation"
+            android:onClick="toPickup"/>
+
+        <View
+            android:layout_width="200dp"
+            android:layout_height="1dp"
+            android:background="#000000"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="25dp"/>
+
+        <TextView
+            android:id="@+id/contact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="30dp"
+            android:text="Contact Us"
+            android:onClick="toContact"/>
+
+        <TextView
+            android:id="@+id/cart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="30dp"
+            android:text="Cart"
+            android:onClick="toCart"/>
+    </LinearLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

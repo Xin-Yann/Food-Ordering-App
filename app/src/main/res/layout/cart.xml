@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="Cart"
+        android:fontFamily="@font/happylucky_gxnzp"
+        android:textSize="40dp"
+        android:layout_centerHorizontal="true"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:backgroundTint="#f2f2f2f2"
+        android:background="@drawable/border_round_corner_small">
+
+        <TextView
+            android:id="@+id/menu_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Img"
+            android:fontFamily="@font/happylucky_gxnzp"
+            android:textSize="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:id="@+id/menu_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:fontFamily="@font/happylucky_gxnzp"
+            android:textSize="30dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:id="@+id/cartItemQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Qty"
+            android:fontFamily="@font/happylucky_gxnzp"
+            android:textSize="30dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:id="@+id/menu_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Price"
+            android:fontFamily="@font/happylucky_gxnzp"
+            android:textSize="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"/>
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="180dp"
+        android:layout_marginBottom="105dp"/>
+
+    <RelativeLayout
+        android:id="@+id/footer"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#FEFAFD"
+        android:gravity="center">
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="1dp"
+            android:background="@color/black" />
+
+        <TextView
+            android:id="@+id/confirmTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="45dp"
+            android:layout_marginTop="20dp"
+            android:text="Total："
+            android:textColor="#000000"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/confirmTotalAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="45dp"
+            android:layout_marginTop="50dp"
+            android:text="RM 0.00"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/payBtn"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="220dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginBottom="20dp"
+            android:backgroundTint="#fa9611"
+            android:text="Pay"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:onClick="toOrderConfirmation"/>
+    </RelativeLayout>
+</RelativeLayout>
