@@ -168,4 +168,9 @@ public class Dessert extends AppCompatActivity {
         TextView toAccount = findViewById(R.id.accountPage);
         startActivity(intent);
     }
+    public void toCart(View view){
+        Intent intent = new Intent(this, Cart.class);
+        TextView toCart = findViewById(R.id.cart);
+        startActivity(intent);
+    }
 }
