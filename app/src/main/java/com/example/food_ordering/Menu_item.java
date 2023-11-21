@@ -106,6 +106,8 @@ public class Menu_item extends AppCompatActivity {
             }
         });
 
+        String searchQuery = getIntent().getStringExtra("search_query");
+      
         /*open menu*/
         openDrawer.setOnClickListener(new View.OnClickListener() {
             @Override

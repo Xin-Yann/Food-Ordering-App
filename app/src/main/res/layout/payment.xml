@@ -32,7 +32,8 @@
             android:layout_marginTop="50px"
             android:layout_marginBottom="12dp"
             android:background="@drawable/left_chevron"
-            android:baselineAligned="false" />
+            android:baselineAligned="false"
+            android:onClick="toOrderConfirmation"/>
     </RelativeLayout>
 
     <ScrollView
@@ -247,6 +248,7 @@
             android:backgroundTint="#fa9611"
             android:text="Order"
             android:textColor="#FFFFFF"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:onClick="toOrderHistory"/>
     </RelativeLayout>
 </LinearLayout>

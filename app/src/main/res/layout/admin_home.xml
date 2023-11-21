@@ -64,11 +64,24 @@
                 android:text="Logout" />
         </LinearLayout>
 
+        <Button
+            android:id="@+id/viewStaffBtn"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70dp"
+            android:layout_marginBottom="20dp"
+            android:layout_centerHorizontal="true"
+            android:backgroundTint="#fa9611"
+            android:text="View Staff"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:onClick="toStaffList"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="120dp"
             android:layout_weight="1"
             android:orientation="vertical"
             android:padding="8dp">
@@ -82,8 +95,6 @@
             </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
     </RelativeLayout>
-
-
 
     <!-- Drawer Menu Layout -->
     <LinearLayout
