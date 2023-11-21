@@ -1,6 +1,5 @@
 package com.example.food_ordering;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,23 +7,22 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.io.File;
 import java.util.ArrayList;
 
 public class Admin_manage_beverage extends AppCompatActivity {
@@ -32,10 +30,9 @@ public class Admin_manage_beverage extends AppCompatActivity {
     FirebaseFirestore fStore;
     ArrayList<AdminMenu> datalist;
     AdminMenuAdapter adapter;
-    ImageButton openDrawer;
+    ImageButton logout,openDrawer;
     DrawerLayout drawerLayout;
     FirebaseAuth auth;
-    ImageButton logout;
     FirebaseUser admin;
 
     @Override
@@ -85,17 +82,7 @@ public class Admin_manage_beverage extends AppCompatActivity {
         adapter.setOnItemClickListener(new AdminMenuAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                // Get the selected menu item
-                AdminMenu selectedItem = datalist.get(position);
 
-                // Create an Intent to send the selected menu item's details to the MenuItemDashboardActivity
-                Intent intent = new Intent(Admin_manage_beverage.this, Menu_item.class);
-                intent.putExtra("menuName", selectedItem.getName());
-                intent.putExtra("menuPrice", selectedItem.getPrice());
-                intent.putExtra("menuImage", selectedItem.getImage());
-                intent.putExtra("menuDetail", selectedItem.getDetail());
-                intent.putExtra("menuId", selectedItem.getId());
-                startActivity(intent);
             }
 
             @Override
@@ -110,8 +97,8 @@ public class Admin_manage_beverage extends AppCompatActivity {
                 AdminMenu selectedItem = datalist.get(position);
                 String menuItemId = selectedItem.getId();
 
-                // Implement the code to delete the beverage item here
-                // For example, you can use menuId to delete the item from the Firestore database
+                // Implement the code to delete the dessert item here
+                // For example, you can use menuItemId to delete the item from the Firestore database
                 fStore.collection("menu").document(menuItemId)
                         .delete()
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -223,29 +210,4 @@ public class Admin_manage_beverage extends AppCompatActivity {
         TextView toDessert = findViewById(R.id.dessertPage);
         startActivity(intent);
     }
-
-    public static void deleteCache(Context context) {
-        try {
-            File dir = context.getCacheDir();
-            deleteDir(dir);
-        } catch (Exception e) {}
-    }
-    public static boolean deleteDir(File dir) {
-        if (dir != null && dir.isDirectory()) {
-            String[] children = dir.list();
-            for (int i = 0; i < children.length; i++) {
-                boolean success = deleteDir(new File(dir, children[i]));
-                if (!success) {
-                    return false;
-                }
-            }
-            return dir.delete();
-        } else if(dir!= null && dir.isFile()) {
-            return dir.delete();
-        } else {
-            return false;
-        }
-    }
-
-
 }

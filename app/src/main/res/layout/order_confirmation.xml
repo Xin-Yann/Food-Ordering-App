@@ -86,6 +86,6 @@
             android:text="Pay"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
-            android:onClick="toOrderConfirmation"/>
+            android:onClick="toPayment"/>
     </RelativeLayout>
 </RelativeLayout>
