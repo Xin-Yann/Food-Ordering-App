@@ -83,6 +83,16 @@ public class UpcomingOrdersAdapter extends RecyclerView.Adapter<UpcomingOrdersAd
             pickupButton.setOnClickListener(v -> {
                 showPickupConfirmationDialog(order);
             });
+
+            if ("Ready to Pickup".equals(order.getOrderStatusText())) {
+                // Show an in-app notification
+                new AlertDialog.Builder(itemView.getContext())
+                        .setTitle("Order Ready for Pickup")
+                        .setMessage("Your order is ready for pickup.")
+                        .setPositiveButton("OK", null)
+                        .show();
+            }
+
         }
 
         private void showPickupConfirmationDialog(UpcomingOrder order) {

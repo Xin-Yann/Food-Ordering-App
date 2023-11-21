@@ -15,12 +15,15 @@ import androidx.annotation.NonNull;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import android.widget.Toast;
+import android.util.Log;
 
 import java.util.List;
 
 public class AdminUpcomingOrdersAdapter extends RecyclerView.Adapter<AdminUpcomingOrdersAdapter.OrderItemViewHolder> {
     private List<AdminUpcomingOrder> orderItemList;
     private Context context;
+
+
 
     public AdminUpcomingOrdersAdapter(Context context, List<AdminUpcomingOrder> orderItemList) {
         this.context = context;
@@ -50,6 +53,10 @@ public class AdminUpcomingOrdersAdapter extends RecyclerView.Adapter<AdminUpcomi
         holder.pickupTime.setText(orderItem.getPickupTimeText());
         holder.orderStatus.setText(orderItem.getOrderStatusText());
         holder.paymentMethod.setText(orderItem.getPaymentMethodText());
+        String email = orderItem.getemail();
+        Log.d("EmailDebug", "Email: " + email); // Add this line for debugging
+        holder.email.setText(orderItem.getemail());
+
 
         // Handle button clicks
         holder.preparingButton.setOnClickListener(v -> {
@@ -93,6 +100,8 @@ public class AdminUpcomingOrdersAdapter extends RecyclerView.Adapter<AdminUpcomi
         Button preparingButton;
         Button readyToPickupButton;
 
+        TextView email;
+
         public OrderItemViewHolder(@NonNull View itemView) {
             super(itemView);
             foodImg = itemView.findViewById(R.id.food_img);
@@ -104,6 +113,7 @@ public class AdminUpcomingOrdersAdapter extends RecyclerView.Adapter<AdminUpcomi
             paymentMethod = itemView.findViewById(R.id.paymentMethod);
             preparingButton = itemView.findViewById(R.id.preparingButton);
             readyToPickupButton = itemView.findViewById(R.id.readyToPickupButton);
+            email = itemView.findViewById(R.id.email);
         }
     }
 

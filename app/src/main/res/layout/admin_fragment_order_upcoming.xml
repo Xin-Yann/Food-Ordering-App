@@ -26,6 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/title"
-        android:padding="16dp"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 </RelativeLayout>

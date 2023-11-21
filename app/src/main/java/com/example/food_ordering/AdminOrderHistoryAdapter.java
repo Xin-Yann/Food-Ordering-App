@@ -41,6 +41,7 @@ public class AdminOrderHistoryAdapter extends RecyclerView.Adapter<AdminOrderHis
         String orderStatusText = orderHistory.getOrderStatus();
         String paymentMethodText = orderHistory.getPaymentMethod();
         String pickupedOnText = orderHistory.getPickupedOn();
+        String email = orderHistory.getemail();
 
         // Set the data to your UI elements in the OrderHistoryViewHolder
         holder.foodDetails.setText(foodQuantity + "x " + foodDetailsText);
@@ -50,6 +51,7 @@ public class AdminOrderHistoryAdapter extends RecyclerView.Adapter<AdminOrderHis
         holder.orderStatus.setText(orderStatusText);
         holder.paymentMethod.setText(paymentMethodText);
         holder.pickupedOn.setText(pickupedOnText);
+        holder.email.setText(email);
 
         // Load foodImgUrl using Picasso or your preferred image loading library
         Picasso.get().load(foodImgUrl).into(holder.foodImg);
@@ -62,7 +64,7 @@ public class AdminOrderHistoryAdapter extends RecyclerView.Adapter<AdminOrderHis
 
     public class OrderHistoryViewHolder extends RecyclerView.ViewHolder {
         ImageView foodImg;
-        TextView foodDetails, price, orderNumber, pickupTime, orderStatus, paymentMethod, pickupedOn;
+        TextView foodDetails, price, orderNumber, pickupTime, orderStatus, paymentMethod, pickupedOn, email;
 
         public OrderHistoryViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -74,6 +76,7 @@ public class AdminOrderHistoryAdapter extends RecyclerView.Adapter<AdminOrderHis
             orderStatus = itemView.findViewById(R.id.orderStatus);
             paymentMethod = itemView.findViewById(R.id.paymentMethod);
             pickupedOn = itemView.findViewById(R.id.pickupedOn);
+            email = itemView.findViewById(R.id.email);
         }
     }
 }

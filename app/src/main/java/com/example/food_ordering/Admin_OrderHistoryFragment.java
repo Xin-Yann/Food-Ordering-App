@@ -56,9 +56,10 @@ public class Admin_OrderHistoryFragment extends Fragment {
                     String orderStatusText = document.getString("order_status");
                     String paymentMethodText = document.getString("payment_method");
                     String pickupedOnText = document.getString("pickupedOn");
+                    String email = document.getString("email");
 
                     // Create an AdminOrderHistory object and add it to the list
-                    orderItemList.add(new AdminOrderHistory(foodImgUrl, foodDetailsText, foodQuantity, priceValue, orderNumberText, pickupTimeText, orderStatusText, paymentMethodText, pickupedOnText));
+                    orderItemList.add(new AdminOrderHistory(foodImgUrl, foodDetailsText, foodQuantity, priceValue, orderNumberText, pickupTimeText, orderStatusText, paymentMethodText, pickupedOnText, email));
                 }
                 // Notify the adapter that data has changed
                 orderItemAdapter.notifyDataSetChanged();

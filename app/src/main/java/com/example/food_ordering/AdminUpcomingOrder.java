@@ -11,7 +11,9 @@ public class AdminUpcomingOrder {
     private String orderStatusText;
     private String paymentMethodText;
 
-    public AdminUpcomingOrder(String documentId, String foodImgUrl, String foodDetailsText, int foodQuantity, double priceValue, String orderNumberText, String pickupTimeText, String orderStatusText, String paymentMethodText) {
+    private String email;
+
+    public AdminUpcomingOrder(String documentId, String foodImgUrl, String foodDetailsText, int foodQuantity, double priceValue, String orderNumberText, String pickupTimeText, String orderStatusText, String paymentMethodText, String email) {
         this.documentId = documentId;
         this.foodImgUrl = foodImgUrl;
         this.foodDetailsText = foodDetailsText;
@@ -21,6 +23,7 @@ public class AdminUpcomingOrder {
         this.pickupTimeText = pickupTimeText;
         this.orderStatusText = orderStatusText;
         this.paymentMethodText = paymentMethodText;
+        this.email = email;
     }
 
     public String getDocumentId() {
@@ -55,7 +58,6 @@ public class AdminUpcomingOrder {
         return orderStatusText;
     }
 
-    public String getPaymentMethodText() {
-        return paymentMethodText;
-    }
-}
+    public String getPaymentMethodText() {return paymentMethodText;}
+
+    public String getemail() {return email;}}

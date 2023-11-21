@@ -13,7 +13,9 @@ public class AdminOrderHistory {
     private String paymentMethod;
     private String pickupedOn;
 
-    public AdminOrderHistory(String foodImgUrl, String foodDetailsText, int foodQuantity, double priceValue, String orderNumber, String pickupTime, String orderStatus, String paymentMethod, String pickupedOn) {
+    private String email;
+
+    public AdminOrderHistory(String foodImgUrl, String foodDetailsText, int foodQuantity, double priceValue, String orderNumber, String pickupTime, String orderStatus, String paymentMethod, String pickupedOn, String email) {
         this.foodImgUrl = foodImgUrl;
         this.foodDetailsText = foodDetailsText;
         this.foodQuantity = foodQuantity;
@@ -23,6 +25,7 @@ public class AdminOrderHistory {
         this.orderStatus = orderStatus;
         this.paymentMethod = paymentMethod;
         this.pickupedOn = pickupedOn;
+        this.email = email;
     }
 
     public String getFoodImgUrl() {
@@ -59,6 +62,10 @@ public class AdminOrderHistory {
 
     public String getPickupedOn() {
         return pickupedOn;
+    }
+
+    public String getemail() {
+        return email;
     }
 }
 

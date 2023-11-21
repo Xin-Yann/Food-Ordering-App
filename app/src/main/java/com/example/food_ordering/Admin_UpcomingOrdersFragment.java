@@ -9,7 +9,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -23,7 +22,6 @@ public class Admin_UpcomingOrdersFragment extends Fragment {
     private RecyclerView recyclerView;
     private List<AdminUpcomingOrder> orderItemList;
     private AdminUpcomingOrdersAdapter orderItemAdapter;
-    private String currentUserEmail;
 
     @Nullable
     @Override
@@ -35,67 +33,52 @@ public class Admin_UpcomingOrdersFragment extends Fragment {
         orderItemList = new ArrayList<>();
         orderItemAdapter = new AdminUpcomingOrdersAdapter(requireContext(), orderItemList);
 
-
         recyclerView.setAdapter(orderItemAdapter);
 
         db = FirebaseFirestore.getInstance();
-        currentUserEmail = getCurrentUserEmail();
 
         // Fetch and populate the "Upcoming Orders" layout
-        if (currentUserEmail != null) {
-            Query orderQuery = db.collection("orders");
+        Query orderQuery = db.collection("orders");
 
-            // Add a real-time listener for order changes
-            orderQuery.addSnapshotListener((querySnapshot, e) -> {
-                if (e != null) {
-                    // Handle the error
-                    return;
+        // Add a real-time listener for order changes
+        orderQuery.addSnapshotListener((querySnapshot, e) -> {
+            if (e != null) {
+                // Handle the error
+                return;
+            }
+
+            orderItemList.clear(); // Clear the previous data
+
+            for (QueryDocumentSnapshot document : querySnapshot) {
+                // Get data for the order
+                String documentId = document.getId();
+                String foodImgUrl = document.getString("food_img");
+                String foodDetailsText = document.getString("food_name");
+                int foodQuantity = document.getLong("food_quantity").intValue();
+                double priceValue = document.getDouble("food_price");
+                String orderNumberText = document.getString("order_number");
+                String pickupTimeText = document.getString("pickup_time");
+                String orderStatusText = document.getString("order_status");
+                String paymentMethodText = document.getString("payment_method");
+                String email = document.getString("email");
+
+                // Create an AdminUpcomingOrder object
+                AdminUpcomingOrder orderItem = new AdminUpcomingOrder(
+                        documentId, foodImgUrl, foodDetailsText, foodQuantity,
+                        priceValue, orderNumberText, pickupTimeText, orderStatusText,
+                        paymentMethodText, email
+                );
+
+                // Only add orders with status other than "Pickup Completed"
+                if (!"Pickup Completed".equals(orderStatusText)) {
+                    orderItemList.add(orderItem);
                 }
+            }
 
-                orderItemList.clear(); // Clear the previous data
-
-                for (QueryDocumentSnapshot document : querySnapshot) {
-                    // Get data for the order
-                    String documentId = document.getId();
-                    String foodImgUrl = document.getString("food_img");
-                    String foodDetailsText = document.getString("food_name");
-                    int foodQuantity = document.getLong("food_quantity").intValue();
-                    double priceValue = document.getDouble("food_price");
-                    String orderNumberText = document.getString("order_number");
-                    String pickupTimeText = document.getString("pickup_time");
-                    String orderStatusText = document.getString("order_status");
-                    String paymentMethodText = document.getString("payment_method");
-
-
-                    // Create an AdminUpcomingOrder object
-                    AdminUpcomingOrder orderItem = new AdminUpcomingOrder(
-                            documentId, foodImgUrl, foodDetailsText, foodQuantity,
-                            priceValue, orderNumberText, pickupTimeText, orderStatusText,
-                            paymentMethodText
-                    );
-
-                    // Only add orders with status other than "Pickup Completed"
-                    if (!"Pickup Completed".equals(orderStatusText)) {
-                        orderItemList.add(orderItem);
-                    }
-
-                }
-
-                // Notify the adapter that data has changed
-                orderItemAdapter.notifyDataSetChanged();
-            });
-        }
+            // Notify the adapter that data has changed
+            orderItemAdapter.notifyDataSetChanged();
+        });
 
         return view;
-    }
-
-    @Nullable
-    private String getCurrentUserEmail() {
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        if (auth.getCurrentUser() != null) {
-            return auth.getCurrentUser().getEmail();
-        } else {
-            return null;
-        }
     }
 }
