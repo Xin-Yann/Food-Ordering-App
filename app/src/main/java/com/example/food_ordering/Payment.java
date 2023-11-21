@@ -296,7 +296,8 @@ public class Payment extends AppCompatActivity {
         order.put("pickup_time", pickupTime);
         order.put("order_number", orderId);
         order.put("total_amount", confirmTotalAmount.getText().toString());
-        order.put("order_status", "pending");
+
+        order.put("order_status", "Pending");
 
         firestore.collection("orders").add(order).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
