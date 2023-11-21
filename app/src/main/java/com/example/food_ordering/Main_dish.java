@@ -175,7 +175,4 @@ public class Main_dish extends AppCompatActivity {
         TextView toCart = findViewById(R.id.cart);
         startActivity(intent);
     }
-
-
-
 }

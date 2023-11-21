@@ -7,6 +7,10 @@ import android.widget.TextView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import androidx.drawerlayout.widget.DrawerLayout;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,10 +19,20 @@ public class Wallet extends AppCompatActivity {
 
     private TextView displayAmount;
 
+    ImageButton openDrawer;
+    DrawerLayout drawerLayout;
+    FirebaseAuth auth;
+    FirebaseUser user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wallet);
+
+        auth = FirebaseAuth.getInstance();
+        drawerLayout = findViewById(R.id.drawerLayout);
+        openDrawer = findViewById(R.id.menu);
+        user = auth.getCurrentUser();
 
         // Initialize SharedPreferences
         preferences = getSharedPreferences("MyPreferences", MODE_PRIVATE);
@@ -35,6 +49,29 @@ public class Wallet extends AppCompatActivity {
 
         // Set the wallet balance for the current user
         preferences = getSharedPreferences("Wallet_" + userId, MODE_PRIVATE);
+
+        openDrawer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (drawerLayout.isDrawerOpen(findViewById(R.id.drawerMenu))) {
+                    drawerLayout.closeDrawer(findViewById(R.id.drawerMenu));
+                } else {
+                    drawerLayout.openDrawer(findViewById(R.id.drawerMenu));
+                }
+            }
+        });
+
+        /*display user email if user login */
+        if (user == null) {
+            Intent intent = new Intent(getApplicationContext(), login.class);
+            startActivity(intent);
+            finish();
+        } else {
+            TextView text= findViewById(R.id.user_details);
+            text.setText(user.getEmail());
+            TextView textView = findViewById(R.id.user_email);
+            textView.setText(user.getEmail());
+        }
     }
 
     public void toReload(View view){
