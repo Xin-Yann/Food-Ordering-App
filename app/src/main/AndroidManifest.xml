@@ -43,11 +43,24 @@
         <activity android:name=".Privacy_policy"></activity>
         <activity android:name=".Admin_report"></activity>
         <activity android:name=".Add_Menu"></activity>
+        <activity android:name=".Edit_Menu"></activity>
         <activity android:name=".Menu_item"></activity>
         <activity android:name=".Wallet"></activity>
         <activity android:name=".Reload"></activity>
         <activity android:name=".Admin_menu_list"></activity>
+<<<<<<< HEAD
 
+=======
+        <activity android:name=".Reload_1"></activity>
+        <activity android:name=".Cash_Instruction"></activity>
+        <activity android:name=".Cart"></activity>
+        <activity android:name=".Order_Confirmation"></activity>
+        <activity android:name=".Admin_manage_mainDish"></activity>
+        <activity android:name=".Admin_manage_beverage"></activity>
+        <activity android:name=".Admin_manage_dessert"></activity>
+        <activity android:name=".staffList"></activity>
+        <activity android:name=".Payment"></activity>
+>>>>>>> origin/HM
     </application>
 
 

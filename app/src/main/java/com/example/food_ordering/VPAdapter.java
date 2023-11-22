@@ -37,4 +37,8 @@ public class VPAdapter extends FragmentStateAdapter {
     public int getItemCount() {
         return fragmentList.size();
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/HM
 }

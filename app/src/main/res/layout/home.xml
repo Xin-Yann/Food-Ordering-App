@@ -50,7 +50,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="70dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="25dp"
                 android:background="@color/white"
                 android:onClick="toWallet"
                 android:src="@drawable/wallet_2" />
@@ -238,18 +237,6 @@
                         android:text="Food Menu"
                         android:textSize="16pt" />
 
-                    <TextView
-                        android:id="@+id/seemore"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="110dp"
-                        android:layout_marginTop="330dp"
-                        android:fontFamily="@font/happylucky_gxnzp"
-                        android:onClick="toMainDish"
-                        android:text="See More"
-                        android:textColor="#fa9611"
-                        android:textSize="9pt" />
-
                 </LinearLayout>
 
                 <!--Food Menu Details-->
@@ -363,5 +350,14 @@
             android:layout_marginLeft="30dp"
             android:text="Contact Us"
             android:onClick="toContact"/>
+
+        <TextView
+            android:id="@+id/cart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="30dp"
+            android:text="Cart"
+            android:onClick="toCart"/>
     </LinearLayout>
 </androidx.drawerlayout.widget.DrawerLayout>

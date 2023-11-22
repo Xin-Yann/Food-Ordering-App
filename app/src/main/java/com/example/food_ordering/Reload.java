@@ -1,7 +1,6 @@
 package com.example.food_ordering;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,22 +8,21 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import android.widget.Toast;
 
 
 public class Reload extends AppCompatActivity{
     private TextView cardNumberView;
     private TextView amountView;
     private RadioGroup reloadMethodGroup;
-    private SharedPreferences preferences;
+    private RadioButton creditDebitRadioButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reload);
 
-        cardNumberView = findViewById(R.id.inputCardNumber);
-        amountView = findViewById(R.id.inputAmount);
         reloadMethodGroup = findViewById(R.id.reloadMethodGroup);
-        preferences = getSharedPreferences("MyPreferences", MODE_PRIVATE);
+        creditDebitRadioButton = findViewById(R.id.radioButton1);
     }
 
     public void toHome(View view){
@@ -33,34 +31,22 @@ public class Reload extends AppCompatActivity{
         startActivity(intent);
     }
 
-    public void reload(View view) {
-        String cardNumber = cardNumberView.getText().toString();
-        String amountStr = amountView.getText().toString();
-        int amount = Integer.parseInt(amountStr);
-
-        int selectedRadioButtonId = reloadMethodGroup.getCheckedRadioButtonId();
-        String reloadMethod = "";
-
-        if (selectedRadioButtonId != -1) {
-            RadioButton selectedRadioButton = findViewById(selectedRadioButtonId);
-            reloadMethod = selectedRadioButton.getText().toString();
+    public void next(View view) {
+        // Get the selected radio button ID
+        int selectedId = reloadMethodGroup.getCheckedRadioButtonId();
+        if (selectedId == R.id.radioButton1) {
+            // Credit/Debit Card radio button is selected, proceed to Reload_1 activity
+            Intent intent = new Intent(this, Reload_1.class);
+            startActivity(intent);
+        } else if (selectedId == R.id.radioButton2) {
+            // Cash radio button is selected, navigate to the Cash Instructions activity
+            Intent intent = new Intent(this, Cash_Instruction.class);
+            startActivity(intent);
+        } else {
+            // The user did not select a method, handle it as needed
+            Toast.makeText(this, "Please select a reload method to continue.", Toast.LENGTH_SHORT).show();
         }
-
-        int currentTotalAmount = preferences.getInt("totalAmount", 0);
-        currentTotalAmount += amount;
-
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putInt("totalAmount", currentTotalAmount);
-        editor.apply();
-
-        // Now, you have cardNumber, amount, and reloadMethod
-        // You can pass these values to the Wallet activity or display them as needed.
-
-        // You can pass these values to the Wallet activity
-        Intent intent = new Intent(this, Wallet.class);
-        intent.putExtra("cardNumber", cardNumber);
-        intent.putExtra("reloadAmount", amount);
-        intent.putExtra("reloadMethod", reloadMethod);
-        startActivity(intent);
     }
+
+
 }

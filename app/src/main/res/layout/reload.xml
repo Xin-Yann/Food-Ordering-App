@@ -64,102 +64,18 @@
 
     </RadioGroup>
 
-    <TextView
-        android:id="@+id/card_number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="45dp"
-        android:layout_marginTop="255dp"
-        android:text="Card Number"
-        android:textColor="#000000"
-        android:textSize="16sp" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="320dp"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="280dp"
-        android:hint="Number"
-        android:textColor="#000000"
-        android:textSize="16sp"
-        app:hintEnabled="true">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/inputCardNumber"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        android:id="@+id/reload"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="45dp"
-        android:layout_marginTop="360dp"
-        android:text="Amount"
-        android:textColor="#000000"
-        android:textSize="16sp" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="320dp"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="390dp"
-        android:hint="Amount"
-        android:textColor="#000000"
-        android:textSize="16sp"
-        app:hintEnabled="true">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/inputAmount"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        android:id="@+id/expiryDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="45dp"
-        android:layout_marginTop="475dp"
-        android:text="Expiry Date"
-        android:textColor="#000000"
-        android:textSize="16sp" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/inputExpiryDate_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="45dp"
-        android:layout_marginTop="500dp"
-        android:hint="XXXX-XX"
-        android:textColor="#000000"
-        android:textSize="16sp"
-        app:hintEnabled="true">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/inputExpiryDate"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="date" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
     <Button
-        android:id="@+id/reload_btn"
+        android:id="@+id/next_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
-        android:layout_marginTop="580dp"
+        android:layout_marginTop="250dp"
         android:backgroundTint="#fa9611"
-        android:text="Reload"
+        android:text="Next"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
-        android:onClick="reload"/>
+        android:onClick="next"/>
+
+
 
 </RelativeLayout>

@@ -13,12 +13,17 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MenuItemDashboardActivity extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
     ImageButton logout,openDrawer;
     FirebaseAuth auth;
     FirebaseUser user;
+
+    ArrayList<Menu> datalist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +52,8 @@ public class MenuItemDashboardActivity extends AppCompatActivity {
         Picasso.get().load(menuImage).into(imageView);
 
     }
+
+
     /*menu*/
     public void toPrivacy(View view){
         Intent intent = new Intent(this, Privacy_policy.class);

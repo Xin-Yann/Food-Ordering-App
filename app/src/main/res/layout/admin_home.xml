@@ -66,11 +66,24 @@
                 android:text="Logout" />
         </LinearLayout>
 
+        <Button
+            android:id="@+id/viewStaffBtn"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70dp"
+            android:layout_marginBottom="20dp"
+            android:layout_centerHorizontal="true"
+            android:backgroundTint="#fa9611"
+            android:text="View Staff"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:onClick="toStaffList"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="120dp"
             android:layout_weight="1"
             android:orientation="vertical"
             android:padding="8dp">
@@ -82,15 +95,8 @@
                 android:layout_gravity="center">
 
             </androidx.recyclerview.widget.RecyclerView>
-
-            <include
-                layout="@layout/admin_footer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
         </LinearLayout>
     </RelativeLayout>
-
-
 
     <!-- Drawer Menu Layout -->
     <LinearLayout
@@ -131,12 +137,31 @@
             android:onClick="toOrder"/>
 
         <TextView
+            android:id="@+id/mainDishPage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:layout_marginLeft="30dp"
-            android:text="Menu List"
-            android:onClick="toMenu"/>
+            android:text="Main Dish"
+            android:onClick="toMainDish"/>
+
+        <TextView
+            android:id="@+id/beveragePage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="30dp"
+            android:text="Beverage"
+            android:onClick="toBeverage"/>
+
+        <TextView
+            android:id="@+id/dessertPage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="30dp"
+            android:text="Dessert"
+            android:onClick="toDessert"/>
 
         <View
             android:layout_width="200dp"
@@ -146,7 +171,7 @@
             android:layout_marginTop="25dp"/>
 
         <TextView
-            android:id="@+id/privacy"
+            android:id="@+id/report"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
