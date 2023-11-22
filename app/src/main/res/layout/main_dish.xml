@@ -166,5 +166,14 @@
             android:layout_marginLeft="30dp"
             android:text="Contact Us"
             android:onClick="toContact"/>
+
+        <TextView
+            android:id="@+id/cart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="30dp"
+            android:text="Cart"
+            android:onClick="toCart"/>
     </LinearLayout>
 </androidx.drawerlayout.widget.DrawerLayout>

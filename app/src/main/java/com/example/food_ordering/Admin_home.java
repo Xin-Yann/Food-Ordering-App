@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -62,6 +63,7 @@ public class Admin_home extends AppCompatActivity {
 
         deleteCache(this);
 
+        // Display user list
         fStore.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -79,31 +81,6 @@ public class Admin_home extends AppCompatActivity {
 
                     adapter.notifyDataSetChanged();
 
-                } else {
-                    // Handle the case where the query was not successful
-                }
-            }
-        });
-
-        fStore.collection("staffs").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        String username = document.getString("name");
-                        String staffId = document.getString("id");
-                        String staffEmail = document.getString("email");
-                        String staffContact = document.getString("contact");
-                        String staffPassword = document.getString("password");
-
-                        // Add the retrieved data to the ArrayList
-                        datalist.add(new User(username, staffId, staffEmail, staffContact, staffPassword));
-                    }
-
-                    adapter.notifyDataSetChanged();
-
-                } else {
-                    // Handle the case where the query was not successful
                 }
             }
         });
@@ -171,13 +148,37 @@ public class Admin_home extends AppCompatActivity {
 
     public void toReportPage(View view){
         Intent intent = new Intent(this, Admin_menu_list.class);
-        ImageButton toCartPage = findViewById(R.id.reportPage);
+        ImageButton toReportPage = findViewById(R.id.reportPage);
         startActivity(intent);
     }
 
     public void toAccount(View view){
         Intent intent = new Intent(this, Account_details.class);
         TextView toAccount = findViewById(R.id.accountPage);
+        startActivity(intent);
+    }
+
+    public void toMainDish(View view){
+        Intent intent = new Intent(this, Admin_manage_mainDish.class);
+        TextView toMainDish = findViewById(R.id.mainDishPage);
+        startActivity(intent);
+    }
+
+    public void toBeverage(View view){
+        Intent intent = new Intent(this, Admin_manage_beverage.class);
+        TextView toBeverage = findViewById(R.id.beveragePage);
+        startActivity(intent);
+    }
+
+    public void toDessert(View view){
+        Intent intent = new Intent(this, Admin_manage_dessert.class);
+        TextView toDessert = findViewById(R.id.dessertPage);
+        startActivity(intent);
+    }
+
+    public void toStaffList(View view){
+        Intent intent = new Intent(this, staffList.class);
+        Button toStaffList = findViewById(R.id.viewStaffBtn);
         startActivity(intent);
     }
 

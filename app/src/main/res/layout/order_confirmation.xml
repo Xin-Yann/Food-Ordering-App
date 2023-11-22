@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -26,133 +23,25 @@
 
         <ImageButton
             android:id="@+id/backBtn"
-            android:layout_width="17dp"
-            android:layout_height="20dp"
+            android:layout_width="20dp"
+            android:layout_height="25dp"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="50px"
             android:layout_marginBottom="12dp"
             android:background="@drawable/left_chevron"
-            android:baselineAligned="false" />
+            android:baselineAligned="false"
+            android:onClick="toCart" />
     </RelativeLayout>
 
-    <ScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_gravity="top"
-        android:layout_weight="1">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/orderConfirmationheader"
-            android:padding="8dp">
-
-            <RelativeLayout
-                android:layout_width="380dp"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:background="@drawable/border_round_corner"
-                android:backgroundTint="#F1F1F1"
-                android:padding="15dp">
-
-                <TextView
-                    android:id="@+id/menuId1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Id"
-                    android:textColor="#000000"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/menuId1.1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:text="id"
-                    android:textColor="#000000"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/menuName1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
-                    android:text="Name"
-                    android:textColor="#000000"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/menuName1.1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="40dp"
-                    android:text="name"
-                    android:textColor="#000000"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/menuPrice1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="80dp"
-                    android:text="Price (RM)"
-                    android:textColor="#000000"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/menuPrice1.1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="80dp"
-                    android:text="0.00"
-                    android:textColor="#000000"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/menuQuantity1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="120dp"
-                    android:text="Quantity"
-                    android:textColor="#000000"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/menuQuantity1.1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="120dp"
-                    android:text="0"
-                    android:textColor="#000000"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/menuTotalPrice1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="160dp"
-                    android:text="Total Price (RM)"
-                    android:textColor="#000000"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/menuTotalPrice1.1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="160dp"
-                    android:text="0.00"
-                    android:textColor="#000000"
-                    android:textSize="20sp" />
-            </RelativeLayout>
-        </RelativeLayout>
-    </ScrollView>
+        android:layout_height="match_parent"
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="105dp"/>
 
     <RelativeLayout
-        android:id="@+id/priceFooter"
+        android:id="@+id/footer"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -166,17 +55,17 @@
             android:background="@color/black" />
 
         <TextView
-            android:id="@+id/confirmTotal"
+            android:id="@+id/total"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="45dp"
             android:layout_marginTop="20dp"
-            android:text="Order Total："
+            android:text="Total："
             android:textColor="#000000"
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/confirmTotalAmount"
+            android:id="@+id/totalAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="45dp"
@@ -196,6 +85,7 @@
             android:backgroundTint="#fa9611"
             android:text="Pay"
             android:textColor="#FFFFFF"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:onClick="toPayment"/>
     </RelativeLayout>
-</LinearLayout>
+</RelativeLayout>
