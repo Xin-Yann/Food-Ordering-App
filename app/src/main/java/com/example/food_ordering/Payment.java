@@ -3,6 +3,7 @@ package com.example.food_ordering;
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -46,6 +47,7 @@ public class Payment extends AppCompatActivity {
     TextView textView;
     FirebaseAuth auth;
     FirebaseUser user, staffs;
+    private SharedPreferences preferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -210,6 +212,19 @@ public class Payment extends AppCompatActivity {
                 long orderId = generateOrderId();
                 Map<String, Object> orderDetails = new HashMap<>();
                 placeOrder(orderDetails, orderId);
+
+                // Deduct the order total from the wallet amount
+                double walletAmount = getWalletAmount();
+                double orderTotal = parseOrderTotal(confirmTotalAmount.getText().toString());
+
+                if (walletAmount >= orderTotal) {
+                    double newWalletAmount = walletAmount - orderTotal;
+                    saveWalletAmount(newWalletAmount);
+                    updateDisplayAmount(newWalletAmount);
+                    placeOrder(orderDetails, orderId);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Insufficient funds in the wallet", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
@@ -335,5 +350,32 @@ public class Payment extends AppCompatActivity {
         Intent intent = new Intent(this, Order_history_n_upcoming.class);
         Button toOrderHistory = findViewById(R.id.orderBtn);
         startActivity(intent);
+    }
+
+    private double getWalletAmount() {
+        // Retrieve the wallet amount from SharedPreferences
+        preferences = getSharedPreferences("MyPreferences", MODE_PRIVATE);
+        String walletAmountStr = preferences.getString("walletAmount", "0");
+        return Double.parseDouble(walletAmountStr);
+    }
+
+    private double parseOrderTotal(String orderTotalStr) {
+        // Parse the order total from String to double
+        return Double.parseDouble(orderTotalStr.replace("RM ", ""));
+    }
+
+    private void saveWalletAmount(double newWalletAmount) {
+        // Save the updated wallet amount to SharedPreferences
+        preferences = getSharedPreferences("MyPreferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("walletAmount", String.valueOf(newWalletAmount));
+        editor.apply();
+    }
+
+    private void updateDisplayAmount(double newWalletAmount) {
+        // Send the updated wallet amount back to the calling activity
+        Intent intent = new Intent();
+        intent.putExtra("updatedAmount", "RM " + newWalletAmount);
+        setResult(RESULT_OK, intent);
     }
 }
