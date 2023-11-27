@@ -146,7 +146,7 @@ public class Admin_home extends AppCompatActivity {
     }
 
     public void toReportPage(View view){
-        Intent intent = new Intent(this, Admin_menu_list.class);
+        Intent intent = new Intent(this, Report.class);
         ImageButton toReportPage = findViewById(R.id.reportPage);
         startActivity(intent);
     }
