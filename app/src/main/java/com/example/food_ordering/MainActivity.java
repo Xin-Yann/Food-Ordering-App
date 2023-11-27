@@ -3,6 +3,7 @@ package com.example.food_ordering;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -81,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
             searchView.setIconified(true);
             searchView.requestFocus();
 
-            deleteCache(this);
 
             /*fetch main dish data*/
             fStore.collection("menu")
@@ -130,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
                     // Handle the search query submission
+                    Log.d("MainActivity", "Search submitted with query: " + query);
                     filterList(query);
                     Intent intent = new Intent(getApplicationContext(), SearchResultsActivity.class);
                     intent.putExtra("search_query", query);
@@ -140,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public boolean onQueryTextChange(String newText) {
                     // Handle search query text change
+                    Log.d("MainActivity", "Search text changed to: " + newText);
                     filterList(newText);
                     return true;
                 }
@@ -176,28 +178,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public static void deleteCache(Context context) {
-        try {
-            File dir = context.getCacheDir();
-            deleteDir(dir);
-        } catch (Exception e) {}
-    }
-    public static boolean deleteDir(File dir) {
-        if (dir != null && dir.isDirectory()) {
-            String[] children = dir.list();
-            for (int i = 0; i < children.length; i++) {
-                boolean success = deleteDir(new File(dir, children[i]));
-                if (!success) {
-                    return false;
-                }
-            }
-            return dir.delete();
-        } else if(dir!= null && dir.isFile()) {
-            return dir.delete();
-        } else {
-            return false;
-        }
-    }
 
     public void filterList(String keyword) {
         List<Menu> filteredList = new ArrayList<>();
@@ -212,6 +192,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+
+        Log.d("FilterList", "Filtered list size: " + filteredList.size());
 
         // Update the adapter with the filtered or all items
         adapter.setFilteredList(filteredList);
