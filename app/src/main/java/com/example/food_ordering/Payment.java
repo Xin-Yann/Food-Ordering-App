@@ -193,7 +193,6 @@ public class Payment extends AppCompatActivity {
         timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
             @Override
             public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
-                // Check if the selected time is within the allowed range
                 if ((hourOfDay < 8 || (hourOfDay == 8 && minute < 0)) || (hourOfDay > 16 || (hourOfDay == 16 && minute > 0))) {
                     // If outside the range, set the time back to the minimum (8:00 AM)
                     timePicker.setHour(8);

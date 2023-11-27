@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,8 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -97,28 +94,9 @@ public class Admin_manage_beverage extends AppCompatActivity {
                 AdminMenu selectedItem = datalist.get(position);
                 String menuItemId = selectedItem.getId();
 
-                // Implement the code to delete the dessert item here
-                // For example, you can use menuItemId to delete the item from the Firestore database
-                fStore.collection("menu").document(menuItemId)
-                        .delete()
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                // Item deleted successfully
-                                datalist.remove(position);
-                                adapter.notifyItemRemoved(position);
-                                Toast.makeText(getApplicationContext(), "Deleted successfully", Toast.LENGTH_LONG).show();
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(getApplicationContext(), "Failed to delete", Toast.LENGTH_LONG).show();
-                            }
-                        });
+
             }
         });
-
 
         /*display user email if user login */
         if (admin == null) {
@@ -156,6 +134,7 @@ public class Admin_manage_beverage extends AppCompatActivity {
         });
 
     }
+
     public void toLoginPage(View view){
         Intent intent = new Intent(this, login.class);
         ImageButton toLoginPage = findViewById(R.id.login);
