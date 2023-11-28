@@ -2,6 +2,7 @@ package com.example.food_ordering;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -85,16 +86,44 @@ public class Admin_manage_beverage extends AppCompatActivity {
             @Override
             public void onEditClick(int position) {
                 AdminMenu selectedItem = datalist.get(position);
+                String itemId = selectedItem.getId();
+
+                // Start the Edit_Menu activity with the item's ID
                 Intent intent = new Intent(Admin_manage_beverage.this, Edit_Menu.class);
+                intent.putExtra("itemId", itemId);
+                startActivity(intent);
             }
 
             @Override
             public void onDeleteClick(int position) {
-                // Handle delete button click
                 AdminMenu selectedItem = datalist.get(position);
                 String menuItemId = selectedItem.getId();
 
+                fStore.collection("menu")
+                        .whereEqualTo("menu_id", menuItemId)
+                        .get()
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    String documentId = document.getId();
+                                    Log.d("Delete", "Found document with ID: " + documentId);
 
+                                    document.getReference().delete()
+                                            .addOnCompleteListener(deleteTask -> {
+                                                if (deleteTask.isSuccessful()) {
+                                                    Log.d("Delete", "Document deleted successfully");
+                                                    datalist.remove(position);
+                                                    adapter.notifyItemRemoved(position);
+                                                    adapter.notifyItemRangeChanged(position, datalist.size());
+                                                } else {
+                                                    Log.e("Delete", "Error deleting document", deleteTask.getException());
+                                                }
+                                            });
+                                }
+                            } else {
+                                Log.e("Delete", "Error getting documents: ", task.getException());
+                            }
+                        });
             }
         });
 

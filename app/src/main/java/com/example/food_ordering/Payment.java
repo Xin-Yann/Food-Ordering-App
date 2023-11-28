@@ -89,9 +89,6 @@ public class Payment extends AppCompatActivity {
                                 textView = findViewById(R.id.showEmail);
                                 textView.setText(userEmail);
 
-                                // Additional code if needed after retrieving user data
-                                // ...
-
                             } else {
                                 // If user data not found, try retrieving staff data
                                 firestore.collection("staffs")
@@ -119,8 +116,6 @@ public class Payment extends AppCompatActivity {
                                                         textView = findViewById(R.id.showEmail);
                                                         textView.setText(staffEmail);
 
-                                                        // Additional code if needed after retrieving staff data
-                                                        // ...
                                                     } else {
                                                         // Handle the case when neither user nor staff data is found
                                                     }
@@ -161,7 +156,6 @@ public class Payment extends AppCompatActivity {
 
                 transaction.commit();
 
-                // Adjust the layout of elements below the RadioGroup
                 if (checkedId == R.id.card) {
                     adjustLayoutForFragment(true,
                             1790,
