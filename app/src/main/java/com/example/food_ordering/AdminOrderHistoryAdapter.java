@@ -40,18 +40,22 @@ public class AdminOrderHistoryAdapter extends RecyclerView.Adapter<AdminOrderHis
         String pickupTimeText = orderHistory.getPickupTime();
         String orderStatusText = orderHistory.getOrderStatus();
         String paymentMethodText = orderHistory.getPaymentMethod();
+        String totalAmountText = orderHistory.getTotalamountText();
         String pickupedOnText = orderHistory.getPickupedOn();
         String email = orderHistory.getemail();
+        String remarks = orderHistory.getRemarkText();
 
         // Set the data to your UI elements in the OrderHistoryViewHolder
         holder.foodDetails.setText(foodQuantity + "x " + foodDetailsText);
         holder.price.setText(String.format("RM%.2f", priceValue));
+        holder.totalPrice.setText(totalAmountText);
         holder.orderNumber.setText(orderNumberText);
         holder.pickupTime.setText(pickupTimeText);
         holder.orderStatus.setText(orderStatusText);
         holder.paymentMethod.setText(paymentMethodText);
         holder.pickupedOn.setText(pickupedOnText);
         holder.email.setText(email);
+        holder.remarks.setText(remarks);
 
         // Load foodImgUrl using Picasso or your preferred image loading library
         Picasso.get().load(foodImgUrl).into(holder.foodImg);
@@ -64,7 +68,7 @@ public class AdminOrderHistoryAdapter extends RecyclerView.Adapter<AdminOrderHis
 
     public class OrderHistoryViewHolder extends RecyclerView.ViewHolder {
         ImageView foodImg;
-        TextView foodDetails, price, orderNumber, pickupTime, orderStatus, paymentMethod, pickupedOn, email;
+        TextView foodDetails, price, orderNumber, pickupTime, orderStatus, paymentMethod, pickupedOn, email, totalPrice, remarks;
 
         public OrderHistoryViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -75,8 +79,10 @@ public class AdminOrderHistoryAdapter extends RecyclerView.Adapter<AdminOrderHis
             pickupTime = itemView.findViewById(R.id.pickupTime);
             orderStatus = itemView.findViewById(R.id.orderStatus);
             paymentMethod = itemView.findViewById(R.id.paymentMethod);
+            totalPrice = itemView.findViewById(R.id.totalPrice);
             pickupedOn = itemView.findViewById(R.id.pickupedOn);
             email = itemView.findViewById(R.id.email);
+            remarks = itemView.findViewById(R.id.remarks);
         }
     }
 }

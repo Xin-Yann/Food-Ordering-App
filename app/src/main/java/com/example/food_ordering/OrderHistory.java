@@ -12,13 +12,16 @@ public class OrderHistory {
     private String paymentMethodText;
 
     private String pickupedOnText;
+    private String totalamountText;
+
+    private String remarkText;
 
     // Add a no-argument constructor
     public OrderHistory() {
         // Default constructor required for Firebase
     }
 
-    public OrderHistory(String documentId, String foodImgUrl, String foodDetailsText, int foodQuantity, double priceValue, String orderNumberText, String pickupTimeText, String orderStatusText, String paymentMethodText, String pickupedOnText) {
+    public OrderHistory(String documentId, String foodImgUrl, String foodDetailsText, int foodQuantity, double priceValue, String orderNumberText, String pickupTimeText, String orderStatusText, String paymentMethodText, String pickupedOnText, String totalamountText, String remarks) {
         this.documentId = documentId;
         this.foodImgUrl = foodImgUrl;
         this.foodDetailsText = foodDetailsText;
@@ -29,6 +32,8 @@ public class OrderHistory {
         this.orderStatusText = orderStatusText;
         this.paymentMethodText = paymentMethodText;
         this.pickupedOnText = pickupedOnText;
+        this.totalamountText = totalamountText;
+        this.remarkText = remarks;
     }
 
     public String getDocumentId() {
@@ -72,6 +77,11 @@ public class OrderHistory {
     }
 
     public String getPickupedOnText() { return pickupedOnText;}
+
+    public String getTotalAmountText() {
+        return totalamountText;
+    }
+    public String getRemarkText() {return remarkText;}
 
 }
 

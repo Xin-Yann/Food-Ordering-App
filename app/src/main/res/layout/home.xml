@@ -283,14 +283,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:layout_marginLeft="30dp"
-            android:text="Home"
-            android:onClick="toHome"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:layout_marginLeft="30dp"
             android:text="Main Dish"
             android:onClick="toMainDish"/>
 
@@ -309,6 +301,14 @@
             android:layout_marginLeft="30dp"
             android:text="Dessert"
             android:onClick="toDessert"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="30dp"
+            android:text="Order"
+            android:onClick="toOrder"/>
 
         <View
             android:layout_width="200dp"

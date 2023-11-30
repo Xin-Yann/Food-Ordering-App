@@ -54,7 +54,12 @@ public class UpcomingOrdersAdapter extends RecyclerView.Adapter<UpcomingOrdersAd
         private TextView pickupTime;
         private TextView orderStatus;
         private TextView paymentMethod;
+        private TextView totalamountText;
+
+        private TextView remarkText;
         private Button pickupButton;
+
+        TextView totalPrice;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -65,7 +70,9 @@ public class UpcomingOrdersAdapter extends RecyclerView.Adapter<UpcomingOrdersAd
             orderNumber = itemView.findViewById(R.id.orderNumber);
             pickupTime = itemView.findViewById(R.id.pickupTime);
             orderStatus = itemView.findViewById(R.id.orderStatus);
+            totalPrice = itemView.findViewById(R.id.totalPrice);
             paymentMethod = itemView.findViewById(R.id.paymentMethod);
+            remarkText = itemView.findViewById(R.id.remarks);
             pickupButton = itemView.findViewById(R.id.pickupButton);
         }
 
@@ -78,6 +85,8 @@ public class UpcomingOrdersAdapter extends RecyclerView.Adapter<UpcomingOrdersAd
             pickupTime.setText(order.getPickupTimeText());
             orderStatus.setText(order.getOrderStatusText());
             paymentMethod.setText(order.getPaymentMethodText());
+            totalPrice.setText(order.getTotalAmountText());
+            remarkText.setText(order.getRemarkText());
 
             // Set the click listener for the "Pickup Completed" button
             pickupButton.setOnClickListener(v -> {
@@ -92,7 +101,6 @@ public class UpcomingOrdersAdapter extends RecyclerView.Adapter<UpcomingOrdersAd
                         .setPositiveButton("OK", null)
                         .show();
             }
-
         }
 
         private void showPickupConfirmationDialog(UpcomingOrder order) {

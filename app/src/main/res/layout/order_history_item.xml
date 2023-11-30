@@ -52,6 +52,14 @@
                             android:textSize="18sp" />
 
                         <TextView
+                            android:id="@+id/remarks"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textSize="18sp"
+                            android:textColor="#333333" />
+
+                        <TextView
                             android:id="@+id/foodQuantity"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -73,8 +81,6 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-
-            <!-- Additional CardViews for more items (if needed) -->
 
             <!-- Total Price -->
             <LinearLayout

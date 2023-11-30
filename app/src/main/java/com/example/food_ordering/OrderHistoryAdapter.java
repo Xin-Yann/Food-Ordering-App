@@ -8,13 +8,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
-import com.google.firebase.firestore.DocumentSnapshot; // Use DocumentSnapshot
 import java.util.List;
 
 public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapter.OrderHistoryViewHolder> {
-    private List<DocumentSnapshot> orderHistoryList; // Change to DocumentSnapshot
+    private List<OrderHistory> orderHistoryList;
 
-    public OrderHistoryAdapter(List<DocumentSnapshot> orderHistoryList) {
+    public OrderHistoryAdapter(List<OrderHistory> orderHistoryList) {
         this.orderHistoryList = orderHistoryList;
     }
 
@@ -27,32 +26,21 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
 
     @Override
     public void onBindViewHolder(@NonNull OrderHistoryViewHolder holder, int position) {
-        DocumentSnapshot document = orderHistoryList.get(position); // Use DocumentSnapshot
+        OrderHistory orderHistory = orderHistoryList.get(position);
 
-        // Populate UI elements with data from DocumentSnapshot
-        String foodImgUrl = document.getString("food_img");
-        String foodDetailsText = document.getString("food_name");
-        int foodQuantity = document.getLong("food_quantity").intValue();
-        double priceValue = document.getDouble("food_price");
-        String orderNumberText = document.getString("order_number");
-        String pickupTimeText = document.getString("pickup_time");
-        String orderStatusText = document.getString("order_status");
-        String paymentMethodText = document.getString("payment_method");
-        String pickupedOnText = document.getString("pickupedOn");
-
-
-        // Set the data to your UI elements in the OrderHistoryViewHolder
-        // For example:
-        holder.foodDetails.setText(foodQuantity + "x " + foodDetailsText);
-        holder.price.setText(String.format("RM%.2f", priceValue));
-        holder.orderNumber.setText(orderNumberText);
-        holder.pickupTime.setText(pickupTimeText);
-        holder.orderStatus.setText(orderStatusText);
-        holder.paymentMethod.setText(paymentMethodText);
-        holder.pickupedOn.setText(pickupedOnText);
+        // Populate UI elements with data from OrderHistory
+        holder.foodDetails.setText(orderHistory.getFoodQuantity() + "x " + orderHistory.getFoodDetailsText());
+        holder.price.setText(String.format("RM%.2f", orderHistory.getPriceValue()));
+        holder.orderNumber.setText(orderHistory.getOrderNumberText());
+        holder.pickupTime.setText(orderHistory.getPickupTimeText());
+        holder.orderStatus.setText(orderHistory.getOrderStatusText());
+        holder.paymentMethod.setText(orderHistory.getPaymentMethodText());
+        holder.totalamount.setText(orderHistory.getTotalAmountText());
+        holder.pickupedOn.setText(orderHistory.getPickupedOnText());
+        holder.remarks.setText(orderHistory.getRemarkText());
 
         // Load foodImgUrl using Picasso or your preferred image loading library
-        Picasso.get().load(foodImgUrl).into(holder.foodImg);
+        Picasso.get().load(orderHistory.getFoodImgUrl()).into(holder.foodImg);
     }
 
     @Override
@@ -61,9 +49,8 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
     }
 
     public class OrderHistoryViewHolder extends RecyclerView.ViewHolder {
-        // Define your UI elements here, e.g., foodImg, foodDetails, price, etc.
         ImageView foodImg;
-        TextView foodDetails, price, orderNumber, pickupTime, orderStatus, paymentMethod, pickupedOn;
+        TextView foodDetails, price, orderNumber, pickupTime, orderStatus, paymentMethod, pickupedOn, totalamount, remarks;
 
         public OrderHistoryViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -75,7 +62,9 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
             pickupTime = itemView.findViewById(R.id.pickupTime);
             orderStatus = itemView.findViewById(R.id.orderStatus);
             paymentMethod = itemView.findViewById(R.id.paymentMethod);
+            totalamount = itemView.findViewById(R.id.totalPrice);
             pickupedOn = itemView.findViewById(R.id.pickupedOn);
+            remarks = itemView.findViewById(R.id.remarks);
         }
     }
 }

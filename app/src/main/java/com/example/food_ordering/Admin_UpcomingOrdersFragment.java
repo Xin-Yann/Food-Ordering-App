@@ -15,6 +15,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Admin_UpcomingOrdersFragment extends Fragment {
 
@@ -51,34 +52,60 @@ public class Admin_UpcomingOrdersFragment extends Fragment {
 
             for (QueryDocumentSnapshot document : querySnapshot) {
                 // Get data for the order
+
                 String documentId = document.getId();
-                String foodImgUrl = document.getString("food_img");
-                String foodDetailsText = document.getString("food_name");
-                int foodQuantity = document.getLong("food_quantity").intValue();
-                double priceValue = document.getDouble("food_price");
-                String orderNumberText = document.getString("order_number");
-                String pickupTimeText = document.getString("pickup_time");
-                String orderStatusText = document.getString("order_status");
-                String paymentMethodText = document.getString("payment_method");
-                String email = document.getString("email");
 
-                // Create an AdminUpcomingOrder object
-                AdminUpcomingOrder orderItem = new AdminUpcomingOrder(
-                        documentId, foodImgUrl, foodDetailsText, foodQuantity,
-                        priceValue, orderNumberText, pickupTimeText, orderStatusText,
-                        paymentMethodText, email
-                );
+                // Fetch and populate the "order_items" map
+                Map<String, Object> orderItemsMap = (Map<String, Object>) document.get("order_items");
 
-                // Only add orders with status other than "Pickup Completed"
-                if (!"Pickup Completed".equals(orderStatusText)) {
-                    orderItemList.add(orderItem);
+                if (orderItemsMap != null) {
+                    // Your existing code to fetch other fields
+                    String foodImgUrl = getStringFromMap(orderItemsMap, "cart_image");
+                    String foodDetailsText = getStringFromMap(orderItemsMap, "cart_name");
+                    int foodQuantity = getIntegerFromMap(orderItemsMap, "cart_quantity");
+                    double priceValue = getDoubleFromMap(orderItemsMap, "cart_price");
+                    String remarkText = getStringFromMap(orderItemsMap,"cart_remark");
+                    Object orderNumberObject = document.get("order_number");
+                    String orderNumberText = (orderNumberObject != null) ? orderNumberObject.toString() : "";
+                    String pickupTimeText = document.getString("pickup_time");
+                    String orderStatusText = document.getString("order_status");
+                    String paymentMethodText = document.getString("payment_method");
+                    String totalPrice = document.getString("total_amount");
+                    String email = document.getString("user_email");
+
+                    // Create an AdminUpcomingOrder object
+                    AdminUpcomingOrder orderItem = new AdminUpcomingOrder(
+                            documentId, foodImgUrl, foodDetailsText, foodQuantity,
+                            priceValue, orderNumberText, pickupTimeText, orderStatusText,
+                            paymentMethodText, email, totalPrice, remarkText
+                    );
+
+                    // Only add orders with status other than "Pickup Completed"
+                    if (!"Pickup Completed".equals(orderStatusText)) {
+                        orderItemList.add(orderItem);
+                    }
                 }
             }
-
             // Notify the adapter that data has changed
             orderItemAdapter.notifyDataSetChanged();
         });
 
         return view;
+    }
+
+    // Helper methods to handle null values
+    private String getStringFromMap(Map<String, Object> map, String key) {
+        Object value = map.get(key);
+        return (value != null) ? value.toString() : "";
+    }
+
+    private int getIntegerFromMap(Map<String, Object> map, String key) {
+        Object value = map.get(key);
+        return (value instanceof Number) ? ((Number) value).intValue() : 0;
+    }
+
+    private double getDoubleFromMap(Map<String, Object> map, String key) {
+        Object value = map.get(key);
+        return (value instanceof Number) ? ((Number) value).doubleValue() : 0.0;
     }
 }

@@ -48,9 +48,6 @@
         <activity android:name=".Wallet"></activity>
         <activity android:name=".Reload"></activity>
         <activity android:name=".Admin_menu_list"></activity>
-<<<<<<< HEAD
-
-=======
         <activity android:name=".Reload_1"></activity>
         <activity android:name=".Cash_Instruction"></activity>
         <activity android:name=".Cart"></activity>
@@ -60,7 +57,8 @@
         <activity android:name=".Admin_manage_dessert"></activity>
         <activity android:name=".staffList"></activity>
         <activity android:name=".Payment"></activity>
->>>>>>> origin/HM
+        <activity android:name=".Report"></activity>
+
     </application>
 
 
