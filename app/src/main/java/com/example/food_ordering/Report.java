@@ -75,7 +75,7 @@ public class Report extends AppCompatActivity {
                         cartReportArrayList.clear();
                         cartNameCountMap.clear();
                         cartNameQuantityMap.clear();
-                        cartNameTotalPriceMap.clear(); // Clear the cart_name total price map
+                        cartNameTotalPriceMap.clear();
 
                         for (DocumentChange dc : value.getDocumentChanges()) {
                             if (dc.getType() == DocumentChange.Type.ADDED) {
@@ -97,19 +97,16 @@ public class Report extends AppCompatActivity {
     }
 
     private void updateCartNameTotalPrice(String cartName, String price) {
-        // Update the total price for each cart_name in the Map
         double totalPrice = cartNameTotalPriceMap.getOrDefault(cartName, 0.0);
         totalPrice += Double.parseDouble(price);
         cartNameTotalPriceMap.put(cartName, totalPrice);
     }
 
     private void updateCartNameCount(String cartName) {
-        // Update the count for each cart_name in the Map
         cartNameCountMap.put(cartName, cartNameCountMap.getOrDefault(cartName, 0) + 1);
     }
 
     private void updateCartNameQuantity(String cartName, long quantity) {
-        // Update the quantity for each cart_name in the Map
         cartNameQuantityMap.put(cartName, cartNameQuantityMap.getOrDefault(cartName, 0L) + quantity);
     }
 
@@ -117,19 +114,16 @@ public class Report extends AppCompatActivity {
         double totalProfitAmount = 0;
         StringBuilder cartNamesStringBuilder = new StringBuilder();
 
-        // Iterate through the cartNameTotalPriceMap to calculate the total profit
         for (Map.Entry<String, Double> entry : cartNameTotalPriceMap.entrySet()) {
             String cartName = entry.getKey();
             double totalPrice = entry.getValue();
-            long totalQuantity = cartNameQuantityMap.getOrDefault(cartName, 0L); // Get the total quantity
+            long totalQuantity = cartNameQuantityMap.getOrDefault(cartName, 0L);
 
-            // Find the CartReport with the given cart_name
             CartReport cartReport = findCartReportByCartName(cartName);
 
             if (cartReport != null && "paid".equals(cartReport.getPayment_status())) {
                 totalProfitAmount += totalPrice;
 
-                // Append the cart_name, total price, and total quantity to the StringBuilder with a new line
                 cartNamesStringBuilder.append(cartName)
                         .append(" (Price: RM ").append(String.format("%.2f", totalPrice))
                         .append(", Quantity: ").append(totalQuantity).append(")\n\n");
@@ -141,7 +135,6 @@ public class Report extends AppCompatActivity {
     }
 
     private CartReport findCartReportByCartName(String cartName) {
-        // Find the CartReport with the given cart_name in the list
         for (CartReport cartReport : cartReportArrayList) {
             if (cartName.equals(cartReport.cart_name)) {
                 return cartReport;
