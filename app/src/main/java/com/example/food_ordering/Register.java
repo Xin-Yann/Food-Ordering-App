@@ -144,27 +144,22 @@ public class Register extends AppCompatActivity {
                                     public void onComplete(@NonNull Task<AuthResult> task) {
                                         progressBar.setVisibility(View.GONE);
                                         if (task.isSuccessful()) {
-                                            // User registration successful
                                             Toast.makeText(Register.this, "Account Created.", Toast.LENGTH_SHORT).show();
 
                                             // Store user data in Firestore
                                             FirebaseUser firebaseUser = mAuth.getCurrentUser();
                                             if (firebaseUser != null) {
 
-                                                // Create a map to store user data
                                                 Map<String, Object> userData = new HashMap<>();
                                                 userData.put("id", id);
                                                 userData.put("name", name);
                                                 userData.put("email", email);
-                                                userData.put("password", hashedPassword); // Store the hashed password
+                                                userData.put("password", hashedPassword);
                                                 userData.put("contact", contact);
 
-                                                // Get a reference to Firestore
                                                 FirebaseFirestore db = FirebaseFirestore.getInstance();
 
                                                 if (isAdmin) {
-
-                                                    // Save admin data in the "admins" collection
                                                     db.collection("admins")
                                                             .document(firebaseUser.getUid())
                                                             .set(userData)
@@ -187,14 +182,12 @@ public class Register extends AppCompatActivity {
                                                 }
 
                                                 if (isUser) {
-                                                    // Create a new document in the "users" collection with the user's UID as the document ID
                                                     db.collection("users")
                                                             .document(firebaseUser.getUid())
                                                             .set(userData)
                                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                 @Override
                                                                 public void onSuccess(Void unused) {
-                                                                    // User data successfully saved in Firestore
                                                                     Toast.makeText(Register.this, "User data saved.", Toast.LENGTH_SHORT).show();
 
                                                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -206,21 +199,18 @@ public class Register extends AppCompatActivity {
                                                             .addOnFailureListener(new OnFailureListener() {
                                                                 @Override
                                                                 public void onFailure(@NonNull Exception e) {
-                                                                    // Failed to save user data in Firestore
                                                                     Toast.makeText(Register.this, "Failed to save user data.", Toast.LENGTH_SHORT).show();
                                                                 }
                                                             });
                                                 }
 
                                                 if (isStaff) {
-                                                    // Create a new document in the "users" collection with the user's UID as the document ID
                                                     db.collection("staffs")
                                                             .document(firebaseUser.getUid())
                                                             .set(userData)
                                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                 @Override
                                                                 public void onSuccess(Void aVoid) {
-                                                                    // User data successfully saved in Firestore
                                                                     Toast.makeText(Register.this, "Staff data saved.", Toast.LENGTH_SHORT).show();
 
                                                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -231,7 +221,6 @@ public class Register extends AppCompatActivity {
                                                             .addOnFailureListener(new OnFailureListener() {
                                                                 @Override
                                                                 public void onFailure(@NonNull Exception e) {
-                                                                    // Failed to save user data in Firestore
                                                                     Toast.makeText(Register.this, "Failed to save staff data.", Toast.LENGTH_SHORT).show();
                                                                 }
                                                             });
@@ -239,7 +228,6 @@ public class Register extends AppCompatActivity {
                                             }
 
                                         } else {
-                                            // Registration failed
                                             Toast.makeText(Register.this, "Authentication failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                         }
                                     }
@@ -276,15 +264,12 @@ public class Register extends AppCompatActivity {
                         } else {
                             // Handle the error
                             Log.e("Register", "Error checking ID: " + task.getException());
-                            listener.onIdCheckComplete(false); // Assume ID is not registered if an error occurs
+                            listener.onIdCheckComplete(false);
                         }
                     }
                 });
     }
 
-
-
-    // Hashing function (You can use a proper password hashing library)
     private String hashPassword(String password) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
