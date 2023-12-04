@@ -42,7 +42,6 @@
         <activity android:name=".Pickup_info"></activity>
         <activity android:name=".Privacy_policy"></activity>
         <activity android:name=".Admin_report"></activity>
-        <activity android:name=".Admin_order"></activity>
         <activity android:name=".Add_Menu"></activity>
         <activity android:name=".Edit_Menu"></activity>
         <activity android:name=".Menu_item"></activity>
@@ -58,6 +57,8 @@
         <activity android:name=".Admin_manage_dessert"></activity>
         <activity android:name=".staffList"></activity>
         <activity android:name=".Payment"></activity>
+        <activity android:name=".Report"></activity>
+
     </application>
 
 

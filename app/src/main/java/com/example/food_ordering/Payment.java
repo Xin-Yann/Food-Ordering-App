@@ -3,6 +3,7 @@ package com.example.food_ordering;
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -46,6 +47,7 @@ public class Payment extends AppCompatActivity {
     TextView textView;
     FirebaseAuth auth;
     FirebaseUser user, staffs;
+    private SharedPreferences preferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -191,6 +193,19 @@ public class Payment extends AppCompatActivity {
                 long orderId = generateOrderId();
                 Map<String, Object> orderDetails = new HashMap<>();
                 placeOrder(orderDetails, orderId);
+
+                // Deduct the order total from the wallet amount
+                double walletAmount = getWalletAmount();
+                double orderTotal = parseOrderTotal(confirmTotalAmount.getText().toString());
+
+                if (walletAmount >= orderTotal) {
+                    double newWalletAmount = walletAmount - orderTotal;
+                    saveWalletAmount(newWalletAmount);
+                    updateDisplayAmount(newWalletAmount);
+                    placeOrder(orderDetails, orderId);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Insufficient funds in the wallet", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
@@ -256,43 +271,85 @@ public class Payment extends AppCompatActivity {
     private void placeOrder(Map<String, Object> order, long orderId) {
         String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
-        String name = ((TextView) findViewById(R.id.showUsername)).getText().toString();
-        String id = ((TextView) findViewById(R.id.showDarpaId)).getText().toString();
-        String email = ((TextView) findViewById(R.id.showEmail)).getText().toString();
-        String contact = ((TextView) findViewById(R.id.showContactNo)).getText().toString();
+        // Fetch cart data
+        firestore.collection("cart")
+                .whereEqualTo("user_email", userEmail)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    for (DocumentSnapshot cartDocument : queryDocumentSnapshots.getDocuments()) {
+                        // Get cart data
+                        String cartImage = cartDocument.getString("cart_image");
+                        String cartName = cartDocument.getString("cart_name");
+                        long cartQuantity = cartDocument.getLong("cart_quantity");
+                        String cartPriceString = cartDocument.getString("cart_price");
+                        String cartRemarkString = cartDocument.getString("cart_remarks");
+                        String paymentStatus = cartDocument.getString("payment_status");
 
-        int selectedRadioButtonId = radioGroup.getCheckedRadioButtonId();
-        String paymentMethod = getPaymentMethod(selectedRadioButtonId);
+                        // Check if payment_status is null
+                        if (paymentStatus == null) {
+                            try {
+                                double cartPrice = Double.parseDouble(cartPriceString);
 
-        timePicker = findViewById(R.id.selectPickupTime);
-        int hour = timePicker.getHour();
-        int minute = timePicker.getMinute();
-        String pickupTime = String.format("%02d:%02d", hour, minute);
+                                // Add cart data to the order
+                                Map<String, Object> cartItem = new HashMap<>();
+                                cartItem.put("cart_image", cartImage);
+                                cartItem.put("cart_name", cartName);
+                                cartItem.put("cart_quantity", cartQuantity);
+                                cartItem.put("cart_price", cartPrice);
+                                cartItem.put("cart_remark", cartRemarkString);
 
-        order.put("user_email", userEmail);
-        order.put("name", name);
-        order.put("id", id);
-        order.put("contact", contact);
-        order.put("payment_method", paymentMethod);
-        order.put("pickup_time", pickupTime);
-        order.put("order_number", orderId);
-        order.put("total_amount", confirmTotalAmount.getText().toString());
+                                // Add the cart item to the "order_items" field in the order
+                                order.put("order_items", cartItem);
 
-        order.put("order_status", "Pending");
+                                // Add other order details here
+                                String name = ((TextView) findViewById(R.id.showUsername)).getText().toString();
+                                String id = ((TextView) findViewById(R.id.showDarpaId)).getText().toString();
+                                String email = ((TextView) findViewById(R.id.showEmail)).getText().toString();
+                                String contact = ((TextView) findViewById(R.id.showContactNo)).getText().toString();
 
-        firestore.collection("orders").add(order).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-            @Override
-            public void onSuccess(DocumentReference documentReference) {
-                Toast.makeText(getApplicationContext(), "Order placed successfully", Toast.LENGTH_LONG).show();
-                updateStatusForCart(userEmail);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(), "Failed to place order", Toast.LENGTH_LONG).show();
-            }
-        });
+                                int selectedRadioButtonId = radioGroup.getCheckedRadioButtonId();
+                                String paymentMethod = getPaymentMethod(selectedRadioButtonId);
+
+                                TimePicker timePicker = findViewById(R.id.selectPickupTime);
+                                int hour = timePicker.getHour();
+                                int minute = timePicker.getMinute();
+                                String pickupTime = String.format("%02d:%02d", hour, minute);
+
+                                // Add other order details to the "orders" collection
+                                order.put("user_email", userEmail);
+                                order.put("name", name);
+                                order.put("id", id);
+                                order.put("contact", contact);
+                                order.put("payment_method", paymentMethod);
+                                order.put("pickup_time", pickupTime);
+                                order.put("order_number", orderId);
+                                order.put("total_amount", confirmTotalAmount.getText().toString());
+                                order.put("order_status", "Pending");
+
+                                // Save the order to Firestore
+                                firestore.collection("orders").add(order)
+                                        .addOnSuccessListener(documentReference -> {
+                                            // Update the payment_status to "paid" for each cart item
+                                            updateStatusForCart(userEmail);
+
+                                            // Display a success message
+                                            Toast.makeText(getApplicationContext(), "Order placed successfully!", Toast.LENGTH_LONG).show();
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            Toast.makeText(getApplicationContext(), "Failed to place order", Toast.LENGTH_LONG).show();
+                                        });
+                            } catch (NumberFormatException e) {
+                                // Handle the case where 'cart_price' is not a valid number
+                            }
+                        } else {
+                            // Handle the case where payment_status is not null
+                            // You can choose to skip or handle accordingly
+                        }
+                    }
+                });
     }
+
+
 
     private String getPaymentMethod(int selectedRadioButtonId) {
         if (selectedRadioButtonId == R.id.cash) {
@@ -316,5 +373,31 @@ public class Payment extends AppCompatActivity {
         Intent intent = new Intent(this, Order_history_n_upcoming.class);
         Button toOrderHistory = findViewById(R.id.orderBtn);
         startActivity(intent);
+    }
+    private double getWalletAmount() {
+        // Retrieve the wallet amount from SharedPreferences
+        preferences = getSharedPreferences("MyPreferences", MODE_PRIVATE);
+        String walletAmountStr = preferences.getString("walletAmount", "0");
+        return Double.parseDouble(walletAmountStr);
+    }
+
+    private double parseOrderTotal(String orderTotalStr) {
+        // Parse the order total from String to double
+        return Double.parseDouble(orderTotalStr.replace("RM ", ""));
+    }
+
+    private void saveWalletAmount(double newWalletAmount) {
+        // Save the updated wallet amount to SharedPreferences
+        preferences = getSharedPreferences("MyPreferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("walletAmount", String.valueOf(newWalletAmount));
+        editor.apply();
+    }
+
+    private void updateDisplayAmount(double newWalletAmount) {
+        // Send the updated wallet amount back to the calling activity
+        Intent intent = new Intent();
+        intent.putExtra("updatedAmount", "RM " + newWalletAmount);
+        setResult(RESULT_OK, intent);
     }
 }

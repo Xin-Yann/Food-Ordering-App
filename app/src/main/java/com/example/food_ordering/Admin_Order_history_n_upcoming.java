@@ -1,60 +1,77 @@
 package com.example.food_ordering;
 
 import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.tabs.TabLayout;
-public class Admin_Order_history_n_upcoming extends AppCompatActivity{
+import android.view.View;
+import android.content.Intent;
 
-    /*public static final String name="";*/
+import java.util.ArrayList;
+import java.util.List;
+import android.util.Log;
 
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
+public class Admin_Order_history_n_upcoming extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.admin_order_history_n_upcoming);
 
-        tabLayout = findViewById(R.id.tablayout);
-        viewPager = findViewById(R.id.viewpager);
+        // Set UpcomingOrdersFragment as the default fragment
+        Fragment defaultFragment = new Admin_UpcomingOrdersFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.AdminUpcomingFragmentContainer, defaultFragment);
+        transaction.commit();
 
-        tabLayout.setupWithViewPager(viewPager);
-        VPAdapter vpAdapter = new VPAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        vpAdapter.addFragment(new Admin_UpcomingOrdersFragment(), "Upcoming Order");
-        vpAdapter.addFragment(new Admin_OrderHistoryFragment(), "Order History");
-        viewPager.setAdapter(vpAdapter);
+        TabLayout tabLayout = findViewById(R.id.tabLayout);
 
-    }
-   /* public void toHome(View view){
-        Intent intent = new Intent(this, Admin_home.class);
-        ImageButton toHome = findViewById(R.id.home_page);
-        startActivity(intent);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                Fragment selectedFragment = null;
+                switch (tab.getPosition()) {
+                    case 0:
+                        // Show Upcoming Orders
+                        selectedFragment = new Admin_UpcomingOrdersFragment();
+                        break;
+                    case 1:
+                        // Show Order History
+                        selectedFragment = new Admin_OrderHistoryFragment();
+                        break;
+                }
+
+                if (selectedFragment != null) {
+                    // Replace the fragment using the correct container IDs
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.AdminUpcomingFragmentContainer, selectedFragment);
+                    transaction.commit();
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                // Handle unselected tabs if needed
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                // Handle reselected tabs if needed
+            }
+        });
+
+        // Get the ImageButton
+        View backBtn = findViewById(R.id.backBtn);
+
+        // Set an OnClickListener to navigate to Admin_home when the ImageButton is clicked
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Navigate to the Admin_home activity
+                startActivity(new Intent(Admin_Order_history_n_upcoming.this, Admin_home.class));
+            }
+        });
     }
 
-    public void toAddMenu(View view){
-        Intent intent = new Intent(this, Add_Menu.class);
-        ImageButton toAddMenu = findViewById(R.id.add_menu);
-        startActivity(intent);
-    }
-
-    public void toOrder(View view){
-        Intent intent = new Intent(this, Admin_Order_history_n_upcoming.class);
-        ImageButton toOrder = findViewById(R.id.order);
-        startActivity(intent);
-    }
-
-    public void toReportPage(View view){
-        Intent intent = new Intent(this, Admin_menu_list.class);
-        ImageButton toCartPage = findViewById(R.id.reportPage);
-        startActivity(intent);
-    }
-
-    public void toAccount(View view){
-        Intent intent = new Intent(this, Account_details.class);
-        TextView toAccount = findViewById(R.id.accountPage);
-        startActivity(intent);
-    }
-*/
 }

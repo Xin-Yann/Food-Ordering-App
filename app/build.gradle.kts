@@ -46,5 +46,7 @@ dependencies {
     implementation ("com.squareup.picasso:picasso:2.8")
     implementation ("com.google.android.material:material:1.2.0-alpha05")
     implementation ("com.google.firebase:firebase-core:19.0.0")
+    implementation("androidx.annotation:annotation:1.2.0")
+    implementation ("androidx.viewpager2:viewpager2:1.0.0")
 
 }

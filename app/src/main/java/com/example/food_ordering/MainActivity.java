@@ -241,6 +241,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
+    /*Footer*/
     public void toHome(View view){
         Intent intent = new Intent(this, MainActivity.class);
         ImageButton toHome = findViewById(R.id.home_page);
