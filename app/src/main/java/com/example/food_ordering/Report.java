@@ -1,6 +1,7 @@
 package com.example.food_ordering;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -9,8 +10,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -23,6 +29,9 @@ import java.util.Map;
 
 public class Report extends AppCompatActivity {
 
+    FirebaseAuth auth;
+    ImageButton logout;
+    FirebaseUser admin;
     RecyclerView recyclerView;
     ArrayList<CartReport> cartReportArrayList;
     ReportAdapter reportAdapter;
@@ -38,6 +47,10 @@ public class Report extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.report);
+
+        auth = FirebaseAuth.getInstance();
+        admin = auth.getCurrentUser();
+        logout = findViewById(R.id.logout);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
@@ -58,6 +71,29 @@ public class Report extends AppCompatActivity {
         cartCount = findViewById(R.id.cart_count);
 
         EventChangeListener();
+
+        /*display user email if user login */
+        if (admin == null) {
+            Intent intent = new Intent(getApplicationContext(), login.class);
+            startActivity(intent);
+            finish();
+        } else {
+            TextView text = findViewById(R.id.admin_details);
+            text.setText(admin.getEmail());
+
+        }
+
+        /*logout*/
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getApplicationContext(), login.class);
+                startActivity(intent);
+                finish();
+            }
+
+        });
     }
 
     private void EventChangeListener() {
