@@ -45,10 +45,8 @@ public class OrderHistoryFragment extends Fragment {
 
                 for (DocumentSnapshot document : task.getResult().getDocuments()) {
                     try {
-                        // Fetch and populate the "order_items" map
                         Map<String, Object> orderItemsMap = (Map<String, Object>) document.get("order_items");
 
-                        // Your existing code to fetch other fields
                         String foodImgUrl = getStringFromMap(orderItemsMap, "cart_image");
                         String foodDetailsText = getStringFromMap(orderItemsMap, "cart_name");
                         int foodQuantity = getIntegerFromMap(orderItemsMap, "cart_quantity");
@@ -64,7 +62,6 @@ public class OrderHistoryFragment extends Fragment {
                         // Use the helper method to handle null values for remarks
                         String remarksText = getRemarksFromMap(orderItemsMap, "cart_remark");
 
-                        // Create an OrderHistory object and add it to the list
                         OrderHistory orderHistory = new OrderHistory(
                                 document.getId(),
                                 foodImgUrl,
@@ -81,8 +78,7 @@ public class OrderHistoryFragment extends Fragment {
                         );
                         orderHistoryList.add(orderHistory);
                     } catch (Exception e) {
-                        // Log the exception and continue to the next iteration
-                        Log.e("OrderHistoryFragment", "Exception while processing order document", e);
+
                     }
                 }
 

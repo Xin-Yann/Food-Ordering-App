@@ -202,7 +202,6 @@ public class Payment extends AppCompatActivity {
                     double newWalletAmount = walletAmount - orderTotal;
                     saveWalletAmount(newWalletAmount);
                     updateDisplayAmount(newWalletAmount);
-                    placeOrder(orderDetails, orderId);
                 } else {
                     Toast.makeText(getApplicationContext(), "Insufficient funds in the wallet", Toast.LENGTH_LONG).show();
                 }

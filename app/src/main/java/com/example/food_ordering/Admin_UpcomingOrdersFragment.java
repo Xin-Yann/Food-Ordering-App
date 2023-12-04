@@ -38,20 +38,17 @@ public class Admin_UpcomingOrdersFragment extends Fragment {
 
         db = FirebaseFirestore.getInstance();
 
-        // Fetch and populate the "Upcoming Orders" layout
         Query orderQuery = db.collection("orders");
 
         // Add a real-time listener for order changes
         orderQuery.addSnapshotListener((querySnapshot, e) -> {
             if (e != null) {
-                // Handle the error
                 return;
             }
 
-            orderItemList.clear(); // Clear the previous data
+            orderItemList.clear();
 
             for (QueryDocumentSnapshot document : querySnapshot) {
-                // Get data for the order
 
                 String documentId = document.getId();
 
@@ -59,7 +56,6 @@ public class Admin_UpcomingOrdersFragment extends Fragment {
                 Map<String, Object> orderItemsMap = (Map<String, Object>) document.get("order_items");
 
                 if (orderItemsMap != null) {
-                    // Your existing code to fetch other fields
                     String foodImgUrl = getStringFromMap(orderItemsMap, "cart_image");
                     String foodDetailsText = getStringFromMap(orderItemsMap, "cart_name");
                     int foodQuantity = getIntegerFromMap(orderItemsMap, "cart_quantity");
@@ -73,7 +69,6 @@ public class Admin_UpcomingOrdersFragment extends Fragment {
                     String totalPrice = document.getString("total_amount");
                     String email = document.getString("user_email");
 
-                    // Create an AdminUpcomingOrder object
                     AdminUpcomingOrder orderItem = new AdminUpcomingOrder(
                             documentId, foodImgUrl, foodDetailsText, foodQuantity,
                             priceValue, orderNumberText, pickupTimeText, orderStatusText,
@@ -86,7 +81,7 @@ public class Admin_UpcomingOrdersFragment extends Fragment {
                     }
                 }
             }
-            // Notify the adapter that data has changed
+
             orderItemAdapter.notifyDataSetChanged();
         });
 

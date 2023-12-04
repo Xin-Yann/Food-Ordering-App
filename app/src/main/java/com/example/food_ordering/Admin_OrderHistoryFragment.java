@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.Map;
 
 import java.util.ArrayList;
@@ -47,14 +46,12 @@ public class Admin_OrderHistoryFragment extends Fragment {
 
         orderQuery.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                orderItemList.clear(); // Clear the previous data
+                orderItemList.clear();
 
                 for (DocumentSnapshot document : task.getResult().getDocuments()) {
                     try {
-                        // Fetch and populate the "order_items" map
                         Map<String, Object> orderItemsMap = (Map<String, Object>) document.get("order_items");
 
-                        // Your existing code to fetch other fields
                         String foodImgUrl = getStringFromMap(orderItemsMap, "cart_image");
                         String foodDetailsText = getStringFromMap(orderItemsMap, "cart_name");
                         int foodQuantity = getIntegerFromMap(orderItemsMap, "cart_quantity");
@@ -68,13 +65,11 @@ public class Admin_OrderHistoryFragment extends Fragment {
                         String pickupedOnText = document.getString("pickupedOn");
                         String email = document.getString( "user_email");
 
-                        // Create an AdminOrderHistory object and add it to the list
                         orderItemList.add(new AdminOrderHistory(foodImgUrl, foodDetailsText, foodQuantity, priceValue, orderNumberText, pickupTimeText, orderStatusText, paymentMethodText, pickupedOnText, email, totalamountText, remarkText));
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
-                // Notify the adapter that data has changed
                 orderItemAdapter.notifyDataSetChanged();
             }
         });
