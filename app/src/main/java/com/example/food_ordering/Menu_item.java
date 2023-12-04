@@ -37,8 +37,8 @@ public class Menu_item extends AppCompatActivity {
     FirebaseFirestore db;
 
     int quantity = 1;
-    String menuName; // Add variable to hold menu name
-    String menuPrice; // Add variable to hold menu price
+    String menuName;
+    String menuPrice;
     String menuImage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

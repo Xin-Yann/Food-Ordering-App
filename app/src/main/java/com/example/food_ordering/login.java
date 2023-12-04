@@ -81,18 +81,18 @@ public class login extends AppCompatActivity {
                                 progressBar.setVisibility(View.GONE);
                                 if (task.isSuccessful()) {
                                     if (isAdmin) {
-                                        // Admin login successful, redirect to admin activity
+                                        // Admin login successful, redirect to admin home page
                                         Intent adminIntent = new Intent(getApplicationContext(), Admin_home.class);
                                         startActivity(adminIntent);
                                         finish();
                                     } else {
-                                        // Regular user login successful, redirect to main activity
+                                        // user & staff login successful, redirect to home page
                                         Intent userIntent = new Intent(getApplicationContext(), MainActivity.class);
                                         startActivity(userIntent);
                                         finish();
                                     }
                                 } else {
-                                    // If sign-in fails, display a message to the user.
+                                    // login fail
                                     Toast.makeText(login.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                                 }
                             }
@@ -100,7 +100,6 @@ public class login extends AppCompatActivity {
 
             }
 
-            // Hashing function (You can use a proper password hashing library)
             private String hashPassword(String password) {
                 try {
                     MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -113,9 +112,7 @@ public class login extends AppCompatActivity {
             }
         });
 
-
         TextView register = findViewById(R.id.register);
-
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

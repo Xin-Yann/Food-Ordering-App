@@ -43,7 +43,6 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.CardViewHolder
         return new CardViewHolder(view);
     }
 
-
     @Override
     public void onBindViewHolder(@NonNull CardViewHolder holder, int position) {
         Menu data = datalist.get(holder.getAdapterPosition());
@@ -52,8 +51,6 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.CardViewHolder
         holder.detailTextView.setText(data.getDetail());
         holder.priceTextView.setText(data.getPrice());
 
-
-        // Set an OnClickListener for the item view
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,8 +63,6 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.CardViewHolder
             }
         });
     }
-
-
     @Override
     public int getItemCount() {
         return datalist.size();

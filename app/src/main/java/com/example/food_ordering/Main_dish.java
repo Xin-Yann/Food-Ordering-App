@@ -90,15 +90,11 @@ public class Main_dish extends AppCompatActivity {
                                 String dishImage = document.getString("menu_image");
                                 String dishDesc = document.getString("menu_detail");
 
-
-                                // Add the retrieved data to the ArrayList
                                 datalist.add(new Menu(dishName, dishPrice, dishImage,dishDesc));
                             }
 
                             adapter.notifyDataSetChanged();
 
-                        } else {
-                            // Handle the case where the query was not successful
                         }
                     }
                 });
@@ -106,10 +102,8 @@ public class Main_dish extends AppCompatActivity {
         adapter.setOnItemClickListener(new MenuAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                // Get the selected menu item
                 Menu selectedItem = datalist.get(position);
 
-                // Create an Intent to send the selected menu item's details to the MenuItemDashboardActivity
                 Intent intent = new Intent(Main_dish.this, Menu_item.class);
                 intent.putExtra("menuName", selectedItem.getName());
                 intent.putExtra("menuPrice", selectedItem.getPrice());
@@ -118,9 +112,6 @@ public class Main_dish extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
-
     }
 
     /*menu*/

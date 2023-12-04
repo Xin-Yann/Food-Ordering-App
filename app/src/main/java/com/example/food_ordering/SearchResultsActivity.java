@@ -54,7 +54,6 @@ public class SearchResultsActivity extends AppCompatActivity {
         searchResultsRecyclerView.setAdapter(adapter);
         drawerLayout = findViewById(R.id.drawerLayout);
         openDrawer = findViewById(R.id.menu);
-        // Retrieve the search query from the intent
         String searchQuery = getIntent().getStringExtra("search_query");
 
         fStore.collection("menu")
@@ -69,14 +68,10 @@ public class SearchResultsActivity extends AppCompatActivity {
                                 String dishImage = document.getString("menu_image");
                                 String dishDesc = document.getString("menu_detail");
 
-                                // Add the retrieved data to the ArrayList
                                 datalist.add(new Menu(dishName, dishPrice, dishImage, dishDesc));
                             }
-                            // Notify the adapter that the data has changed
                             adapter.notifyDataSetChanged();
                             filterList(searchQuery);
-                        } else {
-                            // Handle the case where the query was not successful
                         }
                     }
                 });
@@ -88,14 +83,12 @@ public class SearchResultsActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                // Handle the search query submission
                 filterList(query);
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                // Handle search query text change
                 filterList(newText);
                 return true;
             }
@@ -137,12 +130,10 @@ public class SearchResultsActivity extends AppCompatActivity {
 
     }
 
-
     public void filterList(String keyword) {
         List<Menu> filteredList = new ArrayList<>();
 
         if (keyword.isEmpty()) {
-            // If the query is empty, show all items
             filteredList.addAll(datalist);
         } else {
             for (Menu menu : datalist) {
@@ -152,7 +143,6 @@ public class SearchResultsActivity extends AppCompatActivity {
             }
         }
 
-        // Update the adapter with the filtered or all items
         adapter.setFilteredList(filteredList);
 
         if (filteredList.isEmpty()) {

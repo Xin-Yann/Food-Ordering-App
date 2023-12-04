@@ -79,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
             searchView.setIconified(true);
             searchView.requestFocus();
 
-
             /*fetch main dish data*/
             fStore.collection("menu")
                     .limit(3)
@@ -169,7 +168,6 @@ public class MainActivity extends AppCompatActivity {
             });
         }
     }
-
 
     public void filterList(String keyword) {
         List<Menu> filteredList = new ArrayList<>();
