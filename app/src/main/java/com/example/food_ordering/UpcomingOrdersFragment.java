@@ -39,7 +39,6 @@ public class UpcomingOrdersFragment extends Fragment {
         db = FirebaseFirestore.getInstance();
         currentUserEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
-        // Fetch and populate the "Upcoming Orders" layout
         orderQuery = db.collection("orders").whereEqualTo("user_email", currentUserEmail);
 
         // Add a real-time listener for order changes
@@ -49,25 +48,21 @@ public class UpcomingOrdersFragment extends Fragment {
                 return;
             }
 
-            upcomingOrderList.clear(); // Clear the previous data
+            upcomingOrderList.clear();
 
             for (QueryDocumentSnapshot document : querySnapshot) {
-                // Get data for the order
                 String documentId = document.getId();
                 Map<String, Object> orderItemsMap = (Map<String, Object>) document.get("order_items");
 
                 if (orderItemsMap != null) {
-                    // Access nested data within order_items
                     String foodImgUrl = (String) orderItemsMap.get("cart_image");
                     String foodDetailsText = (String) orderItemsMap.get("cart_name");
                     String remarkText = (String) orderItemsMap.get("cart_remark");
 
 
-                    // Check if cart_quantity is null before using it
                     Long cartQuantityLong = (Long) orderItemsMap.get("cart_quantity");
                     int foodQuantity = (cartQuantityLong != null) ? cartQuantityLong.intValue() : 0;
 
-                    // Check if cart_price is null before using it
                     Double cartPriceDouble = (Double) orderItemsMap.get("cart_price");
                     double priceValue = (cartPriceDouble != null) ? cartPriceDouble : 0.0;
 
@@ -77,20 +72,16 @@ public class UpcomingOrdersFragment extends Fragment {
                     String paymentMethodText = document.getString("payment_method");
                     String totalamountText = document.getString("total_amount");
 
-                    // Extract order_number from order_items or from outside if it's a number
                     Object orderNumberField = orderItemsMap.get("order_number");
                     String orderNumberText = "";
 
                     if (orderNumberField != null) {
                         if (orderNumberField instanceof Number) {
-                            // If it's a number, convert it to String
                             orderNumberText = String.valueOf(((Number) orderNumberField).longValue());
                         } else if (orderNumberField instanceof String) {
-                            // If it's already a string, use it
                             orderNumberText = (String) orderNumberField;
                         }
                     } else {
-                        // If order_number is not found in order_items, check outside the map
                         Object outsideOrderNumberField = document.get("order_number");
                         if (outsideOrderNumberField instanceof Number) {
                             orderNumberText = String.valueOf(((Number) outsideOrderNumberField).longValue());
@@ -115,14 +106,12 @@ public class UpcomingOrdersFragment extends Fragment {
 
                     );
 
-                    // Only add orders with status other than "Pickup Completed"
                     if (!"Pickup Completed".equals(orderStatusText)) {
                         upcomingOrderList.add(upcomingOrder);
                     }
                 }
             }
 
-            // Notify the adapter that data has changed
             adapter.notifyDataSetChanged();
         });
 

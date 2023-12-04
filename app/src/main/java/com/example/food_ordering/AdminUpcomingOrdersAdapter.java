@@ -41,10 +41,9 @@ public class AdminUpcomingOrdersAdapter extends RecyclerView.Adapter<AdminUpcomi
     public void onBindViewHolder(@NonNull OrderItemViewHolder holder, int position) {
         AdminUpcomingOrder orderItem = orderItemList.get(position);
 
-        // Populate the views with data from the AdminUpcomingOrder
+
         Picasso.get().load(orderItem.getFoodImgUrl()).into(holder.foodImg);
 
-        // Display food details and quantity in the desired format
         String foodDetailsAndQuantity = orderItem.getFoodQuantity() + "x " + orderItem.getFoodDetailsText();
         holder.foodDetails.setText(foodDetailsAndQuantity);
 
@@ -55,7 +54,7 @@ public class AdminUpcomingOrdersAdapter extends RecyclerView.Adapter<AdminUpcomi
         holder.orderStatus.setText(orderItem.getOrderStatusText());
         holder.paymentMethod.setText(orderItem.getPaymentMethodText());
         String email = orderItem.getemail();
-        Log.d("EmailDebug", "Email: " + email); // Add this line for debugging
+        Log.d("EmailDebug", "Email: " + email);
         holder.email.setText(orderItem.getemail());
         holder.totalPrice.setText(orderItem.getTotalamountText());
         holder.remarks.setText(orderItem.getRemarkText());
@@ -143,13 +142,11 @@ public class AdminUpcomingOrdersAdapter extends RecyclerView.Adapter<AdminUpcomi
         DocumentReference orderRef = db.collection("orders").document(documentId);
         orderRef.update("order_status", newStatus)
                 .addOnSuccessListener(aVoid -> {
-                    // Handle a successful update
-                    // For example, you can show a success message to the user
+
                     showToast("Order status updated successfully");
                 })
                 .addOnFailureListener(e -> {
-                    // Handle any errors that occurred during the update
-                    // For example, you can show an error message to the user
+
                     showToast("Failed to update order status: " + e.getMessage());
                 });
     }

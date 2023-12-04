@@ -135,11 +135,10 @@ public class UpcomingOrdersAdapter extends RecyclerView.Adapter<UpcomingOrdersAd
                     .document(order.getDocumentId())
                     .update(updates)
                     .addOnSuccessListener(aVoid -> {
-                        // Successfully updated the order status and pickup date and time
-                        // You can also handle any UI updates or other actions here
+
                     })
                     .addOnFailureListener(e -> {
-                        // Handle the error
+
                     });
         }
     }
