@@ -10,7 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- Content Layout -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -75,7 +74,6 @@
         </RelativeLayout>
     </ScrollView>
 
-    <!-- Drawer Menu Layout -->
     <LinearLayout
         android:id="@+id/drawerMenu"
         android:layout_width="240dp"
@@ -86,8 +84,6 @@
 
         <include
             layout="@layout/nav_header_main"></include>
-
-        <!-- Add your menu items here, e.g., TextViews, ImageButtons, etc. -->
 
         <TextView
             android:layout_width="wrap_content"

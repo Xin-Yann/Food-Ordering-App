@@ -1,41 +1,41 @@
 package com.example.food_ordering;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 import java.util.ArrayList;
+import java.util.List;
 
-public class VPAdapter extends FragmentPagerAdapter {
-    private final ArrayList<Fragment> fragmentArrayList = new ArrayList<>();
-    private final ArrayList<String> fragmentTitle = new ArrayList<>();
+public class VPAdapter extends FragmentStateAdapter {
+    private final List<Fragment> fragmentList = new ArrayList<>();
+    private final List<String> fragmentTitles = new ArrayList<>();
 
-    public VPAdapter(@NonNull FragmentManager fm, int behavior) {
-        super(fm, behavior);
+    public VPAdapter(FragmentActivity fragmentActivity) {
+        super(fragmentActivity);
     }
 
-    @NonNull
+    public VPAdapter(FragmentActivity fragmentActivity, List<Fragment> fragments) {
+        super(fragmentActivity);
+        fragmentList.addAll(fragments);
+    }
+
+    public void addFragment(Fragment fragment, String title) {
+        fragmentList.add(fragment);
+        fragmentTitles.add(title);
+    }
+
     @Override
-    public Fragment getItem(int position){
-        return fragmentArrayList.get(position);
+    public Fragment createFragment(int position) {
+        return fragmentList.get(position);
+    }
+
+    public String getFragmentTitle(int position) {
+        return fragmentTitles.get(position);
     }
 
     @Override
-    public int getCount(){
-        return fragmentArrayList.size();
-    }
-
-    public void addFragment(Fragment fragment, String title){
-        fragmentArrayList.add(fragment);
-        fragmentTitle.add(title);
-    }
-
-    @Nullable
-    @Override
-    public  CharSequence getPageTitle(int position){
-        return fragmentTitle.get(position);
+    public int getItemCount() {
+        return fragmentList.size();
     }
 
 }

@@ -1,150 +1,131 @@
 package com.example.food_ordering;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.squareup.picasso.Picasso;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class UpcomingOrdersFragment extends Fragment {
+
     private FirebaseFirestore db;
     private Query orderQuery;
-    private ImageView foodImg;
-    private TextView foodDetails;
-    private TextView price;
-    private TextView orderNumber;
-    private TextView pickupTime;
-    private TextView orderStatus;
-    private TextView paymentMethod;
     private String currentUserEmail;
-    private int foodQuantity; // Declare it once
 
-    @Nullable
+    private RecyclerView recyclerView;
+    private UpcomingOrdersAdapter adapter;
+    private List<UpcomingOrder> upcomingOrderList;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_order_upcoming, container, false);
 
-        // Initialize views
-        foodImg = view.findViewById(R.id.food_img);
-        foodDetails = view.findViewById(R.id.foodDetails);
-        price = view.findViewById(R.id.price);
-        orderNumber = view.findViewById(R.id.orderNumber);
-        pickupTime = view.findViewById(R.id.pickupTime);
-        orderStatus = view.findViewById(R.id.orderStatus);
-        paymentMethod = view.findViewById(R.id.paymentMethod);
+        recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        upcomingOrderList = new ArrayList<>();
+        adapter = new UpcomingOrdersAdapter(upcomingOrderList, currentUserEmail);
+        recyclerView.setAdapter(adapter);
 
         db = FirebaseFirestore.getInstance();
-
-        // Get the current user's email after they have signed in
         currentUserEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
-        // Modify the query to fetch orders by the user's email
-        orderQuery = db.collection("orders")
-                .whereEqualTo("email", currentUserEmail);
+        // Fetch and populate the "Upcoming Orders" layout
+        orderQuery = db.collection("orders").whereEqualTo("user_email", currentUserEmail);
 
-        // Add a snapshot listener to the query
+        // Add a real-time listener for order changes
         orderQuery.addSnapshotListener((querySnapshot, e) -> {
             if (e != null) {
                 // Handle the error
                 return;
             }
 
-            if (querySnapshot != null) {
-                for (DocumentChange dc : querySnapshot.getDocumentChanges()) {
-                    if (dc.getType() == DocumentChange.Type.ADDED) {
-                        // This will be called when an upcoming order for the user is found
+            upcomingOrderList.clear(); // Clear the previous data
 
-                        // Get data from the document
-                        String foodImgUrl = dc.getDocument().getString("food_img");
-                        String foodDetailsText = dc.getDocument().getString("food_name");
-                        foodQuantity = dc.getDocument().getLong("food_quantity").intValue(); // Update the existing variable
-                        double priceValue = dc.getDocument().getDouble("food_price");
-                        String orderNumberText = dc.getDocument().getString("order_number");
-                        String pickupTimeText = dc.getDocument().getString("pickup_time");
-                        String orderStatusText = dc.getDocument().getString("order_status");
-                        String paymentMethodText = dc.getDocument().getString("payment_method");
+            for (QueryDocumentSnapshot document : querySnapshot) {
+                // Get data for the order
+                String documentId = document.getId();
+                Map<String, Object> orderItemsMap = (Map<String, Object>) document.get("order_items");
 
-                        // Load and display the image using Picasso
-                        Picasso.get().load(foodImgUrl).into(foodImg);
+                if (orderItemsMap != null) {
+                    // Access nested data within order_items
+                    String foodImgUrl = (String) orderItemsMap.get("cart_image");
+                    String foodDetailsText = (String) orderItemsMap.get("cart_name");
+                    String remarkText = (String) orderItemsMap.get("cart_remark");
 
-                        // Set other data to your views directly
-                        foodDetails.setText(foodQuantity + "x " + foodDetailsText); // Display food_quantity beside food_name
-                        price.setText(String.format("RM"+"%.2f", priceValue));
-                        orderNumber.setText(orderNumberText);
-                        pickupTime.setText(pickupTimeText);
-                        orderStatus.setText(orderStatusText);
-                        paymentMethod.setText(paymentMethodText);
 
-                        // Add click listener for the "Pickup Completed" button
-                        Button pickupButton = view.findViewById(R.id.pickupButton);
-                        pickupButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                showPickupConfirmationDialog();
-                            }
-                        });
+                    // Check if cart_quantity is null before using it
+                    Long cartQuantityLong = (Long) orderItemsMap.get("cart_quantity");
+                    int foodQuantity = (cartQuantityLong != null) ? cartQuantityLong.intValue() : 0;
+
+                    // Check if cart_price is null before using it
+                    Double cartPriceDouble = (Double) orderItemsMap.get("cart_price");
+                    double priceValue = (cartPriceDouble != null) ? cartPriceDouble : 0.0;
+
+                    // Extract fields outside order_items
+                    String pickupTimeText = document.getString("pickup_time");
+                    String orderStatusText = document.getString("order_status");
+                    String paymentMethodText = document.getString("payment_method");
+                    String totalamountText = document.getString("total_amount");
+
+                    // Extract order_number from order_items or from outside if it's a number
+                    Object orderNumberField = orderItemsMap.get("order_number");
+                    String orderNumberText = "";
+
+                    if (orderNumberField != null) {
+                        if (orderNumberField instanceof Number) {
+                            // If it's a number, convert it to String
+                            orderNumberText = String.valueOf(((Number) orderNumberField).longValue());
+                        } else if (orderNumberField instanceof String) {
+                            // If it's already a string, use it
+                            orderNumberText = (String) orderNumberField;
+                        }
+                    } else {
+                        // If order_number is not found in order_items, check outside the map
+                        Object outsideOrderNumberField = document.get("order_number");
+                        if (outsideOrderNumberField instanceof Number) {
+                            orderNumberText = String.valueOf(((Number) outsideOrderNumberField).longValue());
+                        } else if (outsideOrderNumberField instanceof String) {
+                            orderNumberText = (String) outsideOrderNumberField;
+                        }
+                    }
+
+                    // Create an UpcomingOrder object
+                    UpcomingOrder upcomingOrder = new UpcomingOrder(
+                            documentId,
+                            foodImgUrl,
+                            foodDetailsText,
+                            foodQuantity,
+                            priceValue,
+                            orderNumberText,
+                            pickupTimeText,
+                            orderStatusText,
+                            paymentMethodText,
+                            totalamountText,
+                            remarkText
+
+                    );
+
+                    // Only add orders with status other than "Pickup Completed"
+                    if (!"Pickup Completed".equals(orderStatusText)) {
+                        upcomingOrderList.add(upcomingOrder);
                     }
                 }
             }
+
+            // Notify the adapter that data has changed
+            adapter.notifyDataSetChanged();
         });
 
         return view;
-    }
-
-    private void showPickupConfirmationDialog() {
-        // Show a confirmation dialog
-        new AlertDialog.Builder(getContext())
-                .setTitle("Confirm Pickup Completion")
-                .setMessage("Are you sure you want to mark all pending orders as Pickup Completed?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        updateOrderStatus("Pickup Completed");
-                    }
-                })
-                .setNegativeButton("No", null)
-                .show();
-    }
-
-    private void updateOrderStatus(String newStatus) {
-        // Query the database to find the orders associated with the current user's email
-        db.collection("orders")
-                .whereEqualTo("email", currentUserEmail)
-                .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                        // Update the order_status in each document
-                        document.getReference().update("order_status", newStatus)
-                                .addOnSuccessListener(aVoid -> {
-                                    // Update successful
-                                })
-                                .addOnFailureListener(e -> {
-                                    // Handle the error
-                                });
-                    }
-                })
-                .addOnFailureListener(e -> {
-                    // Handle the error
-                });
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        // Stop listening for changes when the fragment is destroyed
-        orderQuery = null;
     }
 }

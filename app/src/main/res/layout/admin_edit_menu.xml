@@ -70,7 +70,8 @@
                     android:layout_height="45dp"
                     android:enabled="false"
                     app:boxStrokeColor="@color/black"
-                    tools:ignore="TouchTargetSizeCheck" />
+                    tools:ignore="TouchTargetSizeCheck"
+                    android:background="#e6e6e6"/>
             </RelativeLayout>
 
             <TextView
@@ -134,7 +135,8 @@
                     android:id="@+id/inputMenuId"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:enabled="false"/>
+                    android:enabled="false"
+                    android:background="#e6e6e6"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 

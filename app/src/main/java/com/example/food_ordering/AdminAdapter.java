@@ -1,12 +1,14 @@
 package com.example.food_ordering;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.CardViewHolder> {
@@ -22,7 +24,6 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.CardViewHold
         this.dataList = filteredList;
         notifyDataSetChanged();
     }
-
 
     @NonNull
     @Override

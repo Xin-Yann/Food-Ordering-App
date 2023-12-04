@@ -22,6 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+
 import java.io.File;
 import java.util.ArrayList;
 
@@ -60,8 +61,6 @@ public class Admin_home extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawerLayout);
         openDrawer = findViewById(R.id.menu);
 
-        deleteCache(this);
-
         // Display user list
         fStore.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -92,6 +91,8 @@ public class Admin_home extends AppCompatActivity {
         } else {
             TextView text = findViewById(R.id.admin_details);
             text.setText(admin.getEmail());
+            TextView textView = findViewById(R.id.user_email);
+            textView.setText(user.getEmail());
 
         }
 
@@ -180,29 +181,5 @@ public class Admin_home extends AppCompatActivity {
         Button toStaffList = findViewById(R.id.viewStaffBtn);
         startActivity(intent);
     }
-
-    public static void deleteCache(Context context) {
-        try {
-            File dir = context.getCacheDir();
-            deleteDir(dir);
-        } catch (Exception e) {}
-    }
-    public static boolean deleteDir(File dir) {
-        if (dir != null && dir.isDirectory()) {
-            String[] children = dir.list();
-            for (int i = 0; i < children.length; i++) {
-                boolean success = deleteDir(new File(dir, children[i]));
-                if (!success) {
-                    return false;
-                }
-            }
-            return dir.delete();
-        } else if(dir!= null && dir.isFile()) {
-            return dir.delete();
-        } else {
-            return false;
-        }
-    }
-
 
 }
