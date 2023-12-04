@@ -51,7 +51,6 @@ public class Admin_manage_dessert extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawerLayout);
         openDrawer = findViewById(R.id.menu);
 
-        /*fetch beverage data*/
         fStore.collection("menu")
                 .whereEqualTo("menu_category","Dessert")
                 .get()
@@ -66,13 +65,10 @@ public class Admin_manage_dessert extends AppCompatActivity {
                                 String dessertDesc = document.getString("menu_detail");
                                 String dessertId = document.getString("menu_id");
 
-                                // Add the retrieved data to the ArrayList
                                 datalist.add(new AdminMenu(dessertName, dessertPrice, dessertImage, dessertDesc, dessertId)); // Change to the appropriate data class (BeverageData)
                             }
 
                             adapter.notifyDataSetChanged();
-                        } else {
-                            // Handle the case where the query was not successful
                         }
                     }
                 });

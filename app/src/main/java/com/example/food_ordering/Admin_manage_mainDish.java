@@ -66,13 +66,10 @@ public class Admin_manage_mainDish extends AppCompatActivity {
                                 String mainDishDesc = document.getString("menu_detail");
                                 String mainDishId = document.getString("menu_id");
 
-                                // Add the retrieved data to the ArrayList
                                 datalist.add(new AdminMenu(mainDishName, mainDishPrice, mainDishImage, mainDishDesc, mainDishId)); // Change to the appropriate data class (BeverageData)
                             }
 
                             adapter.notifyDataSetChanged();
-                        } else {
-                            // Handle the case where the query was not successful
                         }
                     }
                 });

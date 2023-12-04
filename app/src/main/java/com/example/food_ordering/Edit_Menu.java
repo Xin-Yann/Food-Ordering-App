@@ -45,7 +45,6 @@ public class Edit_Menu extends AppCompatActivity {
         selectImageButton = findViewById(R.id.selectImageBtn);
 
         selectImageButton.setOnClickListener(v -> {
-            // Create intent to open photo
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(intent, REQUEST_IMAGE);
         });
@@ -68,7 +67,7 @@ public class Edit_Menu extends AppCompatActivity {
             });
         } else {
             Toast.makeText(getApplicationContext(), "Invalid menu item ID", Toast.LENGTH_LONG).show();
-            finish(); // Finish the activity if the itemId is invalid
+            finish();
         }
     }
 
@@ -86,20 +85,17 @@ public class Edit_Menu extends AppCompatActivity {
                     if (!queryDocumentSnapshots.isEmpty()) {
                         DocumentSnapshot documentSnapshot = queryDocumentSnapshots.getDocuments().get(0);
 
-                        // Populate UI elements with existing data
                         String menuCategory = documentSnapshot.getString("menu_category");
                         String menuId = documentSnapshot.getString("menu_id");
                         String menuName = documentSnapshot.getString("menu_name");
                         String menuDetail = documentSnapshot.getString("menu_detail");
                         String menuPrice = documentSnapshot.getString("menu_price");
 
-                        // Set values to UI elements
                         TextInputEditText inputMenuId = findViewById(R.id.inputMenuId);
                         TextInputEditText inputMenuName = findViewById(R.id.inputMenuName);
                         TextInputEditText inputMenuDescription = findViewById(R.id.inputMenuDescription);
                         TextInputEditText inputMenuPrice = findViewById(R.id.inputmenuPrice);
 
-                        // Find the index of the category and set the selection
                         int categoryIndex = getIndexOfCategory(menuCategory, selectionOptions);
                         selectMenuType.setSelection(categoryIndex);
 
@@ -132,10 +128,8 @@ public class Edit_Menu extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_IMAGE && resultCode == RESULT_OK) {
-            // Handle selected image
             selectedImageUri = data.getData();
 
-            // Display selected image
             ImageView imageView = findViewById(R.id.selectedImage);
             imageView.setImageURI(selectedImageUri);
         }
@@ -144,23 +138,20 @@ public class Edit_Menu extends AppCompatActivity {
     private void editMenu(String menuItemId) {
         if (selectedImageUri != null) {
             storageRef = FirebaseStorage.getInstance().getReference();
-            StorageReference imageRef = storageRef.child("images/" + System.currentTimeMillis()); // Set a unique path for each image
+            StorageReference imageRef = storageRef.child("images/" + System.currentTimeMillis());
 
             imageRef.putFile(selectedImageUri)
                     .addOnSuccessListener(taskSnapshot -> {
-                        // Image uploaded
                         imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                            String imageUrl = uri.toString(); // Shareable URL
+                            String imageUrl = uri.toString();
 
                             Map<String, Object> updatedMenu = new HashMap<>();
-                            // Gather updated data from input fields
                             String menuImage = imageUrl;
                             String menuName = ((TextInputEditText) findViewById(R.id.inputMenuName)).getText().toString();
                             String menuDetail = ((TextInputEditText) findViewById(R.id.inputMenuDescription)).getText().toString();
                             String menuPrice = ((TextInputEditText) findViewById(R.id.inputmenuPrice)).getText().toString();
                             String menuCategory = ((Spinner) findViewById(R.id.selectMenuType)).getSelectedItem().toString();
 
-                            // Replace details with updated data
                             updatedMenu.put("menu_image", menuImage);
                             updatedMenu.put("menu_name", menuName);
                             updatedMenu.put("menu_detail", menuDetail);
@@ -174,11 +165,9 @@ public class Edit_Menu extends AppCompatActivity {
                                         if (!queryDocumentSnapshots.isEmpty()) {
                                             DocumentSnapshot documentSnapshot = queryDocumentSnapshots.getDocuments().get(0);
 
-                                            // Get the DocumentReference for the found document
                                             String documentId = documentSnapshot.getId();
                                             DocumentReference docRef = firestore.collection("menu").document(documentId);
 
-                                            // Update the document using DocumentReference
                                             docRef.update(updatedMenu)
                                                     .addOnSuccessListener(aVoid -> {
                                                         Toast.makeText(getApplicationContext(), "Menu edited successfully", Toast.LENGTH_LONG).show();
@@ -222,11 +211,9 @@ public class Edit_Menu extends AppCompatActivity {
                         if (!queryDocumentSnapshots.isEmpty()) {
                             DocumentSnapshot documentSnapshot = queryDocumentSnapshots.getDocuments().get(0);
 
-                            // Get the DocumentReference for the found document
                             String documentId = documentSnapshot.getId();
                             DocumentReference docRef = firestore.collection("menu").document(documentId);
 
-                            // Update the document using DocumentReference
                             docRef.update(updatedMenu)
                                     .addOnSuccessListener(aVoid -> {
                                         Toast.makeText(getApplicationContext(), "Menu edited successfully", Toast.LENGTH_LONG).show();
