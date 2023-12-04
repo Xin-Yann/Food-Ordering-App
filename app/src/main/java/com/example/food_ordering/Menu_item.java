@@ -151,18 +151,17 @@ public class Menu_item extends AppCompatActivity {
         String menuImage = getIntent().getStringExtra("menuImage");
         String menuDetail = getIntent().getStringExtra("menuDetail");
 
-        // Display the data in your UI elements
+        // Display the data
         TextView nameTextView = findViewById(R.id.menu_name);
         TextView priceTextView = findViewById(R.id.menu_price);
         TextView detailTextView = findViewById(R.id.menu_detail);
         ImageView imageView = findViewById(R.id.menu_image);
 
-        // Set the text of TextViews
         nameTextView.setText(menuName);
         priceTextView.setText(menuPrice);
         detailTextView.setText(menuDetail);
 
-        // Load the image into the ImageView using Picasso or any other image loading library
+        // Load the image into the ImageView
         Picasso.get().load(menuImage).into(imageView);
 
     }
@@ -181,7 +180,6 @@ public class Menu_item extends AppCompatActivity {
         }
     }
 
-    // Function to update the quantity_text_view
     private void updateQuantityTextView() {
         quantityTextView.setText(String.valueOf(quantity));
     }

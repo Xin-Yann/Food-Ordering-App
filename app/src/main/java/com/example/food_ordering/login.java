@@ -72,7 +72,7 @@ public class login extends AppCompatActivity {
                 }
 
                 boolean isAdmin = email.endsWith("@admin.com");
-                String hashedPassword = hashPassword(password); // Hash the entered password
+                String hashedPassword = hashPassword(password);
 
                 mAuth.signInWithEmailAndPassword(email, hashedPassword)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {

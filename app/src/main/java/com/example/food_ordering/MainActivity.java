@@ -1,6 +1,5 @@
 package com.example.food_ordering;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,7 +23,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         } else {
-            // Continue with normal initialization
             fStore = FirebaseFirestore.getInstance();
             recyclerView = findViewById(R.id.recyclerView);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -103,8 +100,6 @@ public class MainActivity extends AppCompatActivity {
 
                                 adapter.notifyDataSetChanged();
 
-                            } else {
-                                // Handle the case where the query was not successful
                             }
                         }
                     });
@@ -112,10 +107,8 @@ public class MainActivity extends AppCompatActivity {
             adapter.setOnItemClickListener(new MenuAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(int position) {
-                    // Get the selected menu item
                     Menu selectedItem = datalist.get(position);
 
-                    // Create an Intent to send the selected menu item's details to the MenuItemDashboardActivity
                     Intent intent = new Intent(MainActivity.this, Menu_item.class);
                     intent.putExtra("menuName", selectedItem.getName());
                     intent.putExtra("menuPrice", selectedItem.getPrice());
@@ -129,7 +122,6 @@ public class MainActivity extends AppCompatActivity {
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
-                    // Handle the search query submission
                     Log.d("MainActivity", "Search submitted with query: " + query);
                     filterList(query);
                     Intent intent = new Intent(getApplicationContext(), SearchResultsActivity.class);
@@ -183,7 +175,6 @@ public class MainActivity extends AppCompatActivity {
         List<Menu> filteredList = new ArrayList<>();
 
         if (keyword.isEmpty()) {
-            // If the query is empty, show all items
             filteredList.addAll(datalist);
         } else {
             for (Menu menu : datalist) {
@@ -195,7 +186,6 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("FilterList", "Filtered list size: " + filteredList.size());
 
-        // Update the adapter with the filtered or all items
         adapter.setFilteredList(filteredList);
 
         if (filteredList.isEmpty()) {
@@ -253,7 +243,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /*Footer*/
     public void toHome(View view){
         Intent intent = new Intent(this, MainActivity.class);
         ImageButton toHome = findViewById(R.id.home_page);
@@ -268,7 +257,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void toAccount(View view){
         Intent intent = new Intent(this, Account_details.class);
-        ImageButton toAccount = findViewById(R.id.accountPage);
+        TextView toAccount = findViewById(R.id.accountPage);
         startActivity(intent);
     }
 

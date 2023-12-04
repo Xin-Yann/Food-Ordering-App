@@ -16,9 +16,8 @@ import java.util.List;
 public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.CardViewHolder> {
     private List<Menu> datalist;
     private Context context;
-    private OnItemClickListener listener; // Declare a listener
+    private OnItemClickListener listener;
 
-    // Define an interface for the click listener
     public interface OnItemClickListener {
         void onItemClick(int position);
     }
@@ -59,7 +58,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.CardViewHolder
             @Override
             public void onClick(View view) {
                 if (listener != null) {
-                    int itemPosition = holder.getAdapterPosition(); // Use getAdapterPosition()
+                    int itemPosition = holder.getAdapterPosition();
                     if (itemPosition != RecyclerView.NO_POSITION) {
                         listener.onItemClick(itemPosition);
                     }
