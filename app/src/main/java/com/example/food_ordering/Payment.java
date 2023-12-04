@@ -59,13 +59,10 @@ public class Payment extends AppCompatActivity {
         String totalAmount = getIntent().getStringExtra("totalAmount");
         confirmTotalAmount.setText(totalAmount);
 
-        // Initialize FirebaseAuth and get the current user
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
         staffs = auth.getCurrentUser();
 
-        // Query Firestore to retrieve additional user data
-        // Query Firestore to retrieve user data
         firestore.collection("users")
                 .document(user.getUid())
                 .get()
@@ -75,13 +72,11 @@ public class Payment extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()) {
-                                // User data found
                                 String userName = document.getString("name");
                                 String userId = document.getString("id");
                                 String userContact = document.getString("contact");
                                 String userEmail = document.getString("email");
 
-                                // Update TextViews with user data
                                 textView = findViewById(R.id.showUsername);
                                 textView.setText(userName);
                                 textView = findViewById(R.id.showDarpaId);
@@ -92,7 +87,6 @@ public class Payment extends AppCompatActivity {
                                 textView.setText(userEmail);
 
                             } else {
-                                // If user data not found, try retrieving staff data
                                 firestore.collection("staffs")
                                         .document(staffs.getUid())
                                         .get()
@@ -118,18 +112,12 @@ public class Payment extends AppCompatActivity {
                                                         textView = findViewById(R.id.showEmail);
                                                         textView.setText(staffEmail);
 
-                                                    } else {
-                                                        // Handle the case when neither user nor staff data is found
                                                     }
-                                                } else {
-                                                    // Handle the error during staff data retrieval
                                                 }
                                             }
                                         });
 
                             }
-                        } else {
-                            // Handle the error during user data retrieval
                         }
                     }
                 });
@@ -190,7 +178,7 @@ public class Payment extends AppCompatActivity {
             @Override
             public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
                 if ((hourOfDay < 8 || (hourOfDay == 8 && minute < 0)) || (hourOfDay > 16 || (hourOfDay == 16 && minute > 0))) {
-                    // If outside the range, set the time back to the minimum (8:00 AM)
+                    // If outside the range, set the time back to 8:00am
                     timePicker.setHour(8);
                     timePicker.setMinute(0);
                 }

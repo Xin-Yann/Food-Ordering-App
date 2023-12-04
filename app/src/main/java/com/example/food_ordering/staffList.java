@@ -62,9 +62,7 @@ public class staffList extends AppCompatActivity {
                         // Add the retrieved data to the ArrayList
                         datalist.add(new User(username, staffId, staffEmail, staffContact, staffPassword));
                     }
-
                     adapter.notifyDataSetChanged();
-
                 }
             }
         });

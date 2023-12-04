@@ -2,10 +2,10 @@ package com.example.food_ordering;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,8 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -88,37 +86,46 @@ public class Admin_manage_beverage extends AppCompatActivity {
             @Override
             public void onEditClick(int position) {
                 AdminMenu selectedItem = datalist.get(position);
+                String itemId = selectedItem.getId();
+
+                // Start the Edit_Menu activity with the item's ID
                 Intent intent = new Intent(Admin_manage_beverage.this, Edit_Menu.class);
+                intent.putExtra("itemId", itemId);
+                startActivity(intent);
             }
 
             @Override
             public void onDeleteClick(int position) {
-                // Handle delete button click
                 AdminMenu selectedItem = datalist.get(position);
                 String menuItemId = selectedItem.getId();
 
-                // Implement the code to delete the dessert item here
-                // For example, you can use menuItemId to delete the item from the Firestore database
-                fStore.collection("menu").document(menuItemId)
-                        .delete()
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                // Item deleted successfully
-                                datalist.remove(position);
-                                adapter.notifyItemRemoved(position);
-                                Toast.makeText(getApplicationContext(), "Deleted successfully", Toast.LENGTH_LONG).show();
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(getApplicationContext(), "Failed to delete", Toast.LENGTH_LONG).show();
+                fStore.collection("menu")
+                        .whereEqualTo("menu_id", menuItemId)
+                        .get()
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    String documentId = document.getId();
+                                    Log.d("Delete", "Found document with ID: " + documentId);
+
+                                    document.getReference().delete()
+                                            .addOnCompleteListener(deleteTask -> {
+                                                if (deleteTask.isSuccessful()) {
+                                                    Log.d("Delete", "Document deleted successfully");
+                                                    datalist.remove(position);
+                                                    adapter.notifyItemRemoved(position);
+                                                    adapter.notifyItemRangeChanged(position, datalist.size());
+                                                } else {
+                                                    Log.e("Delete", "Error deleting document", deleteTask.getException());
+                                                }
+                                            });
+                                }
+                            } else {
+                                Log.e("Delete", "Error getting documents: ", task.getException());
                             }
                         });
             }
         });
-
 
         /*display user email if user login */
         if (admin == null) {
@@ -156,6 +163,7 @@ public class Admin_manage_beverage extends AppCompatActivity {
         });
 
     }
+
     public void toLoginPage(View view){
         Intent intent = new Intent(this, login.class);
         ImageButton toLoginPage = findViewById(R.id.login);

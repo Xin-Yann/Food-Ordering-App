@@ -26,7 +26,7 @@ import java.util.Map;
 public class Account_details extends AppCompatActivity {
     FirebaseAuth auth;
     TextView textView;
-    FirebaseUser user , staffs;
+    FirebaseUser user , staffs, admins;
     FirebaseFirestore fStore;
 
     Button saveButton;
@@ -36,19 +36,17 @@ public class Account_details extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.account_details);
 
-        // Initialize FirebaseAuth and get the current user
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
         staffs= auth.getCurrentUser();
+        admins = auth.getCurrentUser();
         fStore = FirebaseFirestore.getInstance();
 
         if (user == null) {
-            // If the user is not logged in, redirect them to the login screen
             Intent intent = new Intent(Account_details.this, login.class);
             startActivity(intent);
             finish();
         } else {
-            // Query Firestore to retrieve additional user data
             fStore.collection("users")
                     .document(user.getUid())
                     .get()
@@ -75,45 +73,85 @@ public class Account_details extends AppCompatActivity {
                                     textView = findViewById(R.id.inputEmail);
                                     textView.setText(userEmail);
 
-                                } else if (staffs == null) {
-                                    // If the user is not logged in, redirect them to the login screen
-                                    Intent intent = new Intent(Account_details.this, login.class);
-                                    startActivity(intent);
-                                    finish();
-                                } else {
+                                }
+                            }
+                        }
+                    });
+        }
 
-                                    // Query Firestore to retrieve additional user data
-                                    fStore.collection("staffs")
-                                            .document(staffs.getUid())
-                                            .get()
-                                            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                    if (task.isSuccessful()) {
-                                                        DocumentSnapshot document = task.getResult();
-                                                        if (document.exists()) {
-                                                            String staffName = document.getString("name");
-                                                            String staffId = document.getString("id");
-                                                            String staffPass = document.getString("password");
-                                                            String staffContact = document.getString("contact");
-                                                            String staffEmail = document.getString("email");
-                                                            // You can retrieve other user data here
-                                                            textView = findViewById(R.id.inputUsername);
-                                                            textView.setText(staffName);
-                                                            textView = findViewById(R.id.inputDarpaId);
-                                                            textView.setText(staffId);
-                                                            textView = findViewById(R.id.inputPassword);
-                                                            textView.setText(staffPass);
-                                                            textView = findViewById(R.id.inputContactNo);
-                                                            textView.setText(staffContact);
-                                                            textView = findViewById(R.id.inputEmail);
-                                                            textView.setText(staffEmail);
+        if (staffs == null) {
+            Intent intent = new Intent(Account_details.this, login.class);
+            startActivity(intent);
+            finish();
+        } else {
+
+            // Query Firestore to retrieve additional user data
+            fStore.collection("staffs")
+                    .document(staffs.getUid())
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists()) {
+                                    String adminsName = document.getString("name");
+                                    String adminsId = document.getString("id");
+                                    String adminsPass = document.getString("password");
+                                    String adminsContact = document.getString("contact");
+                                    String adminsEmail = document.getString("email");
+                                    // You can retrieve other user data here
+                                    textView = findViewById(R.id.inputUsername);
+                                    textView.setText(adminsName);
+                                    textView = findViewById(R.id.inputDarpaId);
+                                    textView.setText(adminsId);
+                                    textView = findViewById(R.id.inputPassword);
+                                    textView.setText(adminsPass);
+                                    textView = findViewById(R.id.inputContactNo);
+                                    textView.setText(adminsContact);
+                                    textView = findViewById(R.id.inputEmail);
+                                    textView.setText(adminsEmail);
 
 
-                                                        }
-                                                    }
-                                                }
-                                            });
+                                }
+                            }
+                        }
+                    });
+        }
+
+        if (admins == null) {
+            Intent intent = new Intent(Account_details.this, login.class);
+            startActivity(intent);
+            finish();
+        } else {
+
+            fStore.collection("admins")
+                    .document(admins.getUid())
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists()) {
+                                    String staffName = document.getString("name");
+                                    String staffId = document.getString("id");
+                                    String staffPass = document.getString("password");
+                                    String staffContact = document.getString("contact");
+                                    String staffEmail = document.getString("email");
+                                    // You can retrieve other user data here
+                                    textView = findViewById(R.id.inputUsername);
+                                    textView.setText(staffName);
+                                    textView = findViewById(R.id.inputDarpaId);
+                                    textView.setText(staffId);
+                                    textView = findViewById(R.id.inputPassword);
+                                    textView.setText(staffPass);
+                                    textView = findViewById(R.id.inputContactNo);
+                                    textView.setText(staffContact);
+                                    textView = findViewById(R.id.inputEmail);
+                                    textView.setText(staffEmail);
+
+
                                 }
                             }
                         }
@@ -141,16 +179,13 @@ public class Account_details extends AppCompatActivity {
 
     public void updateProfile(String newContact, String newEmail, String newPass) {
         if(user!=null) {
-            // Get the document reference for the user's data
             DocumentReference userDocRef = fStore.collection("users").document(user.getUid());
 
-            // Create a map with the updated data
             Map<String, Object> updatedData = new HashMap<>();
             updatedData.put("contact", newContact);
             updatedData.put("email", newEmail);
             updatedData.put("pass", newPass);
 
-            // Update the data in Firestore
             userDocRef.update(updatedData)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -164,16 +199,13 @@ public class Account_details extends AppCompatActivity {
                     });
         }
         if(staffs != null){
-            // Get the document reference for the user's data
             DocumentReference userDocRef = fStore.collection("staffs").document(user.getUid());
 
-            // Create a map with the updated data
             Map<String, Object> updatedData = new HashMap<>();
             updatedData.put("contact", newContact);
             updatedData.put("email", newEmail);
             updatedData.put("pass", newPass);
 
-            // Update the data in Firestore
             userDocRef.update(updatedData)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -187,12 +219,26 @@ public class Account_details extends AppCompatActivity {
                     });
 
         }
+        if(admins != null){
+            DocumentReference userDocRef = fStore.collection("admins").document(user.getUid());
+
+            Map<String, Object> updatedData = new HashMap<>();
+            updatedData.put("contact", newContact);
+            updatedData.put("email", newEmail);
+            updatedData.put("pass", newPass);
+
+            userDocRef.update(updatedData)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(Account_details.this, "Data updated successfully", Toast.LENGTH_LONG).show();
+                            } else {
+                                Toast.makeText(Account_details.this, "Failed to update data", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
+        }
     }
 
 }
-
-
-
-
-
-
