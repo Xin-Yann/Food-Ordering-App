@@ -1,30 +1,26 @@
 package com.example.food_ordering;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.annotation.NonNull;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.io.File;
 import java.util.ArrayList;
 
 public class Admin_manage_beverage extends AppCompatActivity {
@@ -32,10 +28,9 @@ public class Admin_manage_beverage extends AppCompatActivity {
     FirebaseFirestore fStore;
     ArrayList<AdminMenu> datalist;
     AdminMenuAdapter adapter;
-    ImageButton openDrawer;
+    ImageButton logout,openDrawer;
     DrawerLayout drawerLayout;
     FirebaseAuth auth;
-    ImageButton logout;
     FirebaseUser admin;
 
     @Override
@@ -85,53 +80,52 @@ public class Admin_manage_beverage extends AppCompatActivity {
         adapter.setOnItemClickListener(new AdminMenuAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                // Get the selected menu item
-                AdminMenu selectedItem = datalist.get(position);
 
-                // Create an Intent to send the selected menu item's details to the MenuItemDashboardActivity
-                Intent intent = new Intent(Admin_manage_beverage.this, Menu_item.class);
-                intent.putExtra("menuName", selectedItem.getName());
-                intent.putExtra("menuPrice", selectedItem.getPrice());
-                intent.putExtra("menuImage", selectedItem.getImage());
-                intent.putExtra("menuDetail", selectedItem.getDetail());
-                intent.putExtra("menuId", selectedItem.getId());
-                startActivity(intent);
             }
 
             @Override
             public void onEditClick(int position) {
                 AdminMenu selectedItem = datalist.get(position);
+                String itemId = selectedItem.getId();
+
+                // Start the Edit_Menu activity with the item's ID
                 Intent intent = new Intent(Admin_manage_beverage.this, Edit_Menu.class);
+                intent.putExtra("itemId", itemId);
+                startActivity(intent);
             }
 
             @Override
             public void onDeleteClick(int position) {
-                // Handle delete button click
                 AdminMenu selectedItem = datalist.get(position);
                 String menuItemId = selectedItem.getId();
 
-                // Implement the code to delete the beverage item here
-                // For example, you can use menuId to delete the item from the Firestore database
-                fStore.collection("menu").document(menuItemId)
-                        .delete()
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                // Item deleted successfully
-                                datalist.remove(position);
-                                adapter.notifyItemRemoved(position);
-                                Toast.makeText(getApplicationContext(), "Deleted successfully", Toast.LENGTH_LONG).show();
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(getApplicationContext(), "Failed to delete", Toast.LENGTH_LONG).show();
+                fStore.collection("menu")
+                        .whereEqualTo("menu_id", menuItemId)
+                        .get()
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    String documentId = document.getId();
+                                    Log.d("Delete", "Found document with ID: " + documentId);
+
+                                    document.getReference().delete()
+                                            .addOnCompleteListener(deleteTask -> {
+                                                if (deleteTask.isSuccessful()) {
+                                                    Log.d("Delete", "Document deleted successfully");
+                                                    datalist.remove(position);
+                                                    adapter.notifyItemRemoved(position);
+                                                    adapter.notifyItemRangeChanged(position, datalist.size());
+                                                } else {
+                                                    Log.e("Delete", "Error deleting document", deleteTask.getException());
+                                                }
+                                            });
+                                }
+                            } else {
+                                Log.e("Delete", "Error getting documents: ", task.getException());
                             }
                         });
             }
         });
-
 
         /*display user email if user login */
         if (admin == null) {
@@ -169,6 +163,7 @@ public class Admin_manage_beverage extends AppCompatActivity {
         });
 
     }
+
     public void toLoginPage(View view){
         Intent intent = new Intent(this, login.class);
         ImageButton toLoginPage = findViewById(R.id.login);
@@ -223,29 +218,4 @@ public class Admin_manage_beverage extends AppCompatActivity {
         TextView toDessert = findViewById(R.id.dessertPage);
         startActivity(intent);
     }
-
-    public static void deleteCache(Context context) {
-        try {
-            File dir = context.getCacheDir();
-            deleteDir(dir);
-        } catch (Exception e) {}
-    }
-    public static boolean deleteDir(File dir) {
-        if (dir != null && dir.isDirectory()) {
-            String[] children = dir.list();
-            for (int i = 0; i < children.length; i++) {
-                boolean success = deleteDir(new File(dir, children[i]));
-                if (!success) {
-                    return false;
-                }
-            }
-            return dir.delete();
-        } else if(dir!= null && dir.isFile()) {
-            return dir.delete();
-        } else {
-            return false;
-        }
-    }
-
-
 }

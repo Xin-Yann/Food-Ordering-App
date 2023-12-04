@@ -14,11 +14,10 @@ import android.content.Context;
 import java.util.List;
 
 public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.CardViewHolder> {
-    private List<Menu> dataList;
+    private List<Menu> datalist;
     private Context context;
-    private OnItemClickListener listener; // Declare a listener
+    private OnItemClickListener listener;
 
-    // Define an interface for the click listener
     public interface OnItemClickListener {
         void onItemClick(int position);
     }
@@ -29,11 +28,11 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.CardViewHolder
 
     public MenuAdapter(Context context, List<Menu> dataList) {
         this.context = context;
-        this.dataList = dataList;
+        this.datalist = dataList;
     }
 
-    public void setFilteredList(List<Menu> filteredList){
-        this.dataList = filteredList;
+    public void setFilteredList(List<Menu> filteredList) {
+        this.datalist = filteredList;
         notifyDataSetChanged();
     }
 
@@ -44,22 +43,19 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.CardViewHolder
         return new CardViewHolder(view);
     }
 
-
     @Override
     public void onBindViewHolder(@NonNull CardViewHolder holder, int position) {
-        Menu data = dataList.get(holder.getAdapterPosition());
+        Menu data = datalist.get(holder.getAdapterPosition());
         Picasso.get().load(data.getImage()).into(holder.imageView);
         holder.nameTextView.setText(data.getName());
         holder.detailTextView.setText(data.getDetail());
         holder.priceTextView.setText(data.getPrice());
 
-
-        // Set an OnClickListener for the item view
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (listener != null) {
-                    int itemPosition = holder.getAdapterPosition(); // Use getAdapterPosition()
+                    int itemPosition = holder.getAdapterPosition();
                     if (itemPosition != RecyclerView.NO_POSITION) {
                         listener.onItemClick(itemPosition);
                     }
@@ -67,11 +63,9 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.CardViewHolder
             }
         });
     }
-
-
     @Override
     public int getItemCount() {
-        return dataList.size();
+        return datalist.size();
     }
 
     public static class CardViewHolder extends RecyclerView.ViewHolder {

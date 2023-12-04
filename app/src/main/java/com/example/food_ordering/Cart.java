@@ -4,10 +4,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ImageButton;
-import android.widget.TextView;
 import android.view.View;
-import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -66,7 +64,6 @@ public class Cart extends AppCompatActivity {
     }
 
     private void EventChangeListener() {
-
         String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
         db.collection("cart")
@@ -90,33 +87,40 @@ public class Cart extends AppCompatActivity {
                         for (DocumentChange dc : value.getDocumentChanges()){
 
                             if (dc.getType() == DocumentChange.Type.ADDED){
-                                Item item = dc.getDocument().toObject(Item.class);
+                                DocumentSnapshot document = dc.getDocument();
+                                // Check if the document has a "payment_status" field
+                                if (document.contains("payment_status")) {
+                                    String status = document.getString("payment_status");
+
+                                    // Skip documents with status "paid"
+                                    if ("paid".equals(status)) {
+                                        continue;
+                                    }
+                                }
+
+                                Item item = document.toObject(Item.class);
                                 // Fetch the cart_image from the document
-                                item.setCart_image(dc.getDocument().getString("cart_image"));
-                                itemArrayList.add(dc.getDocument().toObject(Item.class));
+                                item.setCart_image(document.getString("cart_image"));
+                                itemArrayList.add(item);
 
                                 // Calculate and update the total amount
                                 double itemPrice = Double.parseDouble(item.getCart_price());
                                 long itemQuantity = item.getCart_quantity();
                                 totalAmount += itemPrice * itemQuantity;
-
                             }
-
-                            itemAdapter.notifyDataSetChanged();
-                            if (progressDialog.isShowing())
-                                progressDialog.dismiss();
-
-                            // Set the calculated total amount in the TextView
-                            confirmTotalAmount.setText("RM " + String.format("%.2f", totalAmount));
-
                         }
 
+                        itemAdapter.notifyDataSetChanged();
+                        if (progressDialog.isShowing())
+                            progressDialog.dismiss();
+
+                        // Set the calculated total amount in the TextView
+                        confirmTotalAmount.setText("RM " + String.format("%.2f", totalAmount));
                     }
                 });
-
     }
 
-     void deleteItemFromFirestore(String itemName){
+    void deleteItemFromFirestore(String itemName){
         db.collection("cart")
                 .whereEqualTo("cart_name", itemName)
                 .get()
@@ -156,9 +160,14 @@ public class Cart extends AppCompatActivity {
                 });
     }
 
-    public void toOrderConfirmation(View view){
-        Intent intent = new Intent(this, Order_Confirmation.class);
-        TextView toOrderConfirmation = findViewById(R.id.payBtn);
-        startActivity(intent);
+    public void toOrderConfirmation(View view) {
+        // Check if the cart is empty
+        if (itemArrayList.isEmpty()) {
+            Toast.makeText(this, "Your cart is empty. Please add items before proceeding to order confirmation.", Toast.LENGTH_SHORT).show();
+        } else {
+            // If the cart is not empty, proceed to Order Confirmation
+            Intent intent = new Intent(this, Order_Confirmation.class);
+            startActivity(intent);
+        }
     }
 }

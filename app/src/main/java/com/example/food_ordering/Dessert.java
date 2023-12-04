@@ -118,8 +118,6 @@ public class Dessert extends AppCompatActivity {
             }
         });
 
-
-
     }
 
     /*menu*/
@@ -166,6 +164,12 @@ public class Dessert extends AppCompatActivity {
     public void toAccount(View view){
         Intent intent = new Intent(this, Account_details.class);
         TextView toAccount = findViewById(R.id.accountPage);
+        startActivity(intent);
+    }
+
+    public void toCart(View view){
+        Intent intent = new Intent(this, Cart.class);
+        TextView toCart = findViewById(R.id.cart);
         startActivity(intent);
     }
 }

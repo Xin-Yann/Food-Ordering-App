@@ -237,18 +237,6 @@
                         android:text="Food Menu"
                         android:textSize="16pt" />
 
-                    <TextView
-                        android:id="@+id/seemore"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="110dp"
-                        android:layout_marginTop="330dp"
-                        android:fontFamily="@font/happylucky_gxnzp"
-                        android:onClick="toMainDish"
-                        android:text="See More"
-                        android:textColor="#fa9611"
-                        android:textSize="9pt" />
-
                 </LinearLayout>
 
                 <!--Food Menu Details-->
@@ -295,14 +283,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:layout_marginLeft="30dp"
-            android:text="Home"
-            android:onClick="toHome"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:layout_marginLeft="30dp"
             android:text="Main Dish"
             android:onClick="toMainDish"/>
 
@@ -321,6 +301,14 @@
             android:layout_marginLeft="30dp"
             android:text="Dessert"
             android:onClick="toDessert"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="30dp"
+            android:text="Order"
+            android:onClick="toOrder"/>
 
         <View
             android:layout_width="200dp"

@@ -18,12 +18,14 @@ import java.util.List;
 public class AdminMenuAdapter extends RecyclerView.Adapter<AdminMenuAdapter.CardViewHolder> {
     private List<AdminMenu> dataList;
     private Context context;
-    private OnItemClickListener listener; // Declare a listener
+    private static OnItemClickListener listener;
 
-    // Define an interface for the click listener
+    // interface for the click listener
     public interface OnItemClickListener {
         void onItemClick(int position);
+
         void onEditClick(int position);
+
         void onDeleteClick(int position);
     }
 
@@ -31,49 +33,12 @@ public class AdminMenuAdapter extends RecyclerView.Adapter<AdminMenuAdapter.Card
         this.listener = listener;
     }
 
-    public class MenuViewHolder extends RecyclerView.ViewHolder {
-        Button editButton;
-        Button deleteButton;
-
-        public MenuViewHolder(@NonNull View itemView) {
-            super(itemView);
-            // Initialize edit and delete buttons
-            editButton = itemView.findViewById(R.id.editButton); // Make sure you have the correct ID in your XML
-            deleteButton = itemView.findViewById(R.id.deleteButton); // Make sure you have the correct ID in your XML
-
-            // Set click listeners for edit and delete buttons
-            editButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            listener.onEditClick(position);
-                        }
-                    }
-                }
-            });
-
-            deleteButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            listener.onDeleteClick(position);
-                        }
-                    }
-                }
-            });
-        }
-    }
-
     public AdminMenuAdapter(Context context, List<AdminMenu> dataList) {
         this.context = context;
         this.dataList = dataList;
     }
 
-    public void setFilteredList(List<AdminMenu> filteredList){
+    public void setFilteredList(List<AdminMenu> filteredList) {
         this.dataList = filteredList;
         notifyDataSetChanged();
     }
@@ -85,7 +50,6 @@ public class AdminMenuAdapter extends RecyclerView.Adapter<AdminMenuAdapter.Card
         return new CardViewHolder(view);
     }
 
-
     @Override
     public void onBindViewHolder(@NonNull CardViewHolder holder, int position) {
         AdminMenu data = dataList.get(holder.getAdapterPosition());
@@ -95,7 +59,6 @@ public class AdminMenuAdapter extends RecyclerView.Adapter<AdminMenuAdapter.Card
         holder.priceTextView.setText(data.getPrice());
         holder.idTextView.setText(data.getId());
 
-        // Set an OnClickListener for the item view
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,7 +72,6 @@ public class AdminMenuAdapter extends RecyclerView.Adapter<AdminMenuAdapter.Card
         });
     }
 
-
     @Override
     public int getItemCount() {
         return dataList.size();
@@ -121,6 +83,8 @@ public class AdminMenuAdapter extends RecyclerView.Adapter<AdminMenuAdapter.Card
         TextView detailTextView;
         TextView priceTextView;
         TextView idTextView;
+        Button editButton;
+        Button deleteButton;
 
         public CardViewHolder(View itemView) {
             super(itemView);
@@ -129,6 +93,35 @@ public class AdminMenuAdapter extends RecyclerView.Adapter<AdminMenuAdapter.Card
             detailTextView = itemView.findViewById(R.id.main_detail);
             priceTextView = itemView.findViewById(R.id.main_price);
             idTextView = itemView.findViewById(R.id.main_id);
+
+            editButton = itemView.findViewById(R.id.editButton); // Make sure you have the correct ID in your XML
+            deleteButton = itemView.findViewById(R.id.deleteButton); // Make sure you have the correct ID in your XML
+
+            editButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onEditClick(position);
+                        }
+                    }
+                }
+            });
+
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onDeleteClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
+
 }

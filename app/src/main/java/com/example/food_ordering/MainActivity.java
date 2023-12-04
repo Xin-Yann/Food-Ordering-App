@@ -1,10 +1,9 @@
 package com.example.food_ordering;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,9 +22,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.squareup.picasso.Picasso;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,128 +60,112 @@ public class MainActivity extends AppCompatActivity {
         searchView.setIconified(true);
         searchView.requestFocus();
 
-        deleteCache(this);
-
-        /*fetch main dish data*/
-        fStore.collection("menu")
-                .limit(3)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        String dishName = document.getString("menu_name");
-                        String dishPrice = document.getString("menu_price");
-                        String dishImage = document.getString("menu_image");
-                        String dishDesc = document.getString("menu_detail");
-
-                        // Add the retrieved data to the ArrayList
-                        datalist.add(new Menu(dishName, dishPrice, dishImage,dishDesc));
-                    }
-
-                    adapter.notifyDataSetChanged();
-
-                } else {
-                    // Handle the case where the query was not successful
-                }
-            }
-        });
-
-        adapter.setOnItemClickListener(new MenuAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                // Get the selected menu item
-                Menu selectedItem = datalist.get(position);
-
-                // Create an Intent to send the selected menu item's details to the MenuItemDashboardActivity
-                Intent intent = new Intent(MainActivity.this, Menu_item.class);
-                intent.putExtra("menuName", selectedItem.getName());
-                intent.putExtra("menuPrice", selectedItem.getPrice());
-                intent.putExtra("menuImage", selectedItem.getImage());
-                intent.putExtra("menuDetail", selectedItem.getDetail());
-                startActivity(intent);
-            }
-        });
-
-        /*search*/
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                // Handle the search query submission
-                filterList(query);
-                Intent intent = new Intent(getApplicationContext(), SearchResultsActivity.class);
-                intent.putExtra("search_query", query);
-                startActivity(intent);
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                // Handle search query text change
-                filterList(newText);
-                return true;
-            }
-        });
-
-        /*display user email if user login */
-        if (user == null) {
-            Intent intent = new Intent(getApplicationContext(), login.class);
+        // Check if the user is null or an admin
+        if (user == null || user.getEmail().endsWith("@admin.com")) {
+            Intent intent = new Intent(getApplicationContext(), Admin_home.class);
             startActivity(intent);
             finish();
         } else {
+            fStore = FirebaseFirestore.getInstance();
+            recyclerView = findViewById(R.id.recyclerView);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            datalist = new ArrayList<>();
+            adapter = new MenuAdapter(this, datalist);
+            recyclerView.setAdapter(adapter);
+            drawerLayout = findViewById(R.id.drawerLayout);
+            openDrawer = findViewById(R.id.menu);
+            searchView = findViewById(R.id.searchView);
+            searchView.setFocusable(true);
+            searchView.setIconified(true);
+            searchView.requestFocus();
 
-            TextView text= findViewById(R.id.user_details);
+            /*fetch main dish data*/
+            fStore.collection("menu")
+                    .limit(3)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    String dishName = document.getString("menu_name");
+                                    String dishPrice = document.getString("menu_price");
+                                    String dishImage = document.getString("menu_image");
+                                    String dishDesc = document.getString("menu_detail");
+
+                                    // Add the retrieved data to the ArrayList
+                                    datalist.add(new Menu(dishName, dishPrice, dishImage, dishDesc));
+                                }
+
+                                adapter.notifyDataSetChanged();
+
+                            }
+                        }
+                    });
+
+            adapter.setOnItemClickListener(new MenuAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(int position) {
+                    Menu selectedItem = datalist.get(position);
+
+                    Intent intent = new Intent(MainActivity.this, Menu_item.class);
+                    intent.putExtra("menuName", selectedItem.getName());
+                    intent.putExtra("menuPrice", selectedItem.getPrice());
+                    intent.putExtra("menuImage", selectedItem.getImage());
+                    intent.putExtra("menuDetail", selectedItem.getDetail());
+                    startActivity(intent);
+                }
+            });
+
+            /*search*/
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    Log.d("MainActivity", "Search submitted with query: " + query);
+                    filterList(query);
+                    Intent intent = new Intent(getApplicationContext(), SearchResultsActivity.class);
+                    intent.putExtra("search_query", query);
+                    startActivity(intent);
+                    return true;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    // Handle search query text change
+                    Log.d("MainActivity", "Search text changed to: " + newText);
+                    filterList(newText);
+                    return true;
+                }
+            });
+
+            /*display user email if user login */
+            TextView text = findViewById(R.id.user_details);
             text.setText(user.getEmail());
             TextView textView = findViewById(R.id.user_email);
             textView.setText(user.getEmail());
-        }
 
-        /*logout*/
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(getApplicationContext(), login.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-        /*open menu*/
-        openDrawer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (drawerLayout.isDrawerOpen(findViewById(R.id.drawerMenu))) {
-                    drawerLayout.closeDrawer(findViewById(R.id.drawerMenu));
-                } else {
-                    drawerLayout.openDrawer(findViewById(R.id.drawerMenu));
+            /*logout*/
+            logout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FirebaseAuth.getInstance().signOut();
+                    Intent intent = new Intent(getApplicationContext(), login.class);
+                    startActivity(intent);
+                    finish();
                 }
-            }
-        });
+            });
 
-    }
-
-    public static void deleteCache(Context context) {
-        try {
-            File dir = context.getCacheDir();
-            deleteDir(dir);
-        } catch (Exception e) {}
-    }
-    public static boolean deleteDir(File dir) {
-        if (dir != null && dir.isDirectory()) {
-            String[] children = dir.list();
-            for (int i = 0; i < children.length; i++) {
-                boolean success = deleteDir(new File(dir, children[i]));
-                if (!success) {
-                    return false;
+            /*open menu*/
+            openDrawer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (drawerLayout.isDrawerOpen(findViewById(R.id.drawerMenu))) {
+                        drawerLayout.closeDrawer(findViewById(R.id.drawerMenu));
+                    } else {
+                        drawerLayout.openDrawer(findViewById(R.id.drawerMenu));
+                    }
                 }
-            }
-            return dir.delete();
-        } else if(dir!= null && dir.isFile()) {
-            return dir.delete();
-        } else {
-            return false;
+            });
         }
     }
 
@@ -192,7 +173,6 @@ public class MainActivity extends AppCompatActivity {
         List<Menu> filteredList = new ArrayList<>();
 
         if (keyword.isEmpty()) {
-            // If the query is empty, show all items
             filteredList.addAll(datalist);
         } else {
             for (Menu menu : datalist) {
@@ -202,7 +182,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        // Update the adapter with the filtered or all items
+        Log.d("FilterList", "Filtered list size: " + filteredList.size());
+
         adapter.setFilteredList(filteredList);
 
         if (filteredList.isEmpty()) {
@@ -235,6 +216,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void toWallet(View view){
+        Intent intent = new Intent(this, Wallet.class);
+        ImageButton toWallet = findViewById(R.id.wallet);
+        startActivity(intent);
+    }
 
     /*Category*/
     public void toMainDish(View view){
@@ -255,6 +241,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
     /*Footer*/
     public void toHome(View view){
         Intent intent = new Intent(this, MainActivity.class);
@@ -270,7 +257,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void toAccount(View view){
         Intent intent = new Intent(this, Account_details.class);
-        ImageButton toAccount = findViewById(R.id.accountPage);
+        TextView toAccount = findViewById(R.id.accountPage);
         startActivity(intent);
     }
 

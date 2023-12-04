@@ -1,38 +1,37 @@
 package com.example.food_ordering;
 
 public class AdminMenu {
-    private String name;
-    private String price;
-    private String image;
-    private String detail;
-    private String id;
+    String menu_name;
+    String menu_price;
+    String menu_image;
+    String menu_detail;
+    String menu_id;
 
-    public AdminMenu(String name, String price, String image, String detail, String id) {
-        this.name = name;
-        this.price = price;
-        this.image = image;
-        this.detail = detail;
-        this.id = id;
+    public AdminMenu(String menu_name, String menu_price, String menu_image, String menu_detail, String menu_id) {
+        this.menu_name = menu_name;
+        this.menu_price = menu_price;
+        this.menu_image = menu_image;
+        this.menu_detail = menu_detail;
+        this.menu_id = menu_id;
     }
 
     public String getName() {
-        return name;
+        return menu_name;
     }
 
     public String getPrice() {
-        return price;
+        return menu_price;
     }
 
     public String getImage() {
-        return image;
+        return menu_image;
     }
 
     public String getDetail() {
-        return detail;
+        return menu_detail;
     }
 
     public String getId() {
-        return id;
+        return menu_id;
     }
-
 }

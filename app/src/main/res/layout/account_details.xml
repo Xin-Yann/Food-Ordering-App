@@ -186,7 +186,11 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputPassword"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:editable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:background="#e6e6e6"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
