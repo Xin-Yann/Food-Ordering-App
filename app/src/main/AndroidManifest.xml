@@ -58,7 +58,6 @@
         <activity android:name=".staffList"></activity>
         <activity android:name=".Payment"></activity>
         <activity android:name=".Report"></activity>
-
     </application>
 
 
